@@ -1,16 +1,15 @@
-interface IClient {
+export interface IClient {
     name: string
     email: string
     dateOfBirth: Date
     isVerified: boolean 
-    listings: ICarListing[]
-    image: URL
-    driversLicense: URL
+    image: string
+    driversLicense: string
     cellNumber: string
     verify: () => void
 }
 
-interface ICarListing {
+export interface ICarListing {
     model: string
     isVerified: boolean
     brand: string
@@ -20,29 +19,30 @@ interface ICarListing {
     priceRate: number
     owner: IClient
     canDeliver: boolean
-    carLicenseImage: URL
+    carLicenseImage: string
     carDescription: string[]
-    carImages: URL[]
+    carImages: string[]
     carLocation: string
     estimate: (arg0:number) => number
 }
 
-interface IBaseReview {
+export interface IBaseReview {
     rating: number
     id: number
     review: string
 }
 
-interface ITransaction {
+export interface ITransaction {
     transactionNumber: number
     total: number
+    description: TransactionDescriptionType | string
     date: Date
     issuer: IClient
     receiver: IClient
     status: TrasactionStatusType
 }
 
-interface IAppointment {
+export interface IAppointment {
     appointmentNumber: number
     days: number
     rentee: IClient
@@ -51,7 +51,7 @@ interface IAppointment {
     status: AppointmentStatusType
     carListing: ICarListing
     meetupLocation: string
-    dropoffLocation: String
+    dropoffLocation: string
     transactions: ITransaction[]
     overlaps: (arg0:IAppointment) => boolean
     accept: () => void
@@ -63,37 +63,43 @@ interface IAppointment {
 }
 
 
-interface IRenteeReview extends IBaseReview {
+export interface IRenteeReview extends IBaseReview {
     client: IClient
 }
 
-interface IListingReview extends IBaseReview {
+export interface IListingReview extends IBaseReview {
     owner: IClient
 }
 
-interface INotification {
+export interface INotification {
     client: IClient
     message: string
     priority: PriorityType
 }
 
-enum PriorityType {
+export enum PriorityType {
     Urgent = "Urgent",
     Regular = "Regular",
     NonUrgent = "NonUrgent"
 }
 
-enum TrasactionStatusType {
+export enum TrasactionStatusType {
     Failed = "Failed",
     Pending = "Pending",
     Completed = "Completed"
 }
 
-enum AppointmentStatusType {
+export enum AppointmentStatusType {
     Denied = "Denied",
     Accepted = "Accepted",
     Delivered = "Delivered",
     Completed = "Completed",
     Pending = "Pending",
     Cancelled = "Cancelled"
+}
+
+export enum TransactionDescriptionType {
+    SecurityDeposit = "SecurityDeposit",
+    RemainingBalance = "RemainingBalance",
+    Refund = "Refund"
 }
