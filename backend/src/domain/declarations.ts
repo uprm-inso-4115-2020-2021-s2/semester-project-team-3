@@ -43,16 +43,16 @@ export interface ITransaction {
 }
 
 export interface IAppointment {
-    appointmentNumber: number
-    days: number
-    rentee: IClient
-    dateAccepted: Date
-    appointmentDate: Date
-    status: AppointmentStatusType
-    carListing: ICarListing
-    meetupLocation: string
-    dropoffLocation: string
-    transactions: ITransaction[]
+    appointmentNumber: number | undefined
+    days: number|undefined
+    rentee: IClient|undefined
+    dateAccepted: Date|undefined
+    appointmentDate: Date|undefined
+    status: AppointmentStatusType|undefined
+    carListing: ICarListing|undefined
+    meetupLocation: string|undefined
+    dropoffLocation: string|undefined
+    transactions: ITransaction[]|undefined
     overlaps: (arg0:IAppointment) => boolean
     accept: () => void
     deny: () => void
