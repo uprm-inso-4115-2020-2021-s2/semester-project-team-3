@@ -8,7 +8,7 @@ export function makeCarListing(data: Partial<ICarListing>): ICarListing {
     throw Error("Not implemented yet.")
 }
 
-export function makeBaseReview(data: Partial<ITransaction>): ITransaction {
+export function makeTransaction(data: Partial<ITransaction>): ITransaction {
     throw Error("Not implemented yet.")
 }
 
