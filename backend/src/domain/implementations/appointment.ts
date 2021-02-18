@@ -1,42 +1,33 @@
-import { IAppointment } from "../declarations";
-import {IClient} from "../declarations";
-import {AppointmentStatusType} from "../declarations";
-import {ICarListing} from "../declarations";
-import {ITransaction} from "../declarations";
-
+import {ErrorMsg, IAppointment,IClient,AppointmentStatusType,ICarListing,ITransaction} from "../declarations";
 
 export class Appointment implements IAppointment{
 
-    appointmentNumber: number|undefined;
-    days: number|undefined;
-    rentee: IClient|undefined;
-    dateAccepted: Date|undefined;
-    appointmentDate: Date|undefined;
-    status: AppointmentStatusType|undefined;
-    carListing: ICarListing|undefined;
-    meetupLocation: string|undefined;
-    dropoffLocation: string|undefined;
-    transactions: ITransaction[]|undefined;
+    appointmentNumber: number|null;
+    days: number;
+    rentee: IClient;
+    dateAccepted: Date|null;
+    appointmentDate: Date;
+    status: AppointmentStatusType;
+    carListing: ICarListing;
+    meetupLocation: string;
+    dropoffLocation: string;
+    transactions: ITransaction[];
 
-    constructor(public data: Partial<Appointment> = {}){
-        this.appointmentNumber = data.appointmentNumber;
-        this.days = data.days;
-        this.rentee = data.rentee;
-        this.dateAccepted = data.dateAccepted;
-        this.appointmentDate = data.appointmentDate;
-        this.status = data.status;
-        this.carListing = data.carListing;
-        this.meetupLocation = data.meetupLocation;
-        this.dropoffLocation = data.dropoffLocation;
-        this.transactions = data.transactions;
+    constructor(public data: Partial<IAppointment> = {}){
+        if (!data.days || !data.rentee || !data.appointmentDate || !data.carListing || !data.dropoffLocation || !data.meetupLocation){
+            throw new Error(ErrorMsg.IllegalException)
+        }
+        this.appointmentNumber = data.appointmentNumber?data.appointmentNumber:null;
+        this.days = data.days as number; 
+        this.rentee = data.rentee as IClient ; 
+        this.dateAccepted = data.dateAccepted? data.dateAccepted:null; 
+        this.appointmentDate = data.appointmentDate as Date;
+        this.status = data.status? data.status : AppointmentStatusType.Pending; 
+        this.carListing = data.carListing as ICarListing; 
+        this.meetupLocation = data.meetupLocation as string; 
+        this.dropoffLocation = data.dropoffLocation as string; 
+        this.transactions = data.transactions? data.transactions: [];
 
     }
 
-    // overlaps: (arg0:IAppointment) => boolean
-    // accept: () => void
-    // deny: () => void
-    // deliver: () => void
-    // isPending: () => boolean
-    // getPrice: () => number
-    // securityDeposit: () => number
 }

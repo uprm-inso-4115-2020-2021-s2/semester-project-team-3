@@ -3,10 +3,10 @@ export interface IClient {
     email: string
     dateOfBirth: Date
     isVerified: boolean 
-    image: string
-    driversLicense: string
+    image: string | null
+    driversLicense: string | null
     cellNumber: string
-    verify: () => void
+    // verify: () => void
 }
 
 export interface ICarListing {
@@ -19,16 +19,16 @@ export interface ICarListing {
     priceRate: number
     owner: IClient
     canDeliver: boolean
-    carLicenseImage: string
-    carDescription: string[]
-    carImages: string[]
+    carLicenseImage: string | null
+    carDescription: string
+    carImages: string[] | null
     carLocation: string
-    estimate: (arg0:number) => number
+    // estimate: (arg0:number) => number
 }
 
 export interface IBaseReview {
     rating: number
-    id: number
+    id: number | null
     review: string
 }
 
@@ -39,27 +39,27 @@ export interface ITransaction {
     date: Date
     issuer: IClient
     receiver: IClient
-    status: TrasactionStatusType
+    status: TransactionStatusType
 }
 
 export interface IAppointment {
-    appointmentNumber: number | undefined
-    days: number|undefined
-    rentee: IClient|undefined
-    dateAccepted: Date|undefined
-    appointmentDate: Date|undefined
-    status: AppointmentStatusType|undefined
-    carListing: ICarListing|undefined
-    meetupLocation: string|undefined
-    dropoffLocation: string|undefined
-    transactions: ITransaction[]|undefined
-    overlaps: (arg0:IAppointment) => boolean
-    accept: () => void
-    deny: () => void
-    deliver: () => void
-    isPending: () => boolean
-    getPrice: () => number
-    securityDeposit: () => number
+    appointmentNumber: number|null
+    days: number
+    rentee: IClient
+    dateAccepted: Date|null
+    appointmentDate: Date
+    status: AppointmentStatusType
+    carListing: ICarListing
+    meetupLocation: string
+    dropoffLocation: string
+    transactions: ITransaction[]
+    // overlaps: (arg0:IAppointment) => boolean
+    // accept: () => void
+    // deny: () => void
+    // deliver: () => void
+    // isPending: () => boolean
+    // getPrice: () => number
+    // securityDeposit: () => number
 }
 
 
@@ -83,7 +83,7 @@ export enum PriorityType {
     NonUrgent = "NonUrgent"
 }
 
-export enum TrasactionStatusType {
+export enum TransactionStatusType {
     Failed = "Failed",
     Pending = "Pending",
     Completed = "Completed"
@@ -102,4 +102,8 @@ export enum TransactionDescriptionType {
     SecurityDeposit = "SecurityDeposit",
     RemainingBalance = "RemainingBalance",
     Refund = "Refund"
+}
+
+export enum ErrorMsg{
+    IllegalException = "Not valid"
 }
