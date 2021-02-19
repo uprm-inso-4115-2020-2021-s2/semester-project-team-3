@@ -3,6 +3,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import { ClientModel, IClientModel } from '../models/clientmodel'
 import * as dbHandler from '../inmemory-dbconfig'
+import { isConstructorDeclaration } from 'typescript';
 
 
 /**
@@ -48,11 +49,16 @@ describe(" The Client Model represents a model of an IClient in the database ", 
                 dateOfBirth: new Date("1998-07-12")
             } as Partial<IClientModel> )
 
-        expect(testUser.save).toThrowError()
+        testUser
+        .save(function(err, doc) {
+            expect(err).toBeTruthy()
+            expect(doc).toBeFalsy()
+        })
 
     });
 
     it("should not be able to be created if person already exists", async () => {
+        
         const testUser = new ClientModel(
             {
                 name: "Test",
@@ -61,7 +67,21 @@ describe(" The Client Model represents a model of an IClient in the database ", 
                 dateOfBirth: new Date("1998-07-12")
             } as Partial<IClientModel> )
 
-        expect(testUser.save).toThrowError()
+        await testUser.save()
+
+        const newUser = new ClientModel({
+            email:"kenneth.rosario@gmail.com",
+            name: "Dimelo",
+            cellNumber: "7875000055", 
+            dateOfBirth: new Date("1998-07-12")
+        })
+
+        await newUser.save()
+        
+        const refetched = (await ClientModel.findOne({email:"kenneth@gmail.com"}))!
+        
+        expect(refetched.name).toBe("Test")
+
     });
     
     it("should be able to be updated", async () => {
