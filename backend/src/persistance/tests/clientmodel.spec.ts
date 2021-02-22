@@ -1,10 +1,6 @@
 
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import mongoose from 'mongoose';
 import { ClientModel, IClientModel } from '../models/clientmodel'
 import * as dbHandler from '../inmemory-dbconfig'
-import { isConstructorDeclaration } from 'typescript';
-
 
 /**
  * Connect to a new in-memory database before running any tests.
