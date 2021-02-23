@@ -31,7 +31,6 @@ describe(" The Client Model represents a model of an IClient in the database ", 
 
         testUser.save(function(err, doc){
             expect(err).toBeNull()
-            console.log(doc.toJSON())
             expect(doc.email).toBe("kenneth@gmail.com")
         })
     });
@@ -92,7 +91,6 @@ describe(" The Client Model represents a model of an IClient in the database ", 
 
         await newUser.save()
 
-        console.log(newUser)
 
         newUser.name = "Kevin"
         await newUser.save()
@@ -114,8 +112,6 @@ describe(" The Client Model represents a model of an IClient in the database ", 
         await newUser.save()
 
         const doc = (await ClientModel.findOne({email:"kenneth@gmail.com"}))!
-
-        console.log(doc)
         
         doc.name = "Kevin"
         await doc.save()
