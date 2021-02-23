@@ -1,17 +1,19 @@
 sudo: false
 language: node_js
 node_js:
-- '8'
+- node # aqui uso el latest version of node
 branches:
   only:
-  - master
+  - main
 cache:
   directories:
-  - node_modules
+  - node-modules
+  - backend
 before_install:
 - npm update
 install:
+- cd backend
 - npm install
 script:
-- npm test
-- npm run coveralls
+- npm run test
+# - npm run coveralls
