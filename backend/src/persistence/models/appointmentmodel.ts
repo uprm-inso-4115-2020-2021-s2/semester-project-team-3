@@ -35,8 +35,8 @@ const TransactionSchema = new Schema({
         required: true
     },
     date: { type: Date , required:true },
-    issuer: { type:String, required:true, ref: ClientCollectionName },
-    receiver: { type:String, required: true, ref:ClientCollectionName },
+    issuer: { type:Schema.Types.ObjectId, required:true, ref: ClientCollectionName },
+    receiver: { type:Schema.Types.ObjectId, required: true, ref:ClientCollectionName },
     status: { type:String, required:true } 
 })
 
