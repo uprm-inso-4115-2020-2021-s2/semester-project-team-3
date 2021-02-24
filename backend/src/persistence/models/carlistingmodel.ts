@@ -1,5 +1,6 @@
 import { ICarListing } from '../../domain/declarations'
 import mongoose, { Schema, Document } from 'mongoose'
+import { IClientModel, ClientCollectionName } from './clientmodel'
 
 
 export interface ICarListingModel extends Document {
@@ -11,7 +12,7 @@ export interface ICarListingModel extends Document {
     cancellationFee: ICarListing['cancellationFee']
     licensePlate: ICarListing['licensePlate']
     priceRate: ICarListing['priceRate']
-    owner: Schema.Types.ObjectId
+    owner: Schema.Types.ObjectId | IClientModel
     canDeliver: ICarListing['canDeliver'] 
     carLicenseImage: ICarListing['carLicenseImage']
     carDescription: ICarListing['carDescription']
@@ -30,7 +31,7 @@ const CarListingSchema = new Schema({
     cancellationFee:{type:String, required: true},
     licensePlate: {type:String, required: true},
     priceRate:{type:Number, required:true},
-    owner:{type: Schema.Types.ObjectId, required:true},
+    owner:{type: Schema.Types.ObjectId, required:true, ref:ClientCollectionName},
     canDeliver:{type: Boolean, default:true},
     carLicenseImage:{type: String},
     carDescription:{type: String, required:true},
@@ -39,4 +40,5 @@ const CarListingSchema = new Schema({
 
 })
 
-export const CarListingModel = mongoose.model<ICarListingModel>('CarListing', CarListingSchema)
+export const CarListingCollectionName = 'CarListing'
+export const CarListingModel = mongoose.model<ICarListingModel>(CarListingCollectionName, CarListingSchema)
