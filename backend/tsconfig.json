@@ -7,8 +7,8 @@
       ],
       "baseUrl": ".",
       "paths": {
-        "@/types/*" : ["./src/types/*"],
-        "*" : ["./src/types/*"]
+        "@/types/*" : ["src/types/*"],
+        "*" : ["src/types/*"]
       },
       "typeRoots": [
         "./src/types",

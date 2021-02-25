@@ -4,7 +4,9 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import http from 'http';
 import config from './config/config'
-
+import routes from './routes'
+import passport from 'passport'
+import './auth/passport'
 
 const app:Application = express()
 
@@ -14,7 +16,7 @@ const app:Application = express()
 app.use(json())
 app.use(cors())
 app.use(cookieParser())
-
+app.use(passport.initialize())
 
 /**
  * Routes
@@ -23,6 +25,7 @@ app.get('/healthcheck', (req, res) => {
     res.status(200).json({online:true})
 })
 
+app.use(routes)
 
 /**
  * Server Start
