@@ -2,6 +2,7 @@ import { CarListingModel, ICarListingModel } from '../models/carlistingmodel'
 import * as dbHandler from '../inmemory-dbconfig'
 import { ClientModel, IClientModel } from '../models/clientmodel';
 import { ObjectId } from 'mongoose';
+import {makeValidCarListingModelSample} from './helper'
 
 /**
  * Connect to a new in-memory database before running any tests.
@@ -34,20 +35,7 @@ beforeEach(async () => {
 afterAll(async () => await dbHandler.closeDatabase());
 
 
-function makeValidCarListingModelSample(ownerId:ObjectId) {
-    return new CarListingModel({
-        carModel: "Corolla",
-        brand: "Toyota",
-        year: 2020,
-        cancellationFee:25.56,
-        licensePlate: "TES321",
-        priceRate: 35,
-        owner: ownerId,
-        carDescription: " Testing creating a vehicle ",
-        carImages: [""] ,
-        carLocation: " Location of car in coordinates that can be parsed by gmaps "
-    } as Partial<ICarListingModel>)
-}
+
 
 describe(" CarListingModel represents a CarListing Domain entity persisted in the database ", function (){
 

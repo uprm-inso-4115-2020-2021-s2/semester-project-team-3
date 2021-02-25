@@ -26,4 +26,5 @@ const ClientSchema: Schema = new Schema({
     cellNumber: { type:String, required:true }
 })
 
-export const ClientModel = mongoose.model<IClientModel>('Client', ClientSchema)
+export const ClientCollectionName = "Client" 
+export const ClientModel = mongoose.model<IClientModel>(ClientCollectionName, ClientSchema)
