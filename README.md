@@ -3,4 +3,4 @@
 
 ![Workflow](https://github.com/github/semester-project-team-3/workflows/node.js.yml/badge.svg?branch=jvserivera-CI)
 
-![example workflow](https://github.com/github/docs/actions/workflows/node.js.yml/badge.svg)
+![example workflow](https://github.com/github/docs/actions/workflows/node.js.yml/badge.svg?branch=jvserivera-CI)
