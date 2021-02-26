@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import { CarListingModel, ICarListingModel } from "../models/carlistingmodel";
+import { CarListingModel, ICarListingModel } from "../carlistingmodel";
 
 export function makeValidCarListingModelSample(ownerId:ObjectId) {
     return new CarListingModel({

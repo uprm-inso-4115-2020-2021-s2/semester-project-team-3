@@ -1,9 +1,7 @@
-import * as dbHandler from '../inmemory-dbconfig'
-import { ClientModel, IClientModel } from '../models/clientmodel';
-import { AppointmentModel, IAppointmentModel } from '../models/appointmentmodel'
-import { CarListingModel } from '../models/carlistingmodel';
+import * as dbHandler from '../../inmemory-dbconfig'
+import { ClientModel, IClientModel } from '../clientmodel';
+import { AppointmentModel, IAppointmentModel } from '../appointmentmodel'
 import { makeValidCarListingModelSample } from './helper';
-import { AppointmentStatusType } from '../../domain/declarations';
 
 
 /**
