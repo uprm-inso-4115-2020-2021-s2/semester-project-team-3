@@ -74,6 +74,23 @@ describe(`The Client repository is in charge of persisting IClient instances to 
         expect(updated!.cellNumber).toBe("7878880000")
         expect(updated!.dateOfBirth).toEqual(new Date('1999-03-10'))
 
+        const refetched = await clientRepo.findByEmail("testing123@gmail.com")
+
+        expect(refetched!.cellNumber).toBe("7878880000")
+        expect(refetched!.dateOfBirth).toEqual(new Date('1999-03-10'))
+
+    })
+
+    it("Should not allow email to change", async ()=> {
+
+        const person = await clientRepo.findByEmail('testing123@gmail.com')
+
+        const updated = await clientRepo.updateClient(person!.email, {
+            email:"ant@gmail.com"
+        })
+
+        expect(updated!.email).toEqual(person!.email)
+
     })
 
 

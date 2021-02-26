@@ -8,7 +8,7 @@ export default class ClientRepository implements IClientRepository {
     async findByEmail(email: string): Promise<IClient | null> {
         
         const client = await ClientModel
-            .findOne({email:email})
+            .findOne({email:email}).exec()
             
         if (!client) {
             return null
@@ -67,9 +67,28 @@ export default class ClientRepository implements IClientRepository {
             refetched.cellNumber = client.cellNumber
         }
 
-        await ClientModel.findOneAndUpdate({email:refetched.email}, refetched)
+        const updated = await ClientModel.findOneAndUpdate({email:refetched.email}, {
+            name: refetched.name,
+            dateOfBirth: refetched.dateOfBirth,
+            cellNumber: refetched.cellNumber,
+            image: refetched.image,
+            driversLicense: refetched.driversLicense,
+            isVerified: refetched.isVerified
+        }, {new:true}).exec()
 
-        return makeClient(refetched)
+        if (!updated){
+            return null
+        }
+
+        return makeClient({
+            email: updated!.email,
+            name: updated!.name,
+            dateOfBirth: updated!.dateOfBirth,
+            cellNumber: updated!.cellNumber,
+            image: updated!.image,
+            driversLicense: updated!.driversLicense,
+            isVerified: updated!.isVerified
+        })
 
     }
 }
