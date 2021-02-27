@@ -1,6 +1,6 @@
 
-import { ClientModel, IClientModel } from '../models/clientmodel'
-import * as dbHandler from '../inmemory-dbconfig'
+import { ClientModel, IClientModel } from '../../models/clientmodel'
+import * as dbHandler from '../../inmemory-dbconfig'
 
 /**
  * Connect to a new in-memory database before running any tests.

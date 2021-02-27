@@ -1,7 +1,6 @@
-import { CarListingModel, ICarListingModel } from '../models/carlistingmodel'
-import * as dbHandler from '../inmemory-dbconfig'
-import { ClientModel, IClientModel } from '../models/clientmodel';
-import { ObjectId } from 'mongoose';
+import { CarListingModel, ICarListingModel } from '../carlistingmodel'
+import * as dbHandler from '../../inmemory-dbconfig'
+import { ClientModel, IClientModel } from '../clientmodel';
 import {makeValidCarListingModelSample} from './helper'
 
 /**
