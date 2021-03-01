@@ -6,7 +6,7 @@ export class RenteeReview implements IRenteeReview{
     review: string
     client: IClient
 
-    constructor(public data: Partial<IRenteeReview> = {}){
+    constructor(data: Partial<IRenteeReview> = {}){
 
         if(!data.rating || !data.client){
             throw new Error(ErrorMsg.IllegalException)

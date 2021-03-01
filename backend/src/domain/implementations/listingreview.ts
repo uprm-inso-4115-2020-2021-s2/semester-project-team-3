@@ -6,7 +6,7 @@ export class ListingReview implements IListingReview{
     review: string
     owner: IClient
 
-    constructor(public data: Partial<IListingReview> = {}){
+    constructor(data: Partial<IListingReview> = {}){
 
         if(!data.rating || !data.owner){
             throw new Error(ErrorMsg.IllegalException)
