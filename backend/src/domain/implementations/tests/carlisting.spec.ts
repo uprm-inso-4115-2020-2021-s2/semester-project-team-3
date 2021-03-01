@@ -2,7 +2,7 @@ import { ICarListing} from '../../declarations'
 import { CarListing } from '../carlisting'
 import {Client} from '../client'
 
-describe('The Client class creates a client in the db', () => {
+describe('The Car Listing class models the car listing entity in the domain', () => {
 
     it("should be able to create an client sucessfully", async () => {
         const client = new Client(

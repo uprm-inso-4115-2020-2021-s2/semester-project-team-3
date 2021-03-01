@@ -3,7 +3,7 @@ import { IListingReview } from '../../declarations'
 import { Client } from '../client'
 
 
-describe('The Listing Review class creates a Listing Review in the db', () => {
+describe('The ListingReview class models the listing review entity in the domain', () => {
 
     it("should be able to create a Listing Review sucessfully", async () => {
         const client = new Client(

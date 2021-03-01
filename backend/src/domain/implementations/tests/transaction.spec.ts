@@ -2,7 +2,7 @@ import { Transaction } from '../transaction'
 import { ITransaction } from '../../declarations'
 import { Client } from '../client'
 
-describe('The Transaction class creates a transaction in the db', () => {
+describe('The Transaction class models the transaction entity in the domain', () => {
 
     it("should be able to create a transaction sucessfully", async () => {
         const client = new Client(

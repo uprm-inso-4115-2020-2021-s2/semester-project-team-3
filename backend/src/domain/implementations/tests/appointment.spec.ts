@@ -3,7 +3,7 @@ import { IAppointment } from '../../declarations'
 import { Client } from '../client'
 import { CarListing } from '../carlisting'
 
-describe('The Appointment class creates an appointment in the db', () => {
+describe('The Appointment class models the appointment entity in the domain', () => {
 
     it("should be able to create an appointment sucessfully", async () => {
         const client = new Client(

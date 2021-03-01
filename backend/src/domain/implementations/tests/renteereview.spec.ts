@@ -3,7 +3,7 @@ import { IRenteeReview } from '../../declarations'
 import { Client } from '../client'
 
 
-describe('The Rentee Review class creates a Rentee Review in the db', () => {
+describe('The RenteeReview class models the rentee review entity in the domain', () => {
 
     it("should be able to create a Rentee Review sucessfully", async () => {
         const client = new Client(

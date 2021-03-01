@@ -2,7 +2,7 @@ import { Notification } from '../notification'
 import { INotification } from '../../declarations'
 import { Client } from '../client'
 
-describe('The Notification class creates a notification in the db', () => {
+describe('The Notification class models the notification entity in the domain', () => {
 
     it("should be able to create a notification sucessfully", async () => {
         const client = new Client(
