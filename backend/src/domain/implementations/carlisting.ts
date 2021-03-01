@@ -15,7 +15,7 @@ export class CarListing implements ICarListing{
     carImages: string[] | null 
     carLocation: string 
 
-    constructor(public data: Partial<ICarListing> = {}){
+    constructor(data: Partial<ICarListing> = {}){
         if(!data.model || !data.brand || !data.year || !data.cancellationFee || !data.licensePlate
             || !data.priceRate || !data.owner || !data.carDescription || !data.carLocation){
             throw new Error(ErrorMsg.IllegalException)

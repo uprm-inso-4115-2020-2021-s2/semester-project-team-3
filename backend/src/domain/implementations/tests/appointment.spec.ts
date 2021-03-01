@@ -1,20 +1,7 @@
-import * as dbHandler from './inmemory-dbconfig'
 import { Appointment } from '../appointment'
 import { IAppointment } from '../../declarations'
 import { Client } from '../client'
 import { CarListing } from '../carlisting'
-
-
-
-/**
- * Connect to a new in-memory database before running any tests.
- */
-beforeAll(async () => await dbHandler.connect());
-
-/**
- * Remove and close the db and server.
- */
-afterAll(async () => await dbHandler.closeDatabase());
 
 describe('The Appointment class creates an appointment in the db', () => {
 

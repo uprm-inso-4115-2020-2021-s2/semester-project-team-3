@@ -1,18 +1,7 @@
-import * as dbHandler from './inmemory-dbconfig'
 import { IClient} from '../../declarations'
 import { Client } from '../client'
 
-/**
- * Connect to a new in-memory database before running any tests.
- */
-beforeAll(async () => await dbHandler.connect());
-
-/**
- * Remove and close the db and server.
- */
-afterAll(async () => await dbHandler.closeDatabase());
-
-describe('The Client class creates a client in the db', () => {
+describe('The Client class models the client entity in the domain', () => {
 
     it("should be able to create an client sucessfully", async () => {
 

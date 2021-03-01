@@ -2,7 +2,7 @@ export interface IClient {
     name: string
     email: string
     dateOfBirth: Date | null
-    isVerified: boolean | null
+    isVerified: boolean 
     image: string | null
     driversLicense: string | null
     cellNumber: string | null

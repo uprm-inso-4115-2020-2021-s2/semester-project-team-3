@@ -13,7 +13,7 @@ export class Appointment implements IAppointment{
     dropoffLocation: string;
     transactions: ITransaction[];
 
-    constructor(public data: Partial<IAppointment> = {}){
+    constructor(data: Partial<IAppointment> = {}){
         if (!data.days || !data.rentee || !data.appointmentDate || !data.carListing || !data.dropoffLocation || !data.meetupLocation){
             throw new Error(ErrorMsg.IllegalException)
         }

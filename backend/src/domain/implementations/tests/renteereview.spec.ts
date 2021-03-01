@@ -1,17 +1,7 @@
-import * as dbHandler from './inmemory-dbconfig'
 import { RenteeReview } from '../renteereview'
 import { IRenteeReview } from '../../declarations'
 import { Client } from '../client'
 
-/**
- * Connect to a new in-memory database before running any tests.
- */
-beforeAll(async () => await dbHandler.connect());
-
-/**
- * Remove and close the db and server.
- */
-afterAll(async () => await dbHandler.closeDatabase());
 
 describe('The Rentee Review class creates a Rentee Review in the db', () => {
 

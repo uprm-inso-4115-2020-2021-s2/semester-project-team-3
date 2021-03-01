@@ -5,12 +5,12 @@ export class Client implements IClient{
     name: string
     email: string
     dateOfBirth: Date | null
-    isVerified: boolean | null
+    isVerified: boolean 
     image: string | null
     driversLicense: string | null
     cellNumber: string | null
 
-    constructor(public data: Partial<IClient> = {}){
+    constructor(data: Partial<IClient> = {}){
         if (!data.name || !data.email || !data.dateOfBirth || !data.cellNumber){
             throw new Error(ErrorMsg.IllegalException)
         }
