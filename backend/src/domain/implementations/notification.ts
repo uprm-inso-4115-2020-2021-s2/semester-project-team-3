@@ -5,7 +5,7 @@ export class Notification implements INotification{
     message: string
     priority: PriorityType
 
-    constructor(public data: Partial<INotification> = {}){
+    constructor(data: Partial<INotification> = {}){
         if(!data.client || !data.message){
             throw new Error(ErrorMsg.IllegalException)
         }

@@ -1,11 +1,11 @@
 export interface IClient {
     name: string
     email: string
-    dateOfBirth: Date
+    dateOfBirth: Date | null
     isVerified: boolean 
     image: string | null
     driversLicense: string | null
-    cellNumber: string
+    cellNumber: string | null
     // verify: () => void
 }
 

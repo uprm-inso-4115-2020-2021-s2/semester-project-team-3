@@ -10,7 +10,7 @@ export class Transaction implements ITransaction{
     receiver: IClient
     status: TransactionStatusType
 
-    constructor(public data: Partial<ITransaction> = {}){
+    constructor(data: Partial<ITransaction> = {}){
         if (!data.transactionNumber || !data.total || !data.date || !data.issuer || !data.receiver){
             throw new Error(ErrorMsg.IllegalException)
         }
