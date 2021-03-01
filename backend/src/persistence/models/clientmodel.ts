@@ -18,12 +18,12 @@ const ClientSchema: Schema = new Schema({
     },
     dateOfBirth: {
         type: Date,
-        required: true
+        default: null
     },
     isVerified: { type:Boolean, default:false },
     image: { type:String },
-    driversLicense: { type:String },
-    cellNumber: { type:String, required:true }
+    driversLicense: { type:String, default:null },
+    cellNumber: { type:String, default: null }
 })
 
 export const ClientCollectionName = "Client" 

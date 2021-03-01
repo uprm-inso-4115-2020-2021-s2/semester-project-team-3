@@ -11,7 +11,7 @@ export class Client implements IClient{
     cellNumber: string | null
 
     constructor(data: Partial<IClient> = {}){
-        if (!data.name || !data.email || !data.dateOfBirth || !data.cellNumber){
+        if (!data.name || !data.email){
             throw new Error(ErrorMsg.IllegalException)
         }
 

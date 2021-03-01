@@ -6,7 +6,10 @@ import http from 'http';
 import config from './config/config'
 import routes from './routes'
 import passport from 'passport'
+import { dbConfig } from './persistence'
 import './auth/passport'
+
+
 
 const app:Application = express()
 
@@ -32,5 +35,9 @@ app.use(routes)
  */
 const httpServer = http.createServer(app);
 
-httpServer.listen(config.server.port, () => console.log(`Server up in port ${config.server.port}`));
+dbConfig
+.connect()
+.then(() => {
+    httpServer.listen(config.server.port, () => console.log(`Server up in port ${config.server.port}`));
+})
 
