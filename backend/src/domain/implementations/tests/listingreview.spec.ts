@@ -16,7 +16,14 @@ afterAll(async () => await dbHandler.closeDatabase());
 describe('The Listing Review class creates a Listing Review in the db', () => {
 
     it("should be able to create a Listing Review sucessfully", async () => {
-        const client = new Client()
+        const client = new Client(
+            {
+                name: "Lola Rodz",
+                email:"lola@gmail.com",
+                dateOfBirth: new Date(),
+                cellNumber: "787-355-7783"
+            }
+        )
 
         const rr = new ListingReview(
             {
@@ -37,9 +44,16 @@ describe('The Listing Review class creates a Listing Review in the db', () => {
 
 
     it("should give an error when all the required fields are not complete", async () => {
-        const client = new Client()
+          const client = new Client(
+        {
+            name: "Lola Rodz",
+            email:"lola@gmail.com",
+            dateOfBirth: new Date(),
+            cellNumber: "787-355-7783"
+        }
+    )
 
-        const rr = new ListingReview(
+        const rr = () => new ListingReview(
             {
                 rating: 5,
                 id: 1,
@@ -47,12 +61,19 @@ describe('The Listing Review class creates a Listing Review in the db', () => {
 
             } as Partial<IListingReview> )
 
-            expect(rr).toBeUndefined
+            expect(rr).toThrowError
     
     });
 
     it("should not give an error when a non required field is not complete", async () => {
-        const client = new Client()
+        const client = new Client(
+            {
+                name: "Lola Rodz",
+                email:"lola@gmail.com",
+                dateOfBirth: new Date(),
+                cellNumber: "787-355-7783"
+            }
+        )
 
         const rr = new ListingReview(
             {

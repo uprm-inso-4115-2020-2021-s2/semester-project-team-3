@@ -16,7 +16,14 @@ afterAll(async () => await dbHandler.closeDatabase());
 describe('The Client class creates a client in the db', () => {
 
     it("should be able to create an client sucessfully", async () => {
-        const client = new Client()
+        const client = new Client(
+            {
+                name: "Lola Rodz",
+                email:"lola@gmail.com",
+                dateOfBirth: new Date(),
+                cellNumber: "787-355-7783"
+            }
+        )
 
         const car = new CarListing(
             {
@@ -53,8 +60,15 @@ describe('The Client class creates a client in the db', () => {
 
 
     it("should give an error when all the required fields are not complete", async () => {
-        const client = new Client()
-        const car = new CarListing(
+          const client = new Client(
+        {
+            name: "Lola Rodz",
+            email:"lola@gmail.com",
+            dateOfBirth: new Date(),
+            cellNumber: "787-355-7783"
+        }
+    )
+        const car = () => new CarListing(
             {
                 model: "corolla",
                 isVerified: false,
@@ -70,12 +84,19 @@ describe('The Client class creates a client in the db', () => {
 
             } as Partial<ICarListing> )
 
-            expect(car).toBeUndefined
+            expect(car).toThrowError
     
     });
 
     it("should not give an error when a non required field is not complete", async () => {
-        const client =new Client()
+        const client = new Client(
+            {
+                name: "Lola Rodz",
+                email:"lola@gmail.com",
+                dateOfBirth: new Date(),
+                cellNumber: "787-355-7783"
+            }
+        )
         
         const car = new CarListing(
         {

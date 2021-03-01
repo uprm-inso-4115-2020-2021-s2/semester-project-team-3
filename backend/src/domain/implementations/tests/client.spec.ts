@@ -40,7 +40,7 @@ describe('The Client class creates a client in the db', () => {
 
     it("should give an error when all the required fields are not complete", async () => {
         
-        const client = new Client(
+        const client = () => new Client(
             {
                 name: "Lola Perez",
                 email:"lolaperez@gmail.com",
@@ -50,7 +50,7 @@ describe('The Client class creates a client in the db', () => {
 
             } as Partial<IClient> )
 
-            expect(client).toBeUndefined
+            expect(client).toThrowError
     
     });
 

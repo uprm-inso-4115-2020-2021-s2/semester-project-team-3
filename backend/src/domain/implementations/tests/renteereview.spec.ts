@@ -16,7 +16,14 @@ afterAll(async () => await dbHandler.closeDatabase());
 describe('The Rentee Review class creates a Rentee Review in the db', () => {
 
     it("should be able to create a Rentee Review sucessfully", async () => {
-        const client = new Client()
+        const client = new Client(
+            {
+                name: "Lola Rodz",
+                email:"lola@gmail.com",
+                dateOfBirth: new Date(),
+                cellNumber: "787-355-7783"
+            }
+        )
 
         const rr = new RenteeReview(
             {
@@ -37,9 +44,16 @@ describe('The Rentee Review class creates a Rentee Review in the db', () => {
 
 
     it("should give an error when all the required fields are not complete", async () => {
-        const client = new Client()
+          const client = new Client(
+        {
+            name: "Lola Rodz",
+            email:"lola@gmail.com",
+            dateOfBirth: new Date(),
+            cellNumber: "787-355-7783"
+        }
+    )
 
-        const rr = new RenteeReview(
+        const rr = () => new RenteeReview(
             {
                 rating: 5,
                 id: 1,
@@ -47,12 +61,18 @@ describe('The Rentee Review class creates a Rentee Review in the db', () => {
 
             } as Partial<IRenteeReview> )
 
-            expect(rr).toBeUndefined
-    
+            expect(rr).toThrowError    
     });
 
     it("should not give an error when a non required field is not complete", async () => {
-        const client = new Client()
+        const client = new Client(
+            {
+                name: "Lola Rodz",
+                email:"lola@gmail.com",
+                dateOfBirth: new Date(),
+                cellNumber: "787-355-7783"
+            }
+        )
 
         const rr = new RenteeReview(
             {

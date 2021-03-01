@@ -17,7 +17,14 @@ afterAll(async () => await dbHandler.closeDatabase());
 describe('The Transaction class creates a transaction in the db', () => {
 
     it("should be able to create a transaction sucessfully", async () => {
-        const client = new Client()
+        const client = new Client(
+            {
+                name: "Lola Rodz",
+                email:"lola@gmail.com",
+                dateOfBirth: new Date(),
+                cellNumber: "787-355-7783"
+            }
+        )
 
         const trans = new Transaction(
             {
@@ -41,9 +48,16 @@ describe('The Transaction class creates a transaction in the db', () => {
     });
 
     it("should give an error when all the required fields are not complete", async () => {
-        const client = new Client()
+        const client = new Client(
+        {
+            name: "Lola Rodz",
+            email:"lola@gmail.com",
+            dateOfBirth: new Date(),
+            cellNumber: "787-355-7783"
+        }
+    )
 
-        const trans = new Transaction(
+        const trans = ()=> new Transaction(
             {
                 transactionNumber: 1,
                 total: 500,
@@ -51,10 +65,10 @@ describe('The Transaction class creates a transaction in the db', () => {
                 issuer: client,
                 status: "Pending"
 
-            } as Partial<ITransaction> )
-
-            expect(trans).toBeUndefined
-    
+            } as Partial<ITransaction> );
+            
+            expect(trans).toThrowError()
+ 
     });
 
 });
