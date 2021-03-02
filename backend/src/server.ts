@@ -16,8 +16,8 @@ const app:Application = express()
 /**
  * Middleware configuration
  */
-app.use(json())
 app.use(cors())
+app.use(json())
 app.use(cookieParser())
 app.use(passport.initialize())
 
@@ -38,6 +38,6 @@ const httpServer = http.createServer(app);
 dbConfig
 .connect()
 .then(() => {
-    httpServer.listen(config.server.port, () => console.log(`Server up in port ${config.server.port}`));
+    httpServer.listen(config.server.port, "0.0.0.0", () => console.log(`Server up in port ${config.server.port}`));
 })
 
