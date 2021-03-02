@@ -1,9 +1,9 @@
 import express, {Request, Response} from 'express'
-import passport from 'passport'
 import { authController, ILoginRequest } from '../controllers'
+import { googleAuth, fromJwt } from '../auth/passport'
 
 const authRouter = express.Router()
-const googleAuth = passport.authenticate('google', {session:false, scope:["profile"] })
+
 
 authRouter.post('/oauth2/google',
     googleAuth,
@@ -15,6 +15,11 @@ authRouter.post('/logout',
         res.clearCookie('auth'),
         res.status(200)
     }
+)
+
+authRouter.get('/user', 
+    fromJwt,
+    async (req: Request, res: Response) => { res.status(200).json(req.user) }
 )
 
 export default authRouter

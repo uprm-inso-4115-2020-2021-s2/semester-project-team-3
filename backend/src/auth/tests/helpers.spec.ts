@@ -1,4 +1,4 @@
-import {handleLogin} from '../helpers'
+import {handleLogin, fetchUser} from '../helpers'
 
 import { dbConfig, ClientRepository } from '../../persistence'
 import { IClient } from '../../domain';
@@ -58,6 +58,24 @@ calling the appropiate domain application useCase
 
         const fetched = await clientRepo.findByEmail("test@test.com")
         expect(fetched).toBeTruthy()
+    })
+
+})
+
+describe("The fetchUser function queries the target user and returns a dto back", ()=> {
+
+    it("should fetch user", async ()=> {
+        await fetchUser({sub: "test@test.com"}, (err, user: IClient, msg) => {
+            expect(err).toBeFalsy()
+            expect(user).toBeTruthy()
+            expect(user!.email).toEqual("test@test.com")
+        })
+    })
+    it("should give an error if user does not exist", async () => {
+        await fetchUser({sub: "test@te"}, (err, user: IClient, msg) => {
+            expect(err).toBeTruthy()
+            expect(user).toBeFalsy()
+        })
     })
 
 })
