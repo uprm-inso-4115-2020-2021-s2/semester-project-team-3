@@ -26,4 +26,4 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Installing dependencies and Running tests
-      run: cd backend && npm ci && npm run test
+      run: cd backend && npm ci && npm run test && jest-coverage-badges
