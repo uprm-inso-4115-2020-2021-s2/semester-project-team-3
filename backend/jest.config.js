@@ -6,5 +6,4 @@ module.exports = {
     moduleFileExtensions:['ts', "js"],
     testEnvironment: 'node',
     collectCoverage: true,
-    coverageReporters: ['json-summary','text','lcov'],
 }
