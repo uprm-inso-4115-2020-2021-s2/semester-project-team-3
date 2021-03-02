@@ -4,5 +4,6 @@ module.exports = {
         '^.+\\.tsx?$': 'ts-jest'
     },
     moduleFileExtensions:['ts', "js"],
-    testEnvironment: 'node'
+    testEnvironment: 'node',
+    collectCoverage: true,
 }
