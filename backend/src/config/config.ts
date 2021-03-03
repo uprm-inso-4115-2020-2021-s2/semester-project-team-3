@@ -8,7 +8,7 @@ const SECRET_KEY = process.env.SECRET_KEY || 'foo'
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || ''
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || ''
 const TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION || "3h"
-const COOKIE_DURATION = Number(process.env.COOKIE_DURATION) || 36000
+const COOKIE_DURATION = Number(process.env.COOKIE_DURATION) || 8.64e+7
 
 const SERVER = {
     hostname: SERVER_HOSTNAME,
