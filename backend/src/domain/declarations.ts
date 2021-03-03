@@ -6,7 +6,7 @@ export interface IClient {
     image: string | null
     driversLicense: string | null
     cellNumber: string | null
-    // verify: () => void
+    toDto: () => Partial<IClient>
 }
 
 export interface ICarListing {

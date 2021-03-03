@@ -23,4 +23,16 @@ export class Client implements IClient{
         this.driversLicense = data.driversLicense? data.driversLicense:null;
         this.cellNumber = data.cellNumber? data.cellNumber:null;
     }
+
+    toDto(): Partial<IClient> {
+        return {
+            name: this.name,
+            email: this.email,
+            dateOfBirth: this.dateOfBirth,
+            isVerified: this.isVerified,
+            image: this.image,
+            driversLicense: this.driversLicense,
+            cellNumber: this.cellNumber
+        }
+    }
 }

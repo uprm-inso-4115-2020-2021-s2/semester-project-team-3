@@ -17,8 +17,8 @@ const app:Application = express()
  * Middleware configuration
  */
 app.use(cors())
-app.use(json())
 app.use(cookieParser())
+app.use(json())
 app.use(passport.initialize())
 
 /**
