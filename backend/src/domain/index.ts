@@ -1,15 +1,18 @@
-import { IClient, ITransaction, INotification,  IListingReview, IRenteeReview, IAppointment } from './declarations'
+import { IClient, ITransaction, INotification,  IListingReview, IRenteeReview, IAppointment, ICarListing } from './declarations'
 import { makeClient, makeAppointment, makeCarListing, makeTransaction, makeRenteeReview, makeListingReview } from './factories'
-import { IClientRepository } from './repositories'
+import { IClientRepository, ICarListingRepository, CarListingQueryFields } from './repositories'
 
 export type {
     IClient,
+    ICarListing,
     ITransaction, 
     INotification,
     IListingReview,
     IRenteeReview, 
     IAppointment,
-    IClientRepository
+    IClientRepository,
+    ICarListingRepository,
+    CarListingQueryFields
 }
 
 export {
