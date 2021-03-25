@@ -101,6 +101,8 @@ describe(`
 
         expect(refetched).toEqual(newListing)
 
+        expect(refetched!.owner).toEqual(newListing!.owner)
+
         const shouldFail = await carListingRepo.createCarListing({...newVehicle, licensePlate:"CHA123"}, "testingagain@gmail.com")
 
         expect(shouldFail).toBeFalsy()

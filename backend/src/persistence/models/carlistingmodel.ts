@@ -31,7 +31,7 @@ const CarListingSchema = new Schema({
     cancellationFee:{type:String, required: true},
     licensePlate: {type:String, required: true, unique:true},
     priceRate:{type:Number, required:true},
-    owner:{type: String, required:true, ref:ClientCollectionName},
+    owner:{type: Schema.Types.ObjectId, required:true, ref:ClientCollectionName},
     canDeliver:{type: Boolean, default:true},
     carLicenseImage:{type: String},
     carDescription:{type: String, required:true},
