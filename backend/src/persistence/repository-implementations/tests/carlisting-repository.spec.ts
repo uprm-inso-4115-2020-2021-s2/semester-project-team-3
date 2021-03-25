@@ -129,9 +129,15 @@ describe(`
 
     })
 
-
+    
     it(" should be searchable by many fields ", async ()=> {
+        const searchByManyFields = await carListingRepo.findAllByFields({
+            brand:"Honda",
+            model:"Corolla",
+            year:2000
+        })
 
+        expect(searchByManyFields.length).toBeGreaterThan(0)
     })
 
 })

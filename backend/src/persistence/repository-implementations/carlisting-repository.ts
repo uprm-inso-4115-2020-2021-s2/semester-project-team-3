@@ -47,15 +47,14 @@ export default class CarListingRepository implements ICarListingRepository {
     async findAllByFields(fields: CarListingQueryFields, page: number = 1) : Promise<ICarListing[]>{
         
         const fetch = await CarListingModel
-            .find({
-                carLocation: {$in: fields.cities}
-            })
+            .find()
             .or([
                 {brand: fields.brand}, 
                 {carModel: fields.model}, 
                 {canDeliver: fields.canDeliver}, 
                 {year: fields.year}, 
-                {licensePlate: fields.licensePlate}
+                {licensePlate: fields.licensePlate},
+                {carLocation: {$in: fields.cities}}
             ])
             .skip(this.PER_PAGE*(page - 1))
             .limit(this.PER_PAGE)
