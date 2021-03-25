@@ -8,7 +8,9 @@ export default class ClientRepository implements IClientRepository {
     async findByEmail(email: string): Promise<IClient | null> {
         
         const client = await ClientModel
-            .findOne({email:email}).exec()
+            .findOne({email:email})
+            .lean()
+            .exec()
             
         if (!client) {
             return null
@@ -20,15 +22,7 @@ export default class ClientRepository implements IClientRepository {
 
     async createClient(client: IClient): Promise<IClient | null> {
         
-        const newUser = new ClientModel({
-            email: client.email,
-            name: client.name,
-            dateOfBirth: client.dateOfBirth,
-            isVerified: client.isVerified,
-            image: client.image,
-            driversLicense: client.driversLicense,
-            cellNumber: client.cellNumber
-        } as IClientModel)
+        const newUser = new ClientModel(client.toDto())
 
         try {
             await newUser.save()
@@ -80,15 +74,7 @@ export default class ClientRepository implements IClientRepository {
             return null
         }
 
-        return makeClient({
-            email: updated!.email,
-            name: updated!.name,
-            dateOfBirth: updated!.dateOfBirth,
-            cellNumber: updated!.cellNumber,
-            image: updated!.image,
-            driversLicense: updated!.driversLicense,
-            isVerified: updated!.isVerified
-        })
+        return makeClient(updated!.toObject())
 
     }
 }

@@ -1,4 +1,5 @@
 import { ICarListing, ErrorMsg, IClient } from "../declarations";
+import { makeClient  } from '../factories'
 
 export class CarListing implements ICarListing{
     model: string
@@ -27,7 +28,7 @@ export class CarListing implements ICarListing{
         this.cancellationFee = data.cancellationFee as number;
         this.licensePlate = data.licensePlate as string;
         this.priceRate = data.priceRate as number;
-        this.owner = data.owner as IClient;
+        this.owner = makeClient(data.owner);
         this.canDeliver = data.canDeliver? data.canDeliver:true;
         this.carLicenseImage = data.carLicenseImage?data.carLicenseImage: null;
         this.carDescription = data.carDescription as string;
