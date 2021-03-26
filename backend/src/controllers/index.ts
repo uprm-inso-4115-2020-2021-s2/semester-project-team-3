@@ -1,10 +1,12 @@
 import * as authController from './auth/authController'
-import { ILoginRequest } from './auth/declarations'
+import * as carListingController from './carlisting/carListingController'
+import { RequestWithUser } from './declarations'
 
 export {
-    authController
+    authController,
+    carListingController
 }
 
 export type {
-    ILoginRequest
+    RequestWithUser
 }

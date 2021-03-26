@@ -1,5 +1,5 @@
 import express, {Request, Response} from 'express'
-import { authController, ILoginRequest } from '../controllers'
+import { authController, RequestWithUser } from '../controllers'
 import { googleAuth, fromJwt } from '../auth/passport'
 
 const authRouter = express.Router()
@@ -7,7 +7,7 @@ const authRouter = express.Router()
 
 authRouter.post('/oauth2/google',
     googleAuth,
-    async (req: Request, res: Response) => await authController.login(req as ILoginRequest, res)
+    async (req: Request, res: Response) => await authController.login(req as RequestWithUser, res)
 )
 
 authRouter.post('/logout',

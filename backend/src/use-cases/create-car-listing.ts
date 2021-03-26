@@ -16,6 +16,15 @@ export default function makeCreateCarListingUseCase(carListingRepo: ICarListingR
             return {success:false, msg: err.message}
         }
 
+        const fetched = await carListingRepo.findByLicensePlate(builtListing.licensePlate)
+
+        if (fetched) {
+            return {
+                success: false,
+                msg:ErrorMessages.AlreadyExists
+            }
+        }
+
         const result = await carListingRepo.createCarListing(builtListing, builtListing.owner.email)
 
         if (!result) {
