@@ -1,11 +1,11 @@
 import { Response } from "express";
-import { ILoginRequest } from './declarations'
+import { RequestWithUser } from '../declarations'
 import { clientSerialize } from './helpers'
 import config from '../../config/config'
 
 
        
-const login = async function( req:ILoginRequest, res:Response ) {
+const login = async function( req:RequestWithUser, res:Response ) {
 
     res.cookie("auth", clientSerialize(req.user.email), {
         httpOnly: true,

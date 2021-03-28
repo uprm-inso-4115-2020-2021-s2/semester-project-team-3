@@ -7,5 +7,6 @@ export interface UseCaseOutput<E> {
 }
 
 export enum ErrorMessages {
-    CreationError = "Error ocurred while persisting object"
+    CreationError = "Error ocurred while persisting object",
+    AlreadyExists = "Entity already exists"
 }
