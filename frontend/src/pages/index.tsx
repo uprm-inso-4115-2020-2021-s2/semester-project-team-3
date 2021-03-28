@@ -1,3 +1,7 @@
-const Index = () => <h1>Testing</h1> 
+import Landing from './landing'
 
-export default Index
+export default function Index() {
+    return (
+        <Landing />
+    )
+}
