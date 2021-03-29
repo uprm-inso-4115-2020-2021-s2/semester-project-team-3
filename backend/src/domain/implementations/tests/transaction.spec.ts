@@ -16,7 +16,7 @@ describe('The Transaction class models the transaction entity in the domain', ()
 
         const trans = new Transaction(
             {
-                transactionNumber: 1,
+                transactionNumber: "1",
                 total: 500,
                 description: "SecurityDeposit",
                 date: new Date(),
@@ -25,7 +25,7 @@ describe('The Transaction class models the transaction entity in the domain', ()
                 status: "Pending"
             } as Partial<ITransaction> )
 
-            expect(trans.transactionNumber).toBe(1)
+            expect(trans.transactionNumber).toEqual("1")
             expect(trans.total).toBe(500)
             expect(trans.description).toBe("SecurityDeposit")
             expect(trans.date).toBeDefined
@@ -47,7 +47,7 @@ describe('The Transaction class models the transaction entity in the domain', ()
 
         const trans = ()=> new Transaction(
             {
-                transactionNumber: 1,
+                transactionNumber: "1",
                 total: 500,
                 description: "SecurityDeposit",
                 issuer: client,

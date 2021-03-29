@@ -44,29 +44,34 @@ describe("The appointment model represents an appointment in the database", () =
         await carListing.save()
 
         const newAppointment = new AppointmentModel({
-            days: 4,
-            rentee: person,
-            dateAccepted: null,
-            appointmentDate: new Date(),
-            status: "Pending",
-            carListing: carListing,
-            meetupLocation:"test",
-            dropoffLocation:"test"
+            rentee: person!._id,
+            status: "Testing",
+            carListing: carListing!._id,
+            dateInformation: {
+                appointmentDate: new Date(),
+                days: 7
+            },
+            location: {
+                meetupLocation: {
+                    type: 'Point',
+                    coordinates: [0, 0],
+                },
+                dropoffLocation: {
+                    type: 'Point',
+                    coordinates: [0, 0]
+                }
+            }
         } as IAppointmentModel)
 
 
         await newAppointment.save()
         expect(newAppointment.isNew).toBe(false)
 
-        newAppointment.meetupLocation = "dimelo"
-        newAppointment.dropoffLocation = "2"
+        newAppointment.location.dropoffLocation.coordinates = [1, 0]
 
         await newAppointment.save()
-
-        expect(newAppointment.meetupLocation).toBe("dimelo")
-        expect(newAppointment.dropoffLocation).toBe("2")
+        expect([...newAppointment.location.dropoffLocation.coordinates]).toEqual([1,0])
 
     })
-    
 
 })
