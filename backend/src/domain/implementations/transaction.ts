@@ -2,7 +2,7 @@ import { ITransaction, IClient, TransactionDescriptionType, TransactionStatusTyp
 
 export class Transaction implements ITransaction{
 
-    transactionNumber: number
+    transactionNumber: string
     total: number
     description: TransactionDescriptionType | string
     date: Date
@@ -15,7 +15,7 @@ export class Transaction implements ITransaction{
             throw new Error(ErrorMsg.IllegalException)
         }
 
-        this.transactionNumber = data.transactionNumber as number;
+        this.transactionNumber = data.transactionNumber as string;
         this.total = data.total as number;
         this.description = data.description? data.description:"";
         this.date = data.date as Date;

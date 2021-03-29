@@ -1,4 +1,9 @@
 
+export type Location = {
+    lat:number,
+    lon:number
+}
+
 export interface IClient {
     name: string
     email: string
@@ -34,7 +39,7 @@ export interface IBaseReview {
 }
 
 export interface ITransaction {
-    transactionNumber: number
+    transactionNumber?: string
     total: number
     description: TransactionDescriptionType | string
     date: Date
@@ -44,23 +49,22 @@ export interface ITransaction {
 }
 
 export interface IAppointment {
-    appointmentNumber: number|null
-    days: number
+    appointmentNumber: string|null
     rentee: IClient
-    dateAccepted: Date|null
-    appointmentDate: Date
     status: AppointmentStatusType
     carListing: ICarListing
-    meetupLocation: string
-    dropoffLocation: string
-    transactions: ITransaction[]
-    // overlaps: (arg0:IAppointment) => boolean
-    // accept: () => void
-    // deny: () => void
-    // deliver: () => void
-    // isPending: () => boolean
-    // getPrice: () => number
-    // securityDeposit: () => number
+    dateInformation: {
+        appointmentDate: Date
+        days: number
+    }
+    location: {
+        meetupLocation: Location
+        dropoffLocation: Location
+    }
+    postAcceptInformation: {
+        dateAccepted: Date, 
+        transactions: ITransaction[]
+    } | null 
 }
 
 
