@@ -10,7 +10,10 @@ export interface IAppointmentModel extends Document {
     rentee: ObjectId | IClientModel,
     status: string,
     carListing: ObjectId | ICarListingModel,
-    dateInformation: IAppointment["dateInformation"],
+    dateInformation: {
+        appointmentDate: Date,
+        days: number
+    },
     location: {
         meetupLocation: {type:string, coordinates:number[]},
         dropoffLocation: {type:string, coordinates:number[]}
@@ -60,6 +63,7 @@ const AppointmentSchema = new Schema({
 })
 
 AppointmentSchema.index({location: {meetupLocation: '2dsphere', dropoffLocations:'2dsphere'}})
+
 
 export const AppointmentCollectionName = 'Appointment'
 export const AppointmentModel = mongoose.model<IAppointmentModel>(AppointmentCollectionName, AppointmentSchema)

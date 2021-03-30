@@ -1,5 +1,6 @@
-import { IClient } from "../declarations";
+import { IAppointment, ICarListing, IClient, RenteeAppointmentRequest } from "../declarations";
 import {ErrorMsg} from "../declarations";
+import { makeAppointment } from "../factories";
 
 export class Client implements IClient{
     name: string
@@ -22,6 +23,25 @@ export class Client implements IClient{
         this.image =  data.image? data.image: null;
         this.driversLicense = data.driversLicense? data.driversLicense:null;
         this.cellNumber = data.cellNumber? data.cellNumber:null;
+    }
+
+    request(values: RenteeAppointmentRequest): IAppointment {
+        return makeAppointment({
+            carListing: values.listing,
+            rentee: this,
+            location: {
+                meetupLocation: values.meetupLocation,
+                dropoffLocation: values.dropoffLocation
+            },
+            dateInformation: {
+                appointmentDate: values.date,
+                days: values.days
+            }
+        })
+    }
+    
+    owns(listing: ICarListing): boolean {
+        return listing.owner.email === this.email
     }
 
     toDto(): Partial<IClient> {

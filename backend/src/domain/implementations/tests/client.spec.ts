@@ -1,4 +1,5 @@
-import { IClient} from '../../declarations'
+import { ICarListing, IClient} from '../../declarations'
+import { CarListing } from '../carlisting';
 import { Client } from '../client'
 
 describe('The Client class models the client entity in the domain', () => {
@@ -62,5 +63,39 @@ describe('The Client class models the client entity in the domain', () => {
         expect(client.cellNumber).toBe("787-675-5439")
         
     });
+
+    it("should probably reflect if owns a carListing", () => {
+        
+        const client = new Client({
+            name: "Pedro",
+            email: "pedro.pedro@pedro.com",
+            dateOfBirth: new Date(),
+            isVerified: false,
+            cellNumber: '777-777-7777'
+        })
+
+        const car = new CarListing(
+            {
+                model: "corolla",
+                isVerified: false,
+                brand: "toyota",
+                year: 2020,
+                cancellationFee: 50,
+                licensePlate: "LOL990",
+                priceRate: 33,
+                owner: client,
+                canDeliver: false,
+                carLicenseImage: " ",
+                carDescription: "Comfortable & brand new car",
+                carImages: [],
+                carLocation: "San Juan, PR"
+
+            } as Partial<ICarListing> )
+        
+        expect(client.owns(car)).toBeTruthy()
+
+    })
+
+
 
 });
