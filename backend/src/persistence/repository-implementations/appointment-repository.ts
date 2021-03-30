@@ -1,6 +1,6 @@
 
 import { IAppointment, IAppointmentRepository, AppointmentStatusType } from "../../domain";
-import { CarListingModel } from "../models";
+import { CarListingModel, ClientModel } from "../models";
 import { AppointmentModel } from "../models/appointmentmodel";
 
 
@@ -14,7 +14,40 @@ export default class AppointmentRepository implements IAppointmentRepository {
     }
 
     async createAppointment(appointment: IAppointment): Promise<IAppointment | null> {
-        throw new Error("Method not implemented.");
+        let rentee = await ClientModel
+            .findOne({email: appointment.rentee.email}, '_id')
+            .lean()
+            .exec()
+
+        let listing = await CarListingModel
+            .findOne({licensePlate: appointment.carListing.licensePlate}, '_id')
+            .lean()
+            .exec()
+
+        if (!listing || !rentee) return null;
+
+        const appointmentDataModel = new AppointmentModel({
+            rentee: rentee?._id,
+            carListing: listing?._id,
+            status: appointment.status,
+            dateInformation: appointment.dateInformation,
+            location: {
+                meetupLocation:{
+                    type: "Point",
+                    coordinates: [appointment.location.meetupLocation.lat, appointment.location.meetupLocation.lon]
+                },
+                dropoffLocation: {
+                    type: "Point",
+                    coordinates: [appointment.location.dropoffLocation.lat, appointment.location.dropoffLocation.lon]
+                }
+            }
+        })
+
+        await appointmentDataModel.save()
+
+        appointment.appointmentNumber = appointmentDataModel._id
+
+        return appointment
     }
 
     async overlapExists(date: Date, days: number, listingPlate: string): Promise<boolean> {
@@ -39,9 +72,6 @@ export default class AppointmentRepository implements IAppointmentRepository {
                 }
             }
         ]).limit(2).exec()
-
-        console.log(date, myEndDate)
-        console.log(appointments)
 
         return appointments.length > 0;
     }

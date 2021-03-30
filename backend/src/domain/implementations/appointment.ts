@@ -62,6 +62,7 @@ export class Appointment implements IAppointment {
         this.status = data.status ? data.status: AppointmentStatusType.Pending
         this.carListing = data.carListing!
         this.dateInformation = data.dateInformation!
+        this.dateInformation.appointmentDate = new Date(data.dateInformation!.appointmentDate)
         this.location = data.location! 
         this.postAcceptInformation = data.postAcceptInformation? data.postAcceptInformation : null
 

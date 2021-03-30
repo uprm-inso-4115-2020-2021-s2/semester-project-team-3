@@ -37,13 +37,22 @@ export function makeRequestAppointment(appointmentRepo: IAppointmentRepository, 
             }
         }
 
-        const appointment = rentee.request({
-            listing: listing,
-            meetupLocation: requestFields.meetupLocation,
-            dropoffLocation: requestFields.dropoffLocation,
-            date: requestFields.date,
-            days: requestFields.days
-        })
+
+        let appointment
+        try {
+            appointment = rentee.request({
+                listing: listing,
+                meetupLocation: requestFields.meetupLocation,
+                dropoffLocation: requestFields.dropoffLocation,
+                date: requestFields.date,
+                days: requestFields.days
+            })
+        } catch (err) {
+            return {
+                success: false,
+                msg: (err as Error).message
+            }
+        }
 
         const persisted = await appointmentRepo.createAppointment(appointment)
 
