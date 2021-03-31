@@ -15,8 +15,8 @@ export interface IAppointmentModel extends Document {
         days: number
     },
     location: {
-        meetupLocation: {type:string, coordinates:number[]},
-        dropoffLocation: {type:string, coordinates:number[]}
+        meetupLocation: {type:string, coordinates:number[], address?:string},
+        dropoffLocation: {type:string, coordinates:number[], address?:string}
     },
     postAcceptInformation: {
         dateAccepted: Date,
@@ -42,6 +42,7 @@ const AppointmentSchema = new Schema({
             coordinates: {
                 type: [Number]
             },
+            address: String
         },
         dropoffLocation: {
             type: { 
@@ -51,6 +52,7 @@ const AppointmentSchema = new Schema({
             coordinates: {
                 type: [Number]
             },
+            address: String
         }
     },
     postAcceptInformation: {

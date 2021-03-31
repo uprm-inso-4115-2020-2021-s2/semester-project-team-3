@@ -55,6 +55,7 @@ describe("The appointment model represents an appointment in the database", () =
                 meetupLocation: {
                     type: 'Point',
                     coordinates: [0, 0],
+                    address: "San Juan"
                 },
                 dropoffLocation: {
                     type: 'Point',
@@ -63,7 +64,6 @@ describe("The appointment model represents an appointment in the database", () =
             }
         } as IAppointmentModel)
 
-        console.log(newAppointment.toJSON())
         await newAppointment.save()
         expect(newAppointment.isNew).toBe(false)
 

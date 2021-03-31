@@ -31,7 +31,7 @@ export class Client implements IClient{
             rentee: this,
             location: {
                 meetupLocation: values.meetupLocation,
-                dropoffLocation: values.dropoffLocation
+                dropoffLocation: values.dropoffLocation,
             },
             dateInformation: {
                 appointmentDate: values.date,

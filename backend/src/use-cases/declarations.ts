@@ -1,3 +1,4 @@
+import { Location } from "../domain";
 
 
 export interface UseCaseOutput<E> {
@@ -15,10 +16,10 @@ export enum ErrorMessages {
     RenteeOwnsListing = "Rentee owns listing"
 }
 
-export type AppointmentRequest = {
+export type     AppointmentRequest = {
 
-    meetupLocation: { lat: number, lon: number }
-    dropoffLocation: { lat:number, lon:number },
+    meetupLocation: Location
+    dropoffLocation: Location,
     date: Date,
     days: number,
     listingLicensePlate: string

@@ -64,7 +64,6 @@ describe(`
         })
         
         await newAppointment.save()
-        console.log(newAppointment.toJSON())
         let fetched = await appointmentRepo.overlapExists(new Date("2020-09-26"), 20, carListing.licensePlate)
         expect(fetched).toBeTruthy()
         fetched = await appointmentRepo.overlapExists(new Date("2020-08-03"), 7, carListing.licensePlate)

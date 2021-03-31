@@ -34,11 +34,13 @@ export default class AppointmentRepository implements IAppointmentRepository {
             location: {
                 meetupLocation:{
                     type: "Point",
-                    coordinates: [appointment.location.meetupLocation.lat, appointment.location.meetupLocation.lon]
+                    coordinates: [appointment.location.meetupLocation.lat, appointment.location.meetupLocation.lon],
+                    address: appointment.location.meetupLocation.address                
                 },
                 dropoffLocation: {
                     type: "Point",
-                    coordinates: [appointment.location.dropoffLocation.lat, appointment.location.dropoffLocation.lon]
+                    coordinates: [appointment.location.dropoffLocation.lat, appointment.location.dropoffLocation.lon],
+                    address: appointment.location.dropoffLocation.address  
                 }
             }
         })
@@ -64,7 +66,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
                 endDate: { $add:["$dateInformation.appointmentDate", {$multiply:[`$dateInformation.days`, 24*60*60000]}] }
             }}, 
             {
-                $match: {
+                $match:  {
                     startDate: {$lt: myEndDate},
                     endDate: {$gt: date},
                     status: AppointmentStatusType.Accepted,

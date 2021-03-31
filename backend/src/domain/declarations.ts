@@ -1,7 +1,8 @@
 
 export type Location = {
     lat:number,
-    lon:number
+    lon:number,
+    address?:string
 }
 
 export type RenteeAppointmentRequest = {

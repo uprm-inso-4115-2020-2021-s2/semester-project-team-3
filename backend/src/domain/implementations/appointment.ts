@@ -7,7 +7,7 @@ export class Appointment implements IAppointment {
     status: AppointmentStatusType;
     carListing: ICarListing;
     dateInformation: { appointmentDate: Date; days: number; };
-    location: { meetupLocation: Location; dropoffLocation: Location; };
+    location: { meetupLocation: Location; dropoffLocation: Location;};
     postAcceptInformation: { dateAccepted: Date; transactions: ITransaction[]; } | null;
 
     constructor(data: Partial<IAppointment>){
