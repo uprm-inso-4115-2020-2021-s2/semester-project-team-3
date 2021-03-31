@@ -84,7 +84,7 @@ describe(`
             priceRate: 35,
             carDescription: " Testing ",
             carImages: [],
-            carLocation: "San Juan, P.R."
+            carLocation: {lat:0, lon:0, address:"San Juan"}
         }
 
         const newListing = await carListingRepo.createCarListing(newVehicle, person.email)

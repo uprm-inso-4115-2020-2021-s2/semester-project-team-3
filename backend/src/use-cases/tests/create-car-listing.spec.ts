@@ -34,7 +34,7 @@ describe("A client should be able to create a new car listing for others to see"
         "priceRate": 35,
         "carDescription": " Testing creating a vehicle ",
         "carImages": [""] ,
-        "carLocation": " Location of car in coordinates that can be parsed by gmaps "
+        "carLocation": {lat:0, lon:0, address:""}
     })
 
     it("Should be able to create new carListing given a sample carListing", async () => {

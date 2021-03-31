@@ -38,7 +38,7 @@ export interface ICarListing {
     carLicenseImage: string | null
     carDescription: string
     carImages: string[] | null
-    carLocation: string
+    carLocation: Location
     // estimate: (arg0:number) => number
 }
 

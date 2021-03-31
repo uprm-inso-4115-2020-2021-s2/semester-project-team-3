@@ -9,7 +9,13 @@ export default class CarListingRepository implements ICarListingRepository {
     private readonly PER_PAGE = 10;
 
     private buildListing(listing: LeanDocument<ICarListingModel>, owner: LeanDocument<IClientModel>): ICarListing {
-        return makeCarListing({...listing, owner:owner as IClient, model:listing.carModel, brand: listing.brand })
+        return makeCarListing({
+            ...listing, 
+            owner:owner as IClient, 
+            model:listing.carModel, 
+            brand: listing.brand,
+            carLocation: {lat: listing.carLocation.coordinates[0], lon: listing.carLocation.coordinates[1], address: listing.carLocation.address}
+        })
     }
 
     async findByLicensePlate(licensePlate: string): Promise<ICarListing | null> {
@@ -54,7 +60,7 @@ export default class CarListingRepository implements ICarListingRepository {
                 {canDeliver: fields.canDeliver}, 
                 {year: fields.year}, 
                 {licensePlate: fields.licensePlate},
-                {carLocation: {$in: fields.cities}}
+                
             ])
             .skip(this.PER_PAGE*(page - 1))
             .limit(this.PER_PAGE)
@@ -85,8 +91,13 @@ export default class CarListingRepository implements ICarListingRepository {
         if (listing.priceRate)
             vehicle!.priceRate = listing.priceRate
 
-        if (listing.carLocation)
-            vehicle!.carLocation = listing.carLocation        
+        if (listing.carLocation) {
+            vehicle!.carLocation = {
+                type: 'Point',
+                coordinates: [listing.carLocation.lat, listing.carLocation.lon],
+                address: listing.carLocation.address       
+            }       
+        }
 
         if (listing.canDeliver)
             vehicle!.canDeliver = listing.canDeliver
@@ -130,7 +141,11 @@ export default class CarListingRepository implements ICarListingRepository {
         const newListing = new CarListingModel({
             ...listing,
             carModel: listing.model,
-            owner: fetchedOwner._id
+            owner: fetchedOwner._id,
+            carLocation: {
+                type: 'Point',
+                coordinates: [listing.carLocation?.lat, listing.carLocation?.lon]
+            }
         })
 
         try {

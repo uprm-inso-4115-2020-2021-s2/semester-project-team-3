@@ -28,7 +28,7 @@ describe('The Appointment class models the appointment entity in the domain', ()
                 carLicenseImage: " ",
                 carDescription: "Comfortable & brand new car",
                 carImages: [],
-                carLocation: "San Juan, PR"
+                carLocation: {lat: 0, lon: 0, address:""}
             } 
         )
 
@@ -110,7 +110,7 @@ describe('The Appointment class models the appointment entity in the domain', ()
                 carLicenseImage: " ",
                 carDescription: "Comfortable & brand new car",
                 carImages: [],
-                carLocation: "San Juan, PR"
+                carLocation: {lat: 0, lon: 0, address:""}
             } 
         )
         
@@ -162,7 +162,7 @@ describe('The Appointment class models the appointment entity in the domain', ()
                 carLicenseImage: " ",
                 carDescription: "Comfortable & brand new car",
                 carImages: [],
-                carLocation: "San Juan, PR"
+                carLocation: {lat: 0, lon: 0, address:""}
             } 
         )
         

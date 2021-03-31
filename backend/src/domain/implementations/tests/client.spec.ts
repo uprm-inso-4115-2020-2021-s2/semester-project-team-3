@@ -88,7 +88,7 @@ describe('The Client class models the client entity in the domain', () => {
                 carLicenseImage: " ",
                 carDescription: "Comfortable & brand new car",
                 carImages: [],
-                carLocation: "San Juan, PR"
+                carLocation: {lat: 0, lon: 0, address:""}
 
             } as Partial<ICarListing> )
         

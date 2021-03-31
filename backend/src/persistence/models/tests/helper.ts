@@ -12,6 +12,9 @@ export function makeValidCarListingModelSample(ownerId:ObjectId) {
         owner: ownerId,
         carDescription: " Testing creating a vehicle ",
         carImages: [""] ,
-        carLocation: " Location of car in coordinates that can be parsed by gmaps "
+        carLocation: {
+            type:'Point',
+            coordinates: [30, 30]
+        }
     } as Partial<ICarListingModel>)
 }

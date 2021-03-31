@@ -1,4 +1,4 @@
-import { ICarListing, ErrorMsg, IClient } from "../declarations";
+import { ICarListing, ErrorMsg, IClient, Location } from "../declarations";
 import { makeClient  } from '../factories'
 
 export class CarListing implements ICarListing{
@@ -14,11 +14,11 @@ export class CarListing implements ICarListing{
     carLicenseImage: string | null
     carDescription: string 
     carImages: string[] | null 
-    carLocation: string 
+    carLocation: Location 
 
     constructor(data: Partial<ICarListing> = {}){
         if(!data.model || !data.brand || !data.year || !data.cancellationFee || !data.licensePlate
-            || !data.priceRate || !data.owner || !data.carDescription || !data.carLocation){
+            || !data.priceRate || !data.owner || !data.carDescription || !data.carLocation || data.carLocation.lat === undefined || data.carLocation.lon === undefined){
             throw new Error(ErrorMsg.IllegalException)
         }
         this.model = data.model as string;
@@ -33,7 +33,7 @@ export class CarListing implements ICarListing{
         this.carLicenseImage = data.carLicenseImage?data.carLicenseImage: null;
         this.carDescription = data.carDescription as string;
         this.carImages = data.carImages?data.carImages: null;
-        this.carLocation = data.carLocation as string;
+        this.carLocation = data.carLocation;
 
     }
 }
