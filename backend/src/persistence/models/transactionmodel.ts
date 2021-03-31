@@ -14,18 +14,16 @@ export interface ITransactionModel extends Document {
 
 const TransactionSchema = new Schema({
     transactionNumber:{
-        type: Number,
-        required:true
+        type: Number, 
     },
     total: {
         type: Number,
-        required: true
     },
-    date: { type: Date , required:true },
-    issuer: { type:Schema.Types.ObjectId, required:true, ref:ClientCollectionName },
-    receiver: { type:Schema.Types.ObjectId, required: true, ref:ClientCollectionName },
-    status: { type:String, required:true } 
+    date: { type: Date },
+    issuer: { type:Schema.Types.ObjectId, ref:ClientCollectionName },
+    receiver: { type:Schema.Types.ObjectId,  ref:ClientCollectionName },
+    status: { type:String} 
 })
 
 export const TransactionCollectionName = "TransactionCollectionName"
-export const AppointmentModel = mongoose.model<ITransactionModel>(TransactionCollectionName, TransactionSchema)
+export const TransactionModel = mongoose.model<ITransactionModel>(TransactionCollectionName, TransactionSchema)

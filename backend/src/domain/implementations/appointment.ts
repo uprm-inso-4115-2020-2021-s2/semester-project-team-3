@@ -7,7 +7,7 @@ export class Appointment implements IAppointment {
     status: AppointmentStatusType;
     carListing: ICarListing;
     dateInformation: { appointmentDate: Date; days: number; };
-    location: { meetupLocation: Location; dropoffLocation: Location; };
+    location: { meetupLocation: Location; dropoffLocation: Location;};
     postAcceptInformation: { dateAccepted: Date; transactions: ITransaction[]; } | null;
 
     constructor(data: Partial<IAppointment>){
@@ -62,6 +62,7 @@ export class Appointment implements IAppointment {
         this.status = data.status ? data.status: AppointmentStatusType.Pending
         this.carListing = data.carListing!
         this.dateInformation = data.dateInformation!
+        this.dateInformation.appointmentDate = new Date(data.dateInformation!.appointmentDate)
         this.location = data.location! 
         this.postAcceptInformation = data.postAcceptInformation? data.postAcceptInformation : null
 

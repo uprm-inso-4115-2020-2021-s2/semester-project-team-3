@@ -1,5 +1,5 @@
 
-import { IClient, ICarListing } from "./declarations";
+import { IClient, ICarListing, IAppointment } from "./declarations";
 
 
 export interface IClientRepository {
@@ -26,5 +26,12 @@ export interface ICarListingRepository {
     findByOwner(owner: string, page?: number) : Promise<ICarListing[]>
     updateCarListing(licensePlate: ICarListing["licensePlate"], listing: Partial<ICarListing>) : Promise<ICarListing | null>
     createCarListing(listing: Partial<ICarListing>, owner:string): Promise<ICarListing | null>
+
+}
+
+export interface IAppointmentRepository {
+
+    createAppointment(appointment: IAppointment) : Promise<IAppointment | null>
+    overlapExists(date: Date, days: number, listingPlate: string): Promise<boolean>
 
 }

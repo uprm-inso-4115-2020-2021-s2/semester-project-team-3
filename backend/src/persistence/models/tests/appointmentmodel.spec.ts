@@ -1,6 +1,6 @@
 import * as dbHandler from '../../inmemory-dbconfig'
 import { ClientModel, IClientModel } from '../clientmodel';
-import { AppointmentModel, IAppointmentModel } from '../appointmentmodel'
+import { AppointmentCollectionName, AppointmentModel, IAppointmentModel } from '../appointmentmodel'
 import { makeValidCarListingModelSample } from './helper';
 
 
@@ -55,6 +55,7 @@ describe("The appointment model represents an appointment in the database", () =
                 meetupLocation: {
                     type: 'Point',
                     coordinates: [0, 0],
+                    address: "San Juan"
                 },
                 dropoffLocation: {
                     type: 'Point',
@@ -63,7 +64,6 @@ describe("The appointment model represents an appointment in the database", () =
             }
         } as IAppointmentModel)
 
-
         await newAppointment.save()
         expect(newAppointment.isNew).toBe(false)
 
@@ -71,7 +71,10 @@ describe("The appointment model represents an appointment in the database", () =
 
         await newAppointment.save()
         expect([...newAppointment.location.dropoffLocation.coordinates]).toEqual([1,0])
-
+    
     })
+
+
+
 
 })

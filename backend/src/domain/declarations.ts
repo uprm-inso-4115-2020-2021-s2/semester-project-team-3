@@ -1,9 +1,17 @@
 
 export type Location = {
     lat:number,
-    lon:number
+    lon:number,
+    address?:string
 }
 
+export type RenteeAppointmentRequest = {
+    listing: ICarListing,
+    meetupLocation: Location,
+    dropoffLocation: Location,
+    date: Date,
+    days: number
+}
 export interface IClient {
     name: string
     email: string
@@ -13,6 +21,8 @@ export interface IClient {
     driversLicense: string | null
     cellNumber: string | null
     toDto: () => Partial<IClient>
+    request(values:RenteeAppointmentRequest): IAppointment
+    owns(listing: ICarListing): boolean
 }
 
 export interface ICarListing {
