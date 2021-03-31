@@ -222,7 +222,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         dialogButtons: {
             width: '100%',
-            paddingLeft: 32
+            paddingLeft: 32,
 
         },
         columnItem: {
