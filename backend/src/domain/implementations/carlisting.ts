@@ -13,7 +13,7 @@ export class CarListing implements ICarListing{
     canDeliver: boolean 
     carLicenseImage: string | null
     carDescription: string 
-    carImages: string[] | null 
+    carImages: string[]
     carLocation: Location 
 
     constructor(data: Partial<ICarListing> = {}){
@@ -32,8 +32,11 @@ export class CarListing implements ICarListing{
         this.canDeliver = data.canDeliver? data.canDeliver:true;
         this.carLicenseImage = data.carLicenseImage?data.carLicenseImage: null;
         this.carDescription = data.carDescription as string;
-        this.carImages = data.carImages?data.carImages: null;
+        this.carImages = data.carImages?data.carImages: [];
         this.carLocation = data.carLocation;
 
+    }
+    hasReachedImageCapacity(): boolean {
+        return this.carImages.length === 5
     }
 }

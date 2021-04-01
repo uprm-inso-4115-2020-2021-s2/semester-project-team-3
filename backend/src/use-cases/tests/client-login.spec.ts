@@ -1,5 +1,5 @@
 import { ClientRepository } from '../../persistence'
-import makeClientLoginUseCase from '../client-login'
+import makeClientLoginUseCase from '../client/client-login'
 import { dbConfig } from '../../persistence'
 
 /**

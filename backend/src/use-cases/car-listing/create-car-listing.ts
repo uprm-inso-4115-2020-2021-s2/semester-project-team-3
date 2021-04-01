@@ -1,5 +1,5 @@
-import { ICarListing, ICarListingRepository, IClient, makeCarListing } from "../domain";
-import { UseCaseOutput, ErrorMessages} from "./declarations";
+import { ICarListing, ICarListingRepository, IClient, makeCarListing } from "../../domain";
+import { UseCaseOutput, ErrorMessages} from "../declarations";
 
 
 export default function makeCreateCarListingUseCase(carListingRepo: ICarListingRepository) {

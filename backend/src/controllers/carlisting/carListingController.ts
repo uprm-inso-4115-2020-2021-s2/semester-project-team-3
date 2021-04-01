@@ -1,7 +1,9 @@
-import { GetMyListingsRequest, RequestWithUser } from "../declarations";
-import { createCarListingUseCase, getMyListingUseCase, searchListingUseCase } from '../../use-cases'
+import { GetMyListingsRequest, RequestWithUser, UploadCarImageRequest } from "../declarations";
+import { createCarListingUseCase, getMyListingUseCase, searchListingUseCase, uploadCarImageUseCase } from '../../use-cases'
 import { ICarListing } from "../../domain";
-import { Response } from 'express'
+import { Request, Response } from 'express'
+import multer from "multer";
+import { storage, imageFilter } from "../../config/multer-config";
 
 
 export const createCarListing = async (req:RequestWithUser, res:Response) => {
@@ -39,4 +41,28 @@ export const searchListing = async (req:GetMyListingsRequest, res:Response) => {
 
     res.status(400).json(result)
 
+}
+
+export const uploadCarImage = async (req:UploadCarImageRequest, res:Response) => {
+    const upload = multer({storage: storage, fileFilter: imageFilter}).single('carImageUpload')
+
+    upload(req, res, async function(err:any) {
+
+        if (err) {
+            res.status(400).json({
+                success: false,
+                msg: err.message
+            })
+            return
+        }
+        const result = await uploadCarImageUseCase(req.body.licensePlate, req.user.email, req.file)
+
+        if (result.success) {
+            res.status(200).json(result)
+            return
+        }
+
+        res.status(400).json(result)
+
+    })
 }

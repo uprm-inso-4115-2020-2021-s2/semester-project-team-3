@@ -29,7 +29,8 @@ export type CarListingUpdateFields = {
     year?: ICarListing['year'],
     priceRate?: ICarListing['priceRate']
     cancellationFee?: ICarListing['cancellationFee']
-    carLocation?: ICarListing['carLocation'] 
+    carLocation?: ICarListing['carLocation'],
+    carImages?: ICarListing['carImages'] 
 }
 
 export interface ICarListingRepository {

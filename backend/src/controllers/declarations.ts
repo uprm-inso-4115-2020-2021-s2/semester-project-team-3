@@ -1,6 +1,7 @@
 import {CarListingQueryFields, IClient} from '../domain'
-import {Request} from 'express'
+import {Request, Express} from 'express'
 import { AppointmentRequest } from '../use-cases'
+
 
 interface RequestWithUser extends Request {
     user: IClient
@@ -15,8 +16,16 @@ interface GetMyListingsRequest extends RequestWithUser {
     body: CarListingQueryFields
 }
 
+interface UploadCarImageRequest extends RequestWithUser {
+    body: {
+        licensePlate: string
+    },
+    file: Express.Multer.File
+}
+
 export type {
     RequestWithUser,
     RequestAppointmentRequest,
-    GetMyListingsRequest
+    GetMyListingsRequest,
+    UploadCarImageRequest
 }

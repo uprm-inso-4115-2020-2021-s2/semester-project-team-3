@@ -1,4 +1,4 @@
-import {makeRequestAppointment} from '../request-appointment'
+import {makeRequestAppointment} from '../appointment/request-appointment'
 import {makeClient, makeAppointment, makeCarListing, IClient, ICarListing, IAppointment, AppointmentStatusType} from '../../domain'
 import {clientRepo, appointmentRepo, carListingRepo} from '../../persistence'
 import { dbConfig } from '../../persistence'

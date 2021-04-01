@@ -3,3 +3,6 @@
 /.env
 /.vscode
 /coverage
+*.png
+*.jpg
+*.jpeg
