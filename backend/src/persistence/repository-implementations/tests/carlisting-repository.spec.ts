@@ -84,7 +84,7 @@ describe(`
             priceRate: 35,
             carDescription: " Testing ",
             carImages: [],
-            carLocation: {lat:0, lon:0, address:"San Juan"}
+            carLocation: {lat:0, lon:0}
         }
 
         const newListing = await carListingRepo.createCarListing(newVehicle, person.email)
@@ -111,7 +111,7 @@ describe(`
 
     it(" should be able to update an existing carListing ", async ()=> {
         
-        const updated = await carListingRepo.updateCarListing(sampleCarListing.licensePlate, { brand: "Honda", model: "Civic", year: 2000 })
+        const updated = await carListingRepo.updateCarListing(sampleCarListing.licensePlate, { brand: "Honda", model: "Civic", year: 2000, carLocation:{lat:10, lon:10, address:"San Juan"}})
 
         expect(updated).toBeTruthy()
 
@@ -125,6 +125,8 @@ describe(`
 
         expect(secureUpdated.brand).toEqual("Honda")
 
+        expect(secureUpdated.licensePlate).toEqual(sampleCarListing.licensePlate)
+
         const shouldFail = await carListingRepo.updateCarListing("123456", {})
 
         expect(shouldFail).toBeNull()
@@ -132,14 +134,49 @@ describe(`
     })
 
     
-    it(" should be searchable by many fields ", async ()=> {
-        const searchByManyFields = await carListingRepo.findAllByFields({
-            brand:"Honda",
-            model:"Corolla",
-            year:2000
+    it(" should be searchable by license plate", async ()=> {
+        const searchByFields = await carListingRepo.findAllByFields({
+            licensePlate: sampleCarListing.licensePlate
+        })
+        expect(searchByFields.length).toBeGreaterThan(0)
+    })
+
+    it (" should be searchable by owner ", async () => {
+        const searchByFields = await carListingRepo.findAllByFields({
+            owner: person.email
+        })
+        expect(searchByFields.length).toBeGreaterThan(0)
+    })
+
+    it(" should be searchable by other misc fields ", async ()=> {
+        const searchByFields = await carListingRepo.findAllByFields({
+ 
+            carModel: 'Civic',
+            brand: 'Honda',
+            canDeliver: false
+
+        })
+        expect(searchByFields.length).toBeGreaterThan(0)
+    })
+
+    it( "should be searchable by distance ", async () => {
+
+        
+        const searchByFields = await carListingRepo.findAllByFields({
+            
+            brand: "Honda",
+
+            nearLocation: {
+                location: {
+                    lat:0, lon:0
+                }
+            }
+
         })
 
-        expect(searchByManyFields.length).toBeGreaterThan(0)
-    })
+        console.log(JSON.stringify(searchByFields))
+        expect(searchByFields.length).toBeGreaterThan(0)
+
+    })    
 
 })

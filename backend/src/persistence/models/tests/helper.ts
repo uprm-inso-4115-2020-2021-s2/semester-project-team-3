@@ -8,13 +8,15 @@ export function makeValidCarListingModelSample(ownerId:ObjectId) {
         year: 2020,
         cancellationFee:25.56,
         licensePlate: "TES321",
+        canDeliver: false,
         priceRate: 35,
         owner: ownerId,
         carDescription: " Testing creating a vehicle ",
         carImages: [""] ,
         carLocation: {
             type:'Point',
-            coordinates: [30, 30]
+            coordinates: [30, 30],
+            address: "San Juan"
         }
     } as Partial<ICarListingModel>)
 }

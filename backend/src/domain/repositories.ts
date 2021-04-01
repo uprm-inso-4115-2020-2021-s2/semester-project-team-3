@@ -12,14 +12,24 @@ export interface IClientRepository {
 
 export type CarListingQueryFields = {
     nearLocation?: {
-        location: Location,
-        distance: number
+        location: Location
     }
+    brand?: ICarListing['brand'],
+    carModel?: ICarListing['model'],
+    canDeliver?: ICarListing['canDeliver'],
+    year?: ICarListing['year'],
+    licensePlate?: ICarListing['licensePlate'] 
+    owner?: IClient['email']
+}
+
+export type CarListingUpdateFields = {
     brand?: ICarListing['brand'],
     model?: ICarListing['model'],
     canDeliver?: ICarListing['canDeliver'],
     year?: ICarListing['year'],
-    licensePlate?: ICarListing['licensePlate'] 
+    priceRate?: ICarListing['priceRate']
+    cancellationFee?: ICarListing['cancellationFee']
+    carLocation?: ICarListing['carLocation'] 
 }
 
 export interface ICarListingRepository {
@@ -27,7 +37,7 @@ export interface ICarListingRepository {
     findAllByFields(fields: CarListingQueryFields, page?: number) : Promise<ICarListing[]>
     findByLicensePlate(licensePlate: string) : Promise<ICarListing | null >
     findByOwner(owner: string, page?: number) : Promise<ICarListing[]>
-    updateCarListing(licensePlate: ICarListing["licensePlate"], listing: Partial<ICarListing>) : Promise<ICarListing | null>
+    updateCarListing(licensePlate: ICarListing["licensePlate"], listing: CarListingUpdateFields) : Promise<ICarListing | null>
     createCarListing(listing: Partial<ICarListing>, owner:string): Promise<ICarListing | null>
 
 }

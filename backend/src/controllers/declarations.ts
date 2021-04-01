@@ -1,4 +1,4 @@
-import {IClient} from '../domain'
+import {CarListingQueryFields, IClient} from '../domain'
 import {Request} from 'express'
 import { AppointmentRequest } from '../use-cases'
 
@@ -11,7 +11,12 @@ interface RequestAppointmentRequest extends RequestWithUser {
 
 }
 
+interface GetMyListingsRequest extends RequestWithUser {
+    body: CarListingQueryFields
+}
+
 export type {
     RequestWithUser,
-    RequestAppointmentRequest
+    RequestAppointmentRequest,
+    GetMyListingsRequest
 }
