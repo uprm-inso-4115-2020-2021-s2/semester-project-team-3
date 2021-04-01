@@ -28,7 +28,7 @@ describe('The Car Listing class models the car listing entity in the domain', ()
                 carLicenseImage: " ",
                 carDescription: "Comfortable & brand new car",
                 carImages: [],
-                carLocation: "San Juan, PR"
+                carLocation: {lat: 0, lon: 0, address:""}
 
             } as Partial<ICarListing> )
             
@@ -44,7 +44,7 @@ describe('The Car Listing class models the car listing entity in the domain', ()
             expect(car.carLicenseImage).toBe(" ")
             expect(car.carDescription).toBe("Comfortable & brand new car")
             expect(car.carImages).toBeDefined
-            expect(car.carLocation).toBe("San Juan, PR")
+            expect(car.carLocation).toEqual({lat:0, lon:0, address:""})
         });
 
 
@@ -69,7 +69,7 @@ describe('The Car Listing class models the car listing entity in the domain', ()
                 carLicenseImage: " ",
                 carDescription: "Comfortable & brand new car",
                 carImages: [],
-                carLocation: "San Juan, PR"
+                carLocation: {lat:0, lon:0, address:""}
 
             } as Partial<ICarListing> )
 
@@ -98,9 +98,10 @@ describe('The Car Listing class models the car listing entity in the domain', ()
             priceRate: 33,
             owner: client,
             canDeliver: false,
+            carLicenseImage: " ",
             carDescription: "Comfortable & brand new car",
-            carLocation: "San Juan, PR"
-
+            carImages: [],
+            carLocation: {lat: 0, lon: 0, address:""}
         } as Partial<ICarListing> )
 
         expect(car.model).toBe("corolla")
@@ -113,7 +114,7 @@ describe('The Car Listing class models the car listing entity in the domain', ()
         expect(car.owner).toBeDefined
         expect(car.canDeliver).toBeFalsy
         expect(car.carDescription).toBe("Comfortable & brand new car")
-        expect(car.carLocation).toBe("San Juan, PR")
+        expect(car.carLocation).toEqual({lat:0, lon:0, address:""})
         
     });
 

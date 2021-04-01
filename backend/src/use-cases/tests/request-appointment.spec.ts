@@ -45,7 +45,7 @@ beforeAll(async () => {
         licensePlate: "TEST11",
         priceRate: 33.00,
         carDescription: "Testing1",
-        carLocation: "location"
+        carLocation: {lat:0, lon:0, address:""}
     })
 
     carListing2 = makeCarListing({
@@ -57,7 +57,7 @@ beforeAll(async () => {
         licensePlate: "TEST22",
         priceRate: 345.67,
         carDescription: "Testing2",
-        carLocation: "location2"
+        carLocation: {lat:0, lon:0, address:""}
     })
 
     carListing3 = makeCarListing({
@@ -69,7 +69,7 @@ beforeAll(async () => {
         licensePlate: "TEST33",
         priceRate: 55.00,
         carDescription: "Testing3",
-        carLocation: "location3"
+        carLocation: {lat:0, lon:0, address:""}
     })
 
     appointment1 = makeAppointment({

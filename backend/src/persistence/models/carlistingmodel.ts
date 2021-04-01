@@ -17,7 +17,7 @@ export interface ICarListingModel extends Document {
     carLicenseImage: ICarListing['carLicenseImage']
     carDescription: ICarListing['carDescription']
     carImages: ICarListing['carImages'] 
-    carLocation: ICarListing['carLocation'] 
+    carLocation: { type: "Point", coordinates: number[], address?:string } 
 
 }
 
@@ -36,9 +36,17 @@ const CarListingSchema = new Schema({
     carLicenseImage:{type: String},
     carDescription:{type: String, required:true},
     carImages:{type:[String] , default:[] },
-    carLocation:{type:String, required:true}
+    carLocation:{
+        type: {
+            type: String,
+            enum: ['Point']
+        },
+        coordinates: [Number],
+        address: String
+    }
 
 })
 
+CarListingSchema.index({carLocation:'2dsphere'})
 export const CarListingCollectionName = 'CarListing'
 export const CarListingModel = mongoose.model<ICarListingModel>(CarListingCollectionName, CarListingSchema)

@@ -1,5 +1,5 @@
 
-import { IClient, ICarListing, IAppointment } from "./declarations";
+import { IClient, ICarListing, IAppointment, Location } from "./declarations";
 
 
 export interface IClientRepository {
@@ -11,7 +11,10 @@ export interface IClientRepository {
 }
 
 export type CarListingQueryFields = {
-    cities?: string[]
+    nearLocation?: {
+        location: Location,
+        distance: number
+    }
     brand?: ICarListing['brand'],
     model?: ICarListing['model'],
     canDeliver?: ICarListing['canDeliver'],
