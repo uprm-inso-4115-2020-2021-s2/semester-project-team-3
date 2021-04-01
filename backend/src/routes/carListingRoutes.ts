@@ -15,4 +15,8 @@ carListingRouter.get("/",
     async (req:Request, res:Response) => await carListingController.getMyListings(req as GetMyListingsRequest, res)
 )
 
+carListingRouter.get('/search',
+    async (req:Request, res:Response) => carListingController.searchListing(req as GetMyListingsRequest, res)
+)
+
 export default carListingRouter
