@@ -1,5 +1,5 @@
 import { LeanDocument } from "mongoose";
-import { ICarListingRepository, ICarListing, makeCarListing, makeClient, CarListingQueryFields, IClient } from "../../domain";
+import { ICarListingRepository, ICarListing, makeCarListing, makeClient, CarListingQueryFields, IClient, CarListingUpdateFields } from "../../domain";
 import { ICarListingModel, CarListingModel, IClientModel, ClientModel } from '../models'
 
 
@@ -14,7 +14,7 @@ export default class CarListingRepository implements ICarListingRepository {
             owner:owner as IClient, 
             model:listing.carModel, 
             brand: listing.brand,
-            carLocation: {lat: listing.carLocation.coordinates[0], lon: listing.carLocation.coordinates[1], address: listing.carLocation.address}
+            carLocation: {lat: listing.carLocation.coordinates[1], lon: listing.carLocation.coordinates[0], address: listing.carLocation.address}
         })
     }
 
@@ -52,72 +52,61 @@ export default class CarListingRepository implements ICarListingRepository {
 
     async findAllByFields(fields: CarListingQueryFields, page: number = 1) : Promise<ICarListing[]>{
         
+        let {owner, nearLocation, ...query} = fields; 
+        const ownerModel = await ClientModel.findOne({email:fields.owner}).exec()
+        let location = nearLocation? {
+            carLocation: {
+                $near: {
+                $geometry: {
+                    type:'Point',
+                    coordinates: [nearLocation?.location.lon, nearLocation?.location.lat]
+                }
+        }}} : {}
+        let ownerSection = ownerModel? {owner: ownerModel?._id} : {}
+
+        let finalQuery = {
+            ...location,
+            ...query,
+            ...ownerSection
+        }
+
+      
+
         const fetch = await CarListingModel
-            .find()
-            .or([
-                {brand: fields.brand}, 
-                {carModel: fields.model}, 
-                {canDeliver: fields.canDeliver}, 
-                {year: fields.year}, 
-                {licensePlate: fields.licensePlate},
-                
-            ])
+            .find(finalQuery)
             .skip(this.PER_PAGE*(page - 1))
             .limit(this.PER_PAGE)
             .populate('owner')
             .lean()
             .exec()
-        
+
         return fetch.map((val) => this.buildListing(val, val.owner as LeanDocument<IClientModel>))
     }
     
-    async updateCarListing(licensePlate: string, listing: Partial<ICarListing>): Promise<ICarListing | null> {
+    async updateCarListing(licensePlate: string, listing: CarListingUpdateFields): Promise<ICarListing | null> {
         const fetched = await CarListingModel.findOne({licensePlate:licensePlate}).lean().exec()
 
         if (!fetched) 
             return null
+        
+        let {carLocation, model, ...vehicle} = listing
+        let vehicleCasted = {...vehicle} as Partial<ICarListingModel>
 
-        let vehicle = {} as Partial<ICarListingModel>
+        if (model)
+            vehicleCasted!.carModel = model
 
-        if (listing.brand) 
-            vehicle!.brand = listing.brand
-
-        if (listing.model)
-            vehicle!.carModel = listing.model
-
-        if (listing.year)
-            vehicle!.year = listing.year
-
-        if (listing.priceRate)
-            vehicle!.priceRate = listing.priceRate
-
-        if (listing.carLocation) {
-            vehicle!.carLocation = {
+        if (carLocation) {
+            vehicleCasted.carLocation = {
                 type: 'Point',
-                coordinates: [listing.carLocation.lat, listing.carLocation.lon],
-                address: listing.carLocation.address       
+                coordinates: [carLocation!.lon, carLocation!.lat],
+                address: carLocation!.address       
             }       
         }
-
-        if (listing.canDeliver)
-            vehicle!.canDeliver = listing.canDeliver
-        
-        if (listing.carImages)
-            vehicle!.carImages = listing.carImages
-        
-        if (listing.carLicenseImage) 
-            vehicle!.carLicenseImage = listing.carLicenseImage
-        
-        if (listing.cancellationFee) 
-            vehicle!.cancellationFee = listing.cancellationFee
-
-        if (listing.carDescription)
-            vehicle!.carDescription = listing.carDescription
 
         const saved = await CarListingModel
             .findOneAndUpdate(
                 {licensePlate: licensePlate},
-                vehicle,
+                vehicleCasted,
                 {new: true}
             ).exec()
             
@@ -144,7 +133,8 @@ export default class CarListingRepository implements ICarListingRepository {
             owner: fetchedOwner._id,
             carLocation: {
                 type: 'Point',
-                coordinates: [listing.carLocation?.lat, listing.carLocation?.lon]
+                coordinates: [listing.carLocation?.lon, listing.carLocation?.lat],
+                address:listing.carLocation?.address
             }
         })
 
