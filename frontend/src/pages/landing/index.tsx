@@ -1,13 +1,13 @@
 import React from "react"
 import Link from "next/link";
-import { Box, Button, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, Button, Card, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 
 export default function Index(){
    const classes = useStyles();
 
    return(
       <>
-      <Box width="100%" height="100%" position="absolute" top={0}>
+      <Box width="100%"  position="absolute" top={0}>
          <img src="/backgroundImage.png" className={classes.backImage}/>
       </Box>
 
@@ -34,39 +34,71 @@ export default function Index(){
 
          <Grid container direction='row' justify="space-around" alignContent="center" className={classes.gridMainContent}>
 
-         <Grid item>
-            <Link href="/lform">
-               <Button>Listing Form</Button>
-            </Link>
-         </Grid>
+            <Grid item md={6} xs={12}>
+               <Grid container justify="center" style={{padding:4}}>
+                  <Card className={classes.cardContainer}>
+                     <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
 
-         <Grid item>
-            <Link href="/listing">
-               <Button>Listing Page</Button>
-            </Link>
-         </Grid>
+                        <Grid item>
+                           <Typography variant='h4'>
+                              <u>Recently Added</u>
+                           </Typography>
+                        </Grid>
 
-         <Grid item>
-            <Link href="/owner">
-               <Button>Owner Page</Button>
-            </Link>
-         </Grid>
+                        <Grid item className={classes.cardItem}>
 
-         <Grid item>
-            <Link href="/request">
-               <Button>Request Page</Button>
-            </Link>
-         </Grid>
+                        </Grid>   
 
-         <Grid item>
-            <Link href="/search">
-               <Button>Search Page</Button>
-            </Link>
-         </Grid>
+                     </Grid>
+                  </Card>
+               </Grid>
+            </Grid>
 
-         </Grid>
+            <Grid md={6} xs={12} item>
+               <Grid container justify="center" style={{padding:4}}>
+                  <Card className={classes.cardContainer}>  
+                     <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
 
-         
+                        <Grid item>
+                           <Typography variant='h4'>
+                              <u>Most Popular</u>
+                           </Typography>
+                        </Grid>
+
+                        <Grid item className={classes.cardItem}>
+                           
+                        </Grid>   
+
+                     </Grid>
+                  </Card>
+               </Grid>
+            </Grid>
+
+            <Grid item>
+
+               <Link href="/lform">
+                  <Button>Listing Form</Button>
+               </Link>
+
+               <Link href="/listing">
+                  <Button>Listing Page</Button>
+               </Link>
+
+               <Link href="/owner">
+                  <Button>Owner Page</Button>
+               </Link>
+
+               <Link href="/request">
+                  <Button>Request Page</Button>
+               </Link>
+
+               <Link href="/search">
+                  <Button>Search Page</Button>
+               </Link>
+
+            </Grid>
+            
+         </Grid>
 
       </Grid>
       </>
@@ -76,13 +108,12 @@ export default function Index(){
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({    
       backImage: {
-         width:"100%",
-         height: "100%",
+         width:"100%", 
+         height:485,
          opacity:0.575,
          objectFit:'cover', 
          position:"relative", 
          zIndex:-100,
-         marginTop: -470
       },
       main: {
          marginTop: 70,
@@ -109,7 +140,25 @@ const useStyles = makeStyles((theme: Theme) =>
       //////////////////////////////////////////////////////
 
       gridMainContent: {
-         marginTop: 150
+         marginTop: 150,
+         paddingRight: theme.spacing(2),
+         paddingLeft: theme.spacing(2),
+      },
+      cardContainer: {
+         minHeight: 600,
+         maxHeight: 600,
+         maxWidth:800,
+         width:"100%",
+         marginBottom:30,
+         backgroundColor: theme.palette.primary.main,
+      },
+     cardContent: {
+         padding: theme.spacing(4),
+         width: '100%',
+      },
+     cardItem: {
+         marginTop: 30,
+         width: '95%',
       },
 
    }),
