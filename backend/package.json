@@ -41,7 +41,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.17",
     "passport": "^0.4.1",
-    "passport-google-plus-token": "^2.1.0",
+    "passport-google-token": "^0.1.2",
     "passport-jwt": "^4.0.0"
   }
 }

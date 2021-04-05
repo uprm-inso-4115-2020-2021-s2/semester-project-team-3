@@ -1,2 +1,2 @@
-declare module "passport-google-plus-token"
+declare module "passport-google-token"
 

@@ -1,6 +1,6 @@
 import passport from 'passport'
 import {Strategy as JwtStrategy, ExtractJwt} from 'passport-jwt'
-import GoogleTokenStrategy from 'passport-google-plus-token'
+import {Strategy as GoogleTokenStrategy} from 'passport-google-token'
 import {handleLogin, cookieExtractor, fetchUser} from './helpers'
 import config from '../config/config'
 
