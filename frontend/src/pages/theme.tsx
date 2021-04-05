@@ -21,9 +21,19 @@ const theme = createMuiTheme({
       default: '#F4F4F9'
     },
   },
-//   typography: {
-//     fontFamily: 'Montserrat',
-//   },
+  // typography: {
+  //   fontFamily: 'Montserrat',
+  // },
+  overrides: {
+    MuiButton: {
+      root: {
+        textTransform: 'none'
+      },
+      // disabled: {
+      //   color: '#fff'
+      // }
+    },
+  }
 });
 
 export default theme
