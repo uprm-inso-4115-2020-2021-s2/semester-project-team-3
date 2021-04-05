@@ -2,14 +2,19 @@ import fs from 'fs'
 import {ErrorMessages, UseCaseOutput} from '../declarations'
 import { IClientRepository, ICarListingRepository, ICarListing } from "../../domain";
 
-const removeFile = async (file:Express.Multer.File) => {
+const removeFile = async (file:CarListingImageFile) => {
     fs.unlink(file.path, (err) => {
         console.error(`Unable to remove file ${file.path} please remove manually. Complete error: ${err?.message}`)
     })
 }
 
+type CarListingImageFile = {
+    path:string,
+    filename: string
+}
+
 export default function makeUploadCarImage(carListingRepo: ICarListingRepository, clientRepo:IClientRepository) {
-    return async (licensePlate: string, owner: string, file:Express.Multer.File ): Promise<UseCaseOutput<ICarListing>> => {
+    return async (licensePlate: string, owner: string, file:CarListingImageFile ): Promise<UseCaseOutput<ICarListing>> => {
         const listing = await carListingRepo.findByLicensePlate(licensePlate)
         if (!listing) {
             removeFile(file)
