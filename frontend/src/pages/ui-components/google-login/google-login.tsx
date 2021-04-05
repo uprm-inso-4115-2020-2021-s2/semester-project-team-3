@@ -19,10 +19,29 @@ export default function GoogleLoginButton() {
                 provider: 'google'
             })
             sessionStorage.setItem('access_token', res.accessToken)
+            refreshTokenSetup(res)
         },
         cookiePolicy:'single_host_origin',
         onFailure:(res)=>{console.log(res)},
     })
+
+    const refreshTokenSetup = (res:GoogleLoginResponse) => {
+        
+        let refreshTiming = (res.tokenObj.expires_in || 3600 -5 *60)*1000
+
+        const refreshToken = async () => {
+            const newAuthRes = await res.reloadAuthResponse()
+            refreshTiming = (newAuthRes.expires_in || 3600 -5 *60)*1000
+            let lastToken = sessionStorage.getItem('access_token')
+            if (lastToken) {
+                sessionStorage.setItem('access_token', newAuthRes.access_token)
+                setTimeout(refreshToken, refreshTiming)
+            }
+        }
+
+        setTimeout(refreshToken, refreshTiming)
+
+    }
 
     const classes = useStyles()
 
