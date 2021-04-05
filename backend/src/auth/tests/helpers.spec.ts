@@ -28,7 +28,7 @@ calling the appropiate domain application useCase
             displayName: "kenneth",
             provider: "test",
             id: "123",
-            photos: [{value:"test123"}]
+            _json:{picture:"test123"}
         }, (err, user:IClient, msg) => {
             expect(user).toBeTruthy()
             expect(user.email).toEqual("test@test.com")
@@ -47,7 +47,7 @@ calling the appropiate domain application useCase
             displayName: "kenneth",
             provider: "test",
             id: "123",
-            photos: [{value:"hello"}]
+            _json:{picture:"test123"}
         }, (err, user:IClient, msg) => {
             expect(err).toBeFalsy()
             expect(user).toBeTruthy()

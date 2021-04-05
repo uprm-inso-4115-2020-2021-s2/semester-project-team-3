@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { useTheme } from '@material-ui/core/styles';
 import { TransitionProps } from "@material-ui/core/transitions/transition";
+import GoogleLoginButton from "./google-login/google-login";
 
 
 export default function NavBar() {  
@@ -11,6 +12,8 @@ export default function NavBar() {
     const theme = useTheme();
 
     const [open, setOpen] = React.useState(false);
+    const [loggedIn, setLoggedIn] = React.useState(false)
+
     const logOpen = () => {setOpen(true)}
     const logClose = () => {setOpen(false)}
 
@@ -90,16 +93,7 @@ export default function NavBar() {
                         <Grid container direction="column" alignItems="center">
 
                             <Grid item className={classes.columnItem}>
-                                <Button className={classes.buttonGoogle}>
-                                    <Grid container direction="row" justify='center' alignItems="center" id="Google-Sign-In">
-                                        <Grid item className={classes.googleIconItem}>
-                                            <img src="/Google_G.png" className={classes.googleIcon}/>
-                                        </Grid>
-                                        <Grid item>
-                                            <Typography className={classes.buttonTextGoogle}>Sign In With Google</Typography>
-                                        </Grid>
-                                    </Grid>
-                                </Button>
+                                <GoogleLoginButton />
                             </Grid>
                             
                             <Grid item className={classes.columnItem}>
@@ -230,36 +224,22 @@ const useStyles = makeStyles((theme: Theme) =>
             height: '100%',
             paddingBottom: 8,
         },
-        googleIconItem: {
-            width: 40,
-            height: 40,
-            
-        },
+        
         facebookIconItem: {
             width: 40,
             height: 40,
         },
-        googleIcon: {
-            width: '100%',
-            height: '100%',
-        },
+        
         facebookIcon: {
             width: '100%',
             height: '100%',
         },
-        buttonTextGoogle: {
-            color: theme.palette.secondary.contrastText,
-            paddingLeft: 35
-        },
+        
         buttonTextFacebook: {
             color: theme.palette.secondary.contrastText,
             paddingLeft: 20
         },
-        buttonGoogle: {
-            backgroundColor: theme.palette.secondary.main,
-            width: '90%',
-            padding: 8,
-        },
+        
         buttonFacebook: {
             backgroundColor: theme.palette.primary.main,
             width: '90%',

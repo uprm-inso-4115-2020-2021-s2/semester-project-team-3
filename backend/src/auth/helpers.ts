@@ -15,11 +15,13 @@ interface DeserializedJwtToken {
     sub: string
 }
 
-export const handleLogin = async (accessToken:string, refreshToken:string, profile:Profile, done:VerifyFunction) => {
+export const handleLogin = async (accessToken:string, refreshToken:string, profile:any, done:VerifyFunction) => {
+    
+    console.log(profile)
     const result = await clientLoginUseCase({
         email: profile.emails?profile.emails[0].value : "",
         name: profile.displayName,
-        image: profile.photos? profile.photos[0].value : ""
+        image: profile._json.picture
     }) 
 
     if ( result.success ) {

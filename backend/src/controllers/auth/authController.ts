@@ -7,11 +7,12 @@ import config from '../../config/config'
        
 const login = async function( req:RequestWithUser, res:Response ) {
 
-    res.cookie("auth", clientSerialize(req.user.email), {
-        httpOnly: true,
-        maxAge: config.security.cookie_duration,
-        secure: process.env.NODE_ENV === 'production'
-    })
+    // res.cookie("auth", clientSerialize(req.user.email), {
+    //     httpOnly: true,
+    //     maxAge: config.security.cookie_duration,
+    //     secure: process.env.NODE_ENV === 'production',
+    //     sameSite: 'none'
+    // })
 
     res.status(200).json({
         name: req.user.name,
