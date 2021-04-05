@@ -224,36 +224,22 @@ const useStyles = makeStyles((theme: Theme) =>
             height: '100%',
             paddingBottom: 8,
         },
-        googleIconItem: {
-            width: 40,
-            height: 40,
-            
-        },
+        
         facebookIconItem: {
             width: 40,
             height: 40,
         },
-        googleIcon: {
-            width: '100%',
-            height: '100%',
-        },
+        
         facebookIcon: {
             width: '100%',
             height: '100%',
         },
-        buttonTextGoogle: {
-            color: theme.palette.secondary.contrastText,
-            paddingLeft: 35
-        },
+        
         buttonTextFacebook: {
             color: theme.palette.secondary.contrastText,
             paddingLeft: 20
         },
-        buttonGoogle: {
-            backgroundColor: theme.palette.secondary.main,
-            width: '90%',
-            padding: 8,
-        },
+        
         buttonFacebook: {
             backgroundColor: theme.palette.primary.main,
             width: '90%',
