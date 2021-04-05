@@ -14,5 +14,6 @@ export default async function logIn(requestInfo: OauthLoginRequest) {
         access_token:requestInfo.access_token
     })
     console.log(result)
+    return result
 
 }
