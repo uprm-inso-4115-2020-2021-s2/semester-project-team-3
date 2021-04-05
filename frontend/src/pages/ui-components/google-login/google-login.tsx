@@ -12,10 +12,13 @@ export default function GoogleLoginButton() {
 
     const {signIn, loaded} = useGoogleLogin({
         clientId:process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-        onSuccess:(res:GoogleLoginResponse)=>{logIn({
-            access_token:res.accessToken, 
-            provider: 'google'
-        })},
+        onSuccess:(res:GoogleLoginResponse)=>{
+            console.log(res)    
+            logIn({
+                access_token:res.accessToken, 
+                provider: 'google'
+            })},
+        cookiePolicy:'single_host_origin',
         onFailure:(res)=>{console.log(res)},
     })
 
