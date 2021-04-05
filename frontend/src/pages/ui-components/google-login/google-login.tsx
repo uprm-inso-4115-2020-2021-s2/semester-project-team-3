@@ -17,7 +17,9 @@ export default function GoogleLoginButton() {
             logIn({
                 access_token:res.accessToken, 
                 provider: 'google'
-            })},
+            })
+            sessionStorage.setItem('access_token', res.accessToken)
+        },
         cookiePolicy:'single_host_origin',
         onFailure:(res)=>{console.log(res)},
     })
