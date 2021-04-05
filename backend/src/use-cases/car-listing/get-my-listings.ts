@@ -1,5 +1,5 @@
-import { CarListingQueryFields, ICarListing, ICarListingRepository, IClientRepository } from "../domain";
-import { ErrorMessages, UseCaseOutput } from "./declarations";
+import { CarListingQueryFields, ICarListing, ICarListingRepository, IClientRepository } from "../../domain";
+import { ErrorMessages, UseCaseOutput } from "../declarations";
 
 export default function makeGetMyListingsUseCase(carListingRepo: ICarListingRepository, clientRepo: IClientRepository) {
 

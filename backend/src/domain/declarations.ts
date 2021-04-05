@@ -37,8 +37,9 @@ export interface ICarListing {
     canDeliver: boolean
     carLicenseImage: string | null
     carDescription: string
-    carImages: string[] | null
+    carImages: string[]
     carLocation: Location
+    hasReachedImageCapacity(): boolean
     // estimate: (arg0:number) => number
 }
 

@@ -1,6 +1,6 @@
 import { makeClient } from '../../domain'
 import { dbConfig, CarListingRepository, ClientRepository } from '../../persistence'
-import makeCreateCarListingUseCase from '../create-car-listing'
+import makeCreateCarListingUseCase from '../car-listing/create-car-listing'
 
 let carListingRepo = new CarListingRepository()
 let clientRepo = new ClientRepository()

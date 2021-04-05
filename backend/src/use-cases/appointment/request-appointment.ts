@@ -1,5 +1,5 @@
-import { IAppointment, IAppointmentRepository, ICarListingRepository, IClient, IClientRepository, makeClient } from "../domain";
-import { AppointmentRequest, ErrorMessages, UseCaseOutput } from "./declarations";
+import { IAppointment, IAppointmentRepository, ICarListingRepository, IClient, IClientRepository, makeClient } from "../../domain";
+import { AppointmentRequest, ErrorMessages, UseCaseOutput } from "../declarations";
 
 
 export function makeRequestAppointment(appointmentRepo: IAppointmentRepository, clientRepo: IClientRepository, carLisitingRepo: ICarListingRepository) {

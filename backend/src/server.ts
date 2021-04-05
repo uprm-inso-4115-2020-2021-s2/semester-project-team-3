@@ -2,6 +2,8 @@ import express, { Application } from 'express'
 import {json} from "body-parser";
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import multer from 'multer'
+import path from 'path'
 import http from 'http';
 import config from './config/config'
 import routes from './routes'
@@ -20,6 +22,9 @@ app.use(cors())
 app.use(cookieParser())
 app.use(json())
 app.use(passport.initialize())
+
+// Static folder
+app.use('/static', express.static(__dirname + '/uploads'));
 
 /**
  * Routes

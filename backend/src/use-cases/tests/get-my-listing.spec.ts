@@ -1,4 +1,4 @@
-import makeGetMyListingsUseCase from '../get-my-listings'
+import makeGetMyListingsUseCase from '../car-listing/get-my-listings'
 import {clientRepo, carListingRepo, dbConfig} from '../../persistence'
 import { ICarListing, IClient, makeCarListing, makeClient } from '../../domain'
 

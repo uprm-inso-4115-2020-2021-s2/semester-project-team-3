@@ -1,7 +1,7 @@
 import * as authController from './auth/authController'
 import * as carListingController from './carlisting/carListingController'
 import * as appointmentController from './appointment/appointmentController'
-import {RequestWithUser, RequestAppointmentRequest, GetMyListingsRequest} from './declarations'
+import {RequestWithUser, RequestAppointmentRequest, GetMyListingsRequest, UploadCarImageRequest} from './declarations'
 
 export {
     authController,
@@ -12,5 +12,6 @@ export {
 export type {
     RequestWithUser,
     RequestAppointmentRequest,
-    GetMyListingsRequest
+    GetMyListingsRequest,
+    UploadCarImageRequest
 }

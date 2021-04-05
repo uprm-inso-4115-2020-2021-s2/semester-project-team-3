@@ -1,5 +1,5 @@
-import { IClientRepository, IClient, makeClient } from "../domain";
-import { UseCaseOutput, ErrorMessages } from "./declarations"
+import { IClientRepository, IClient, makeClient } from "../../domain";
+import { UseCaseOutput, ErrorMessages } from "../declarations"
 
 
 export default function makeClientLoginUseCase(clientRepo: IClientRepository) {

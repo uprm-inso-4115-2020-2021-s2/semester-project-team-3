@@ -1,4 +1,4 @@
-import { CarListingQueryFields, ICarListingRepository } from "../domain";
+import { CarListingQueryFields, ICarListingRepository } from "../../domain";
 
 
 export default function makeSearchListing(carListingRepo: ICarListingRepository) {
