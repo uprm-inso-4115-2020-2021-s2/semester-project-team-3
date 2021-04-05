@@ -18,7 +18,7 @@ authRouter.post('/logout',
 )
 
 authRouter.get('/user', 
-    fromJwt,
+    googleAuth,
     async (req: Request, res: Response) => { res.status(200).json(req.user) }
 )
 
