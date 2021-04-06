@@ -1,10 +1,12 @@
-import { AppBar, Button, createStyles, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, fade, Grid, IconButton, InputBase, makeStyles, Slide, Theme, Typography } from "@material-ui/core";
+import { AppBar, Button, createStyles, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, fade, Grid, IconButton, InputBase, makeStyles, Menu, MenuItem, Slide, Theme, Typography } from "@material-ui/core";
 import { CloseRounded } from '@material-ui/icons';
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useTheme } from '@material-ui/core/styles';
 import { TransitionProps } from "@material-ui/core/transitions/transition";
 import GoogleLoginButton from "./google-login/google-login";
+import { useUser } from "../../hooks/useUser";
+import fetchUser from "../../requests/fetchUser";
 
 
 export default function NavBar() {  
@@ -12,18 +14,88 @@ export default function NavBar() {
     const theme = useTheme();
 
     const [open, setOpen] = React.useState(false);
-    const [loggedIn, setLoggedIn] = React.useState(false)
+    const [openMenu, setOpenMenu] = React.useState(false);
+    const [loggedIn, setLoggedIn] = React.useState(false);
+    
+    const {user, setUser} = useUser()
 
     const logOpen = () => {setOpen(true)}
     const logClose = () => {setOpen(false)}
 
-    // const Transition = React.forwardRef(function Transition(
-    //     props: TransitionProps & { children?: React.ReactElement<any, any> },
-    //     ref: React.Ref<unknown>,
-    //     ) {
-    //     return <Slide direction="down" ref={ref} {...props} />;
-    //     }
-    // );
+    const menuOpen = () => {setOpenMenu(true)}
+    const menuClose = () => {setOpenMenu(false)}
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    useEffect(()=>{
+        if (user) {
+            logClose()
+        }
+    }, [user])
+
+    useEffect(() => {
+        if (sessionStorage.getItem("access_token")) {
+          fetchUser({access_token: sessionStorage.getItem("access_token")})
+          .then(result => {
+            console.log("In here")
+            setUser(result)
+          })
+          .catch(err => {
+            setUser(null)
+          })
+        }
+      
+    }, []);
+
+    const handleUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+        menuOpen();
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleUserMenuClose = () => {
+        menuClose();
+        setAnchorEl(null);
+    };
+
+    const logout = async () => {
+        return
+    }
+
+    const renderAccountSection = () => {
+        if (!user) {
+            return (
+                <Grid container justify="flex-end">
+                    <Button className={classes.logInButton} onClick={logOpen}>
+                        <Typography className={classes.logInText} noWrap>
+                            Log In!
+                        </Typography>
+                    </Button>
+                </Grid>
+            )
+        } else {
+            return (
+                <Grid container justify="flex-end">
+                    <Grid item>
+                        <Button className={classes.logInButton} onClick={handleUserMenu}>
+                            <Typography className={classes.logInText} noWrap>
+                                {user?.email}
+                            </Typography>
+                        </Button>
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={openMenu}
+                            onClose={handleUserMenuClose}
+                        >
+                            <Link href="/owner/">
+                                <MenuItem onClick={handleUserMenuClose}>Profile</MenuItem>
+                            </Link>
+                            <MenuItem onClick={() => {handleUserMenuClose;logout()}}>Log Out</MenuItem>
+                        </Menu>
+                    </Grid>        
+                </Grid>
+            )
+        }
+    }
 
     return(
         <AppBar position='relative' className={classes.main}>         
@@ -56,18 +128,14 @@ export default function NavBar() {
                 </Grid>
 
                 <Grid item className={classes.logInItem}>
-                    <Button className={classes.logInButton} onClick={logOpen}>
-                        <Typography className={classes.logInText} noWrap>
-                            Log In!
-                        </Typography>
-                    </Button>
+                    {renderAccountSection()}
                 </Grid>
 
             </Grid>
 
             <Dialog
                 open={open}
-                // TransitionComponent={Transition}
+                //TransitionComponent={Transition}
                 keepMounted
                 onClose={logClose}
             >

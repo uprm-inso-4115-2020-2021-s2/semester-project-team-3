@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Grid, Typography, makeStyles, createStyles, Theme } from '@material-ui/core'
 import {GoogleLoginResponse, useGoogleLogin}  from 'react-google-login'
 import {logIn} from '../../../requests'
+import { useUser } from '../../../hooks/useUser'
 
 interface GoogleLoginButton {
     sucessCallBack: (res) => void
@@ -10,19 +11,24 @@ interface GoogleLoginButton {
 
 export default function GoogleLoginButton() {
 
+    const {setUser} = useUser()
+
     const {signIn, loaded} = useGoogleLogin({
         clientId:process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-        onSuccess:(res:GoogleLoginResponse)=>{
-            console.log(res)    
+        onSuccess:async (res:GoogleLoginResponse)=>{
+  
             logIn({
                 access_token:res.accessToken, 
                 provider: 'google'
-            })
-            sessionStorage.setItem('access_token', res.accessToken)
-            refreshTokenSetup(res)
+            }).then(result => {
+                setUser(result)
+                sessionStorage.setItem('access_token', res.accessToken)
+                refreshTokenSetup(res)
+            }).catch(err => alert("Unable to log in"))
+            
         },
         cookiePolicy:'single_host_origin',
-        onFailure:(res)=>{console.log(res)},
+        onFailure:(res)=>{alert("Unable to log in")},
     })
 
     const refreshTokenSetup = (res:GoogleLoginResponse) => {
