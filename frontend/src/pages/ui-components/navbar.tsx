@@ -1,6 +1,7 @@
 import { AppBar, Button, createStyles, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, fade, Grid, IconButton, InputBase, makeStyles, Menu, MenuItem, Slide, Theme, Typography } from "@material-ui/core";
 import { CloseRounded } from '@material-ui/icons';
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useTheme } from '@material-ui/core/styles';
 import { TransitionProps } from "@material-ui/core/transitions/transition";
@@ -12,6 +13,8 @@ import fetchUser from "../../requests/fetchUser";
 export default function NavBar() {  
     const classes = useStyles();
     const theme = useTheme();
+
+    const router = useRouter();
 
     const [open, setOpen] = React.useState(false);
     const [openMenu, setOpenMenu] = React.useState(false);
@@ -33,18 +36,10 @@ export default function NavBar() {
         }
     }, [user])
 
-    useEffect(() => {
-        if (sessionStorage.getItem("access_token")) {
-          fetchUser({access_token: sessionStorage.getItem("access_token")})
-          .then(result => {
-            console.log("In here")
-            setUser(result)
-          })
-          .catch(err => {
-            setUser(null)
-          })
+    useEffect(() => {  
+        if (sessionStorage.getItem('user')) {
+            setUser(JSON.parse(sessionStorage.getItem('user')))
         }
-      
     }, []);
 
     const handleUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -58,7 +53,11 @@ export default function NavBar() {
     };
 
     const logout = async () => {
-        return
+        console.log('sad emoji')
+        sessionStorage.removeItem('user')
+        sessionStorage.removeItem('access_token')
+        setUser(null)
+        router.push('/landing')
     }
 
     const renderAccountSection = () => {
@@ -89,7 +88,7 @@ export default function NavBar() {
                             <Link href="/owner/">
                                 <MenuItem onClick={handleUserMenuClose}>Profile</MenuItem>
                             </Link>
-                            <MenuItem onClick={() => {handleUserMenuClose;logout()}}>Log Out</MenuItem>
+                            <MenuItem onClick={() => {handleUserMenuClose();logout()}}>Log Out</MenuItem>
                         </Menu>
                     </Grid>        
                 </Grid>

@@ -23,6 +23,7 @@ export default function GoogleLoginButton() {
             }).then(result => {
                 setUser(result)
                 sessionStorage.setItem('access_token', res.accessToken)
+                sessionStorage.setItem('user', JSON.stringify(result))
                 refreshTokenSetup(res)
             }).catch(err => alert("Unable to log in"))
             
