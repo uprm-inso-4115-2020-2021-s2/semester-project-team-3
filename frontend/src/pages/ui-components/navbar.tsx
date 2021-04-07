@@ -53,11 +53,10 @@ export default function NavBar() {
     };
 
     const logout = async () => {
-        console.log('sad emoji')
         sessionStorage.removeItem('user')
         sessionStorage.removeItem('access_token')
         setUser(null)
-        router.push('/landing')
+        router.push('/')
     }
 
     const renderAccountSection = () => {
