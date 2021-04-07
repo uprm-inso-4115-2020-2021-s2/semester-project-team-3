@@ -49,3 +49,12 @@ export interface IAppointmentRepository {
     overlapExists(date: Date, days: number, listingPlate: string): Promise<boolean>
 
 }
+
+export type AppointmentUpdateFields = {
+    status?: IAppointment['status'],
+    dateInformation?: IAppointment['dateInformation'],
+    date?:IAppointment['dateInformation']['appointmentDate'],
+    days?:IAppointment['dateInformation']['days'],
+    meetupLocation?: IAppointment['location']['meetupLocation'],
+    dropoffLocation?: IAppointment['location']['dropoffLocation'],
+}

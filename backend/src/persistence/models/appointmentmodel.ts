@@ -1,4 +1,4 @@
-import {  IAppointment } from '../../domain'
+import {  AppointmentStatusType, IAppointment } from '../../domain'
 import {IClientModel, ClientCollectionName} from './clientmodel'; 
 import mongoose, { Schema, Document, ObjectId } from 'mongoose'
 import { ICarListingModel, CarListingCollectionName } from './carlistingmodel';
@@ -8,7 +8,7 @@ import { ITransactionModel, TransactionCollectionName } from './transactionmodel
 export interface IAppointmentModel extends Document {
 
     rentee: ObjectId | IClientModel,
-    status: string,
+    status: AppointmentStatusType,
     carListing: ObjectId | ICarListingModel,
     dateInformation: {
         appointmentDate: Date,

@@ -1,7 +1,9 @@
 
-import { IAppointment, IAppointmentRepository, AppointmentStatusType } from "../../domain";
-import { CarListingModel, ClientModel } from "../models";
+import { AppointmentUpdateFields } from "../../domain/repositories";
+import { IAppointment, IAppointmentRepository, AppointmentStatusType, makeAppointment, makeClient, makeCarListing } from "../../domain";
+import { CarListingModel, ClientModel, ICarListingModel, IClientModel } from "../models";
 import { AppointmentModel } from "../models/appointmentmodel";
+import { carListingRepo } from "..";
 
 
 export default class AppointmentRepository implements IAppointmentRepository {
@@ -76,6 +78,70 @@ export default class AppointmentRepository implements IAppointmentRepository {
         ]).limit(2).exec()
 
         return appointments.length > 0;
+    }
+
+    async updateAppointment(apppointmentNumber: string, appointment: AppointmentUpdateFields): Promise<IAppointment | null> {
+        // Access the old appointment
+        const oldAppointment = await AppointmentModel.findOne({_id:apppointmentNumber}).lean().exec()
+
+        if (!oldAppointment) 
+            return null
+        
+        if (appointment.status){
+            oldAppointment.status = appointment.status
+        }
+
+        if (appointment.date){
+            oldAppointment.dateInformation.appointmentDate = appointment.date
+        }
+
+        if (appointment.days){
+            oldAppointment.dateInformation.days = appointment.days
+        }
+
+        if (appointment.meetupLocation){
+            oldAppointment.location.meetupLocation.coordinates = [appointment.meetupLocation.lon, appointment.meetupLocation.lat]
+            oldAppointment.location.meetupLocation.address = appointment.meetupLocation.address
+        }
+
+        if (appointment.dropoffLocation){
+            oldAppointment.location.dropoffLocation.coordinates = [appointment.dropoffLocation.lon, appointment.dropoffLocation.lat]
+            oldAppointment.location.dropoffLocation.address = appointment.dropoffLocation.address
+        }
+
+        const newAppointment = await AppointmentModel.findOneAndUpdate({_id:apppointmentNumber}, oldAppointment, {new: true}).exec()
+        if (newAppointment == null) {
+            return null
+        }
+        await newAppointment.populate("rentee").populate("carListing").execPopulate()
+        try{
+            const builtAppointment = makeAppointment({
+                appointmentNumber: newAppointment._id,
+                rentee: makeClient(newAppointment.rentee as IClientModel),
+                status: newAppointment.status,
+                carListing: (await carListingRepo.findByLicensePlate((newAppointment.carListing as ICarListingModel).licensePlate))!,
+                dateInformation: {
+                    appointmentDate: newAppointment.dateInformation.appointmentDate,
+                    days: newAppointment.dateInformation.days
+                },
+                location: {
+                    meetupLocation: {lat: newAppointment.location.meetupLocation.coordinates[1],
+                                    lon: newAppointment.location.meetupLocation.coordinates[0], 
+                                    address: newAppointment.location.meetupLocation.address},
+                    dropoffLocation: {lat: newAppointment.location.dropoffLocation.coordinates[1],
+                        lon: newAppointment.location.dropoffLocation.coordinates[0], 
+                        address: newAppointment.location.dropoffLocation.address}
+                },
+                postAcceptInformation: {
+                    dateAccepted: newAppointment.postAcceptInformation?.dateAccepted, 
+                    transactions: []
+                } 
+            })
+        }
+        catch(err) {
+            return null
+        }
+        return null
     }
 
 }
