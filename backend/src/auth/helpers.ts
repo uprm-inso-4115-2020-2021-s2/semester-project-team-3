@@ -1,5 +1,4 @@
 import {clientLoginUseCase} from '../use-cases'
-import { Profile } from 'passport'
 import { Request } from 'express'
 import {ClientRepository} from '../persistence'
 
@@ -16,8 +15,7 @@ interface DeserializedJwtToken {
 }
 
 export const handleLogin = async (accessToken:string, refreshToken:string, profile:any, done:VerifyFunction) => {
-    
-    console.log(profile)
+
     const result = await clientLoginUseCase({
         email: profile.emails?profile.emails[0].value : "",
         name: profile.displayName,

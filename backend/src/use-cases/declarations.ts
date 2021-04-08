@@ -18,7 +18,36 @@ export enum ErrorMessages {
     ListingImageCapacityReached = "Listing image capacity reached"
 }
 
-export type     AppointmentRequest = {
+/**
+"model": "Corolla",
+"brand": "Toyota",
+"year": 2020,
+"cancellationFee":25.56,
+"licensePlate": "TES321",
+"priceRate": 35,
+"carDescription": " Testing creating a vehicle ",
+"carImages": [""] ,
+"carLocation": {lat:0, lon:0, address:""}
+ */
+export type CreateCarListingRequest = {
+    carLocationLat: number,
+    carLocationLon: number,
+    carLocationAddress: string,
+    owner: string,
+    model: string,
+    brand: string,
+    year:number,
+    licensePlate: string,
+    priceRate: number,
+    carDescription: string
+    carImages?: File[],
+    carLicenseImage?: File[],
+    cancellationFee: number,
+    canDeliver?: boolean
+
+}
+
+export type AppointmentRequest = {
 
     meetupLocation: Location
     dropoffLocation: Location,
@@ -29,9 +58,13 @@ export type     AppointmentRequest = {
 }
 
 export type File = {
-    key: string // Available using `S3`.
-    path: string // Available using `DiskStorage`.
-    mimetype: string
-    originalname: string
-    size: number
+    path:string,
+    filename: string
+}
+
+export interface IStorageAdapter {
+    upload(f:File): Promise<string | null>
+    uploadFileArray(fs: File[]): Promise<string[] | null>
+    remove(f:File): Promise<void>
+    removeFileArray(f:File[]): Promise<void>
 }

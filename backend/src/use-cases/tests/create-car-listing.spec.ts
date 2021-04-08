@@ -1,10 +1,11 @@
 import { makeClient } from '../../domain'
 import { dbConfig, CarListingRepository, ClientRepository } from '../../persistence'
 import makeCreateCarListingUseCase from '../car-listing/create-car-listing'
+import {MockStorageAdapter} from './mock/mockStorageAdapter'
 
 let carListingRepo = new CarListingRepository()
 let clientRepo = new ClientRepository()
-let createCarListingUseCase = makeCreateCarListingUseCase(carListingRepo)
+let createCarListingUseCase = makeCreateCarListingUseCase(carListingRepo, clientRepo, new MockStorageAdapter())
 
 /**
  * Connect to a new in-memory database before running any tests.
@@ -33,13 +34,20 @@ describe("A client should be able to create a new car listing for others to see"
         "licensePlate": "TES321",
         "priceRate": 35,
         "carDescription": " Testing creating a vehicle ",
-        "carImages": [""] ,
+        "carImages": [] ,
         "carLocation": {lat:0, lon:0, address:""}
     })
 
     it("Should be able to create new carListing given a sample carListing", async () => {
         let sample = sampleCarListing()
-        const result = await createCarListingUseCase(sample, {email:"test@test.com", name:"pedro"})
+        const result = await createCarListingUseCase({
+            ...sample,
+            carLocationAddress: sample.carLocation.address,
+            carLocationLat: sample.carLocation.lat,
+            carLocationLon: sample.carLocation.lon,
+            canDeliver: false,
+            owner: "test@test.com"
+        })
         expect(result.success).toBeTruthy()
         expect(result.data).toBeTruthy()
         expect(result.data!.licensePlate).toEqual(sample.licensePlate)
@@ -47,7 +55,14 @@ describe("A client should be able to create a new car listing for others to see"
 
     it("Should not allow to create another lsiting with the same license plate", async () => {
         let sample = sampleCarListing()
-        const result = await createCarListingUseCase(sample, {email:"test@test.com", name:"pedro"})
+        const result = await createCarListingUseCase({
+            ...sample,
+            carLocationAddress: sample.carLocation.address,
+            carLocationLat: sample.carLocation.lat,
+            carLocationLon: sample.carLocation.lon,
+            canDeliver: false,
+            owner: "test@test.com"
+        })
         expect(result.success).toBeFalsy()
         expect(result.data).toBeFalsy()
     })

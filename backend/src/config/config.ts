@@ -9,6 +9,9 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || ''
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || ''
 const TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION || "3h"
 const COOKIE_DURATION = Number(process.env.COOKIE_DURATION) || 8.64e+7
+const GOOGLE_STORAGE_SERVICE_KEY = process.env.GOOGLE_STORAGE_SERVICE_KEY || ''
+const GOOGLE_STORAGE_BUCKET = process.env.GOOGLE_STORAGE_BUCKET || ''
+const GOOGLE_PROJECT_ID = process.env.projectId || ''
 
 const SERVER = {
     hostname: SERVER_HOSTNAME,
@@ -28,7 +31,10 @@ const SECURITY = {
 
 const GOOGLE = {
     clientId: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    storageServiceKey: GOOGLE_STORAGE_SERVICE_KEY,
+    storageBucket: GOOGLE_STORAGE_BUCKET,
+    projectId: GOOGLE_PROJECT_ID
 }
 
 const config = {
