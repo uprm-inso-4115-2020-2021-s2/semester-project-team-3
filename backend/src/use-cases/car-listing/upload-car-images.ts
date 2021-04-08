@@ -1,23 +1,20 @@
 import fs from 'fs'
-import {ErrorMessages, UseCaseOutput} from '../declarations'
+import {ErrorMessages, UseCaseOutput, File, IStorageAdapter} from '../declarations'
 import { IClientRepository, ICarListingRepository, ICarListing } from "../../domain";
 
-const removeFile = async (file:CarListingImageFile) => {
+const removeFile = async (file:File) => {
     fs.unlink(file.path, (err) => {
         console.error(`Unable to remove file ${file.path} please remove manually. Complete error: ${err?.message}`)
     })
 }
 
-type CarListingImageFile = {
-    path:string,
-    filename: string
-}
 
-export default function makeUploadCarImage(carListingRepo: ICarListingRepository, clientRepo:IClientRepository) {
-    return async (licensePlate: string, owner: string, file:CarListingImageFile ): Promise<UseCaseOutput<ICarListing>> => {
+
+export default function makeUploadCarImage(carListingRepo: ICarListingRepository, clientRepo:IClientRepository, storageAdapter: IStorageAdapter) {
+    return async (licensePlate: string, owner: string, file:File ): Promise<UseCaseOutput<ICarListing>> => {
         const listing = await carListingRepo.findByLicensePlate(licensePlate)
         if (!listing) {
-            removeFile(file)
+            
             return {
                 success: false,
                 msg: ErrorMessages.ListingDoesNotExist
@@ -26,7 +23,7 @@ export default function makeUploadCarImage(carListingRepo: ICarListingRepository
 
         const fetchedOwner = await clientRepo.findByEmail(owner)
         if (!fetchedOwner) {
-            removeFile(file)
+     
             return {
                 success: false,
                 msg: ErrorMessages.ClientDoesNotExist
@@ -34,7 +31,7 @@ export default function makeUploadCarImage(carListingRepo: ICarListingRepository
         }
 
         if (!fetchedOwner.owns(listing)) {
-            removeFile(file)
+
             return {
                 success: false,
                 msg: ErrorMessages.ClientDoesNotOwnListing
@@ -42,17 +39,26 @@ export default function makeUploadCarImage(carListingRepo: ICarListingRepository
         }
 
         if (listing.hasReachedImageCapacity()) {
-            removeFile(file)
+
             return {
                 success: false,
                 msg: ErrorMessages.ListingImageCapacityReached
             }
         }
 
-        const newLisiting = await carListingRepo.updateCarListing(listing.licensePlate, {carImages: [...listing.carImages, file.filename]});
+        const path = await storageAdapter.upload(file)
+
+        if (!path) {
+            return {
+                success: false,
+                msg: ErrorMessages.CreationError
+            }
+        }
+
+        const newLisiting = await carListingRepo.updateCarListing(listing.licensePlate, {carImages: [...listing.carImages, path]});
         
         if (!newLisiting) {
-            removeFile(file)
+            storageAdapter.remove(file)
             return {
                 success: false,
                 msg: ErrorMessages.CreationError

@@ -37,6 +37,6 @@ export class CarListing implements ICarListing{
 
     }
     hasReachedImageCapacity(): boolean {
-        return this.carImages.length === 5
+        return this.carImages.length >= 5
     }
 }

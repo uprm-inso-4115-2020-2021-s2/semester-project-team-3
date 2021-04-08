@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
 import { RequestAppointmentRequest } from "../controllers";
-import { fromJwt, googleAuth } from "../auth/passport";
+import { googleAuth } from "../auth/passport";
 import {appointmentController} from '../controllers'
 
 const appointmentRouter = express.Router()

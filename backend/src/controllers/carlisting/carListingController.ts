@@ -1,21 +1,52 @@
-import { GetMyListingsRequest, RequestWithUser, UploadCarImageRequest } from "../declarations";
-import { createCarListingUseCase, getMyListingUseCase, searchListingUseCase, uploadCarImageUseCase } from '../../use-cases'
+import { CreateListingRequest, GetMyListingsRequest, RequestWithUser, UploadCarImageRequest } from "../declarations";
+import { File, CreateCarListingRequest, createCarListingUseCase, getMyListingUseCase, searchListingUseCase, uploadCarImageUseCase } from '../../use-cases'
 import { ICarListing } from "../../domain";
-import { Request, Response } from 'express'
+import { request, Request, Response } from 'express'
 import multer from "multer";
 import { storage, imageFilter } from "../../config/multer-config";
+import { promisify } from "util";
+import fs from 'fs'
 
+const uploadSetting = multer({storage: storage, fileFilter: imageFilter})
 
-export const createCarListing = async (req:RequestWithUser, res:Response) => {
+const unlinkAsync = promisify(fs.unlink)
+
+export const createCarListing = async (req:CreateListingRequest, res:Response) => {
     
-    const result = await createCarListingUseCase(req.body as Partial<ICarListing>, req.user)
+    let createupload = uploadSetting.fields([{
+        name: 'carImages', maxCount: 5
+      }, {
+        name: 'carLicenseImage', maxCount: 1
+    }])
 
-    if (result.success) {
-        res.status(200).json(result)
-        return
-    }
+    createupload(req, res, async function(err:any) {
+        
+        if (err) {
+            res.status(400).json({success:false, msg: err.message})
+            return
+        }
 
-    res.status(400).json(result)
+        const request = {
+            ...req.body,
+            owner: req.user.email,
+            carImages: req.files.carImages,
+            carLicenseImage: req.files.carLicenseImage
+        }
+
+        const result = await createCarListingUseCase(request)
+
+        request.carImages?.map((val: File) => unlinkAsync(val.path))
+        request.carLicenseImage?.map((val: File) => unlinkAsync(val.path))
+        
+        if (result.success) {
+            res.status(200).json(result)
+            return
+        }
+
+        res.status(400).json(result)
+
+    })
+    
 
 }
 
@@ -44,7 +75,7 @@ export const searchListing = async (req:GetMyListingsRequest, res:Response) => {
 }
 
 export const uploadCarImage = async (req:UploadCarImageRequest, res:Response) => {
-    const upload = multer({storage: storage, fileFilter: imageFilter}).single('carImageUpload')
+    let upload = uploadSetting.single('carImageUpload')
 
     upload(req, res, async function(err:any) {
 
@@ -56,11 +87,14 @@ export const uploadCarImage = async (req:UploadCarImageRequest, res:Response) =>
             return
         }
         const result = await uploadCarImageUseCase(req.body.licensePlate, req.user.email, req.file)
-
+        
+        unlinkAsync(req.file.path)
+        
         if (result.success) {
             res.status(200).json(result)
             return
         }
+
 
         res.status(400).json(result)
 
