@@ -5,7 +5,6 @@ import { IClientModel, ClientCollectionName } from './clientmodel'
 
 export interface ICarListingModel extends Document {
 
-    title: ICarListing['title']
     carModel: ICarListing['model']
     isVerified: ICarListing['isVerified']
     brand: ICarListing['brand']
@@ -25,7 +24,6 @@ export interface ICarListingModel extends Document {
 
 const CarListingSchema = new Schema({
 
-    title:{type:String, required:true},
     carModel:{type:String, required:true},
     isVerified:{type:Boolean, default:false},
     brand:{type:String, required:true},

@@ -27,7 +27,6 @@ afterAll(async () => await dbConfig.closeDatabase());
 describe("A client should be able to create a new car listing for others to see", () => {
 
     let sampleCarListing = () => ({
-        "title": "testing",
         "model": "Corolla",
         "brand": "Toyota",
         "year": 2020,

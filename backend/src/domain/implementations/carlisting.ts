@@ -15,11 +15,10 @@ export class CarListing implements ICarListing{
     carDescription: string 
     carImages: string[]
     carLocation: Location 
-    title:string
 
     constructor(data: Partial<ICarListing> = {}){
         if(!data.model || !data.brand || !data.year || !data.cancellationFee || !data.licensePlate
-            || !data.priceRate || !data.owner || !data.carDescription || !data.carLocation || data.carLocation.lat === undefined || data.carLocation.lon === undefined || !data.title){
+            || !data.priceRate || !data.owner || !data.carDescription || !data.carLocation || data.carLocation.lat === undefined || data.carLocation.lon === undefined){
             throw new Error(ErrorMsg.IllegalException)
         }
         this.model = data.model as string;
@@ -35,8 +34,6 @@ export class CarListing implements ICarListing{
         this.carDescription = data.carDescription as string;
         this.carImages = data.carImages?data.carImages: [];
         this.carLocation = data.carLocation;
-        this.title = data.title as string
-        
 
     }
     hasReachedImageCapacity(): boolean {

@@ -76,7 +76,6 @@ describe('The Client class models the client entity in the domain', () => {
 
         const car = new CarListing(
             {
-                title: "testing",
                 model: "corolla",
                 isVerified: false,
                 brand: "toyota",
