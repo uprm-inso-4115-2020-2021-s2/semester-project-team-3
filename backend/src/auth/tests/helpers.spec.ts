@@ -18,7 +18,7 @@ The handleLogin function is in charge of parsing the
 incoming oauth profile into a client object and 
 calling the appropiate domain application useCase
 `, () => {
-
+    jest.mock('../../use-cases')
 
     const clientRepo = new ClientRepository()
     it("should create a client if it does note exist", async () => {
