@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express'
 import { carListingController, GetMyListingsRequest, RequestWithUser, UploadCarImageRequest } from '../controllers'
-import { fromJwt, googleAuth } from '../auth/passport'
+import { googleAuth } from '../auth/passport'
 
 
 const carListingRouter = express.Router() 
