@@ -26,7 +26,6 @@ export interface IClient {
 }
 
 export interface ICarListing {
-    title: string
     model: string
     isVerified: boolean
     brand: string

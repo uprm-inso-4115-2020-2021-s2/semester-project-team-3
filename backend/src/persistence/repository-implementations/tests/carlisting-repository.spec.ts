@@ -76,7 +76,6 @@ describe(`
     it ("should create new carListing", async () => {
 
         const newVehicle = {
-            title: "testing",
             brand: "Toyota",
             model: "Corolla",
             year: 2021,

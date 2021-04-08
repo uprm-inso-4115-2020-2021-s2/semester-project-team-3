@@ -37,7 +37,6 @@ beforeAll(async () => {
     })
 
     carListing1 = makeCarListing({
-        title:"listing1",
         owner: client1,
         brand: "Toyota",
         model: "Corolla",
@@ -50,7 +49,6 @@ beforeAll(async () => {
     })
 
     carListing2 = makeCarListing({
-        title:"listing2",
         owner:client2,
         brand: "Honda",
         model: "Corolla",
@@ -63,7 +61,6 @@ beforeAll(async () => {
     })
 
     carListing3 = makeCarListing({
-        title:"listing3",
         owner: client3,
         brand: "Honda",
         model:"Civic",
