@@ -16,6 +16,7 @@ describe('The Car Listing class models the car listing entity in the domain', ()
 
         const car = new CarListing(
             {
+                title: "testing",
                 model: "corolla",
                 isVerified: false,
                 brand: "toyota",
@@ -89,6 +90,7 @@ describe('The Car Listing class models the car listing entity in the domain', ()
         
         const car = new CarListing(
         {
+            title: "testing",
             model: "corolla",
             isVerified: false,
             brand: "toyota",
