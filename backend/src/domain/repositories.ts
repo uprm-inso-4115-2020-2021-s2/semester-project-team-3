@@ -23,6 +23,7 @@ export type CarListingQueryFields = {
 }
 
 export type CarListingUpdateFields = {
+    title?: ICarListing['title']
     brand?: ICarListing['brand'],
     model?: ICarListing['model'],
     canDeliver?: ICarListing['canDeliver'],

@@ -38,6 +38,7 @@ export default function makeCreateCarListingUseCase(carListingRepo: ICarListingR
         let builtListing;
         try {
             builtListing = makeCarListing({
+                title: request.title,
                 licensePlate: request.licensePlate,
                 carLocation: {
                     lat: request.carLocationLat,
