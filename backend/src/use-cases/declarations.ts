@@ -30,6 +30,7 @@ export enum ErrorMessages {
 "carLocation": {lat:0, lon:0, address:""}
  */
 export type CreateCarListingRequest = {
+    title: string,
     carLocationLat: number,
     carLocationLon: number,
     carLocationAddress: string,
