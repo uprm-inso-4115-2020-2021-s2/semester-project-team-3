@@ -70,16 +70,27 @@ export default function ListingForm(){
             </Grid>
 
             <Grid container direction="row" className={classes.submitItem}>
-                <TextField label="Car Documents" variant="outlined" required className={classes.submitTextField}
+                <TextField label="Upload Car Documents..." variant="outlined" disabled required className={classes.submitTextField} // might change to button group
+                    value={values.carDocuments}
+                    onChange={handleChange('carDocuments')}
                     InputProps={{
-                        endAdornment: <InputAdornment position="start"><AddAPhotoRounded className={classes.pictureIcon}/></InputAdornment>,
+                        endAdornment:
+                            <IconButton onClick={null}>
+                                <AddAPhotoRounded className={classes.pictureIcon}/>
+                            </IconButton>,
                     }}
                 />
-                <TextField label="Car Pictures" variant="outlined" required className={classes.submitTextField}
+                <TextField label="Upload Car Pictures..." variant="outlined" disabled required className={classes.submitTextField}
+                    value={values.carPictures}
+                    onChange={handleChange('carPictures')}
                     InputProps={{
-                        endAdornment: <InputAdornment position="start"><AddAPhotoRounded className={classes.pictureIcon}/></InputAdornment>,
+                        endAdornment:
+                            <IconButton onClick={null}>
+                                <AddAPhotoRounded className={classes.pictureIcon}/>
+                            </IconButton>,
                     }}
                 />
+                
             </Grid>
 
             <Grid container direction="row">
@@ -123,12 +134,19 @@ const useStyles = makeStyles((theme: Theme) =>
             width: 10
         },
         pictureIcon: {
-            fontSize: 30,
+            fontSize: 32,
             color: theme.palette.secondary.main
         },
         submitDesc: {
             paddingLeft: theme.spacing(0.5),
             paddingRight: theme.spacing(0.5),
         },
+
+        inputRoot: {
+            "&$disabled": {
+              color: theme.palette.common.black
+            }
+        },
+        disabled: {},
     }),
 );
