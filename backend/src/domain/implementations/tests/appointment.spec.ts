@@ -16,6 +16,7 @@ describe('The Appointment class models the appointment entity in the domain', ()
         ) 
         const car = new CarListing(
             {
+                title: "testing",
                 model: "corolla",
                 isVerified: false,
                 brand: "toyota",
@@ -98,6 +99,7 @@ describe('The Appointment class models the appointment entity in the domain', ()
         
         const car = new CarListing(
             {
+                title: "testing",
                 model: "corolla",
                 isVerified: false,
                 brand: "toyota",
@@ -150,6 +152,7 @@ describe('The Appointment class models the appointment entity in the domain', ()
         
         const car = new CarListing(
             {
+                title: "testing",
                 model: "corolla",
                 isVerified: false,
                 brand: "toyota",

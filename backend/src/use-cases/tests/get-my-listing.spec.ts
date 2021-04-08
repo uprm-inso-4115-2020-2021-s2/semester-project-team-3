@@ -31,6 +31,7 @@ describe(`The get my listing use case represents the
     it("Should succed if client exist and show only the listings of the client", async () => {
 
         let sampleCarListing = () => ({
+            "title":"lala",
             "model": "Corolla",
             "brand": "Toyota",
             "year": 2020,
