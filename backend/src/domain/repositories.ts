@@ -48,6 +48,8 @@ export interface IAppointmentRepository {
 
     createAppointment(appointment: IAppointment) : Promise<IAppointment | null>
     overlapExists(date: Date, days: number, listingPlate: string): Promise<boolean>
+    findAppointmentByNumber(appointmentNumber: string): Promise<IAppointment | null>
+    updateAppointment(appointmentNumber: string, appointment: AppointmentUpdateFields): Promise<IAppointment | null>
 
 }
 

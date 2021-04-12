@@ -70,6 +70,20 @@ describe(`
         expect(fetched).toBeFalsy()
         
     })
+
+    it("Should be able to find an appointment by appointment number", async () => {
+        const appointment = await AppointmentModel.findOne().exec()
+        const found = await appointmentRepo.findAppointmentByNumber(appointment!._id)
+        expect(found?.appointmentNumber).toEqual(appointment!._id)
+    })
+
+    it("Should be able to update an appointment", async () => {
+        const appointment = await AppointmentModel.findOne().exec()
+        const found = await appointmentRepo.findAppointmentByNumber(appointment!._id)
+        const newAppointment = await appointmentRepo.updateAppointment(found!.appointmentNumber!, {status: AppointmentStatusType.Delivered})
+        expect(newAppointment).not.toBeNull()
+        expect(newAppointment?.status).not.toEqual(appointment!.status)
+    })
     
 
 }) 

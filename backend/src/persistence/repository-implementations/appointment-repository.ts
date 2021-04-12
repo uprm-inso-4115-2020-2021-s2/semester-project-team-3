@@ -1,7 +1,7 @@
 import { AppointmentUpdateFields } from "../../domain/repositories";
 import { IAppointment, IAppointmentRepository, AppointmentStatusType, makeAppointment, makeClient, makeCarListing } from "../../domain";
 import { CarListingModel, ClientModel, ICarListingModel, IClientModel } from "../models";
-import { AppointmentModel } from "../models/appointmentmodel";
+import { AppointmentModel, IAppointmentModel } from "../models/appointmentmodel";
 import { carListingRepo } from "..";
 
 
@@ -79,7 +79,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
         return appointments.length > 0;
     }
 
-    private async buildAppointment(appointment: IAppointment): Promise<IAppointment | null> {
+    private async buildAppointment(appointment: IAppointmentModel): Promise<IAppointment | null> {
         if (appointment == null) {
             return null
         }
@@ -118,7 +118,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
 
     async findAppointmentByNumber(appointmentNumber: string): Promise<IAppointment | null> {
         const appointment = await AppointmentModel.findOne({_id:appointmentNumber}).exec()
-        return this.buildAppointment(appointment)
+        return appointment ? this.buildAppointment(appointment): null
 
     }
 
@@ -152,7 +152,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
         }
 
         const newAppointment = await AppointmentModel.findOneAndUpdate({_id:appointmentNumber}, oldAppointment, {new: true}).exec()
-        this.buildAppointment(newAppointment)
+        return newAppointment ? this.buildAppointment(newAppointment): null
     }
 
 }
