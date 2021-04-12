@@ -24,7 +24,7 @@ beforeAll(async () => {
 afterAll(async () => await dbHandler.closeDatabase());
 
 describe(` 
-    Appointment repository is in hcarge of abstracting 
+    Appointment repository is in charge of abstracting 
     the persistance and retrieval of appointments `, () => {
     
 
@@ -72,4 +72,4 @@ describe(`
     })
     
 
-})
+}) 
