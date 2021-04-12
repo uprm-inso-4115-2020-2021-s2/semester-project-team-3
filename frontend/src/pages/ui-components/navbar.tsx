@@ -30,6 +30,13 @@ export default function NavBar() {
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+    const Transition = React.forwardRef(function Transition(
+        props: TransitionProps & { children?: React.ReactElement<any, any> },
+        ref: React.Ref<unknown>,
+    ) {
+        return <Slide direction="up" ref={ref} {...props} />;
+    });
+
     useEffect(()=>{
         if (user) {
             logClose()
@@ -53,11 +60,10 @@ export default function NavBar() {
     };
 
     const logout = async () => {
-        console.log('sad emoji')
         sessionStorage.removeItem('user')
         sessionStorage.removeItem('access_token')
         setUser(null)
-        router.push('/landing')
+        router.push('/')
     }
 
     const renderAccountSection = () => {
@@ -134,7 +140,7 @@ export default function NavBar() {
 
             <Dialog
                 open={open}
-                //TransitionComponent={Transition}
+                // TransitionComponent={Transition}
                 keepMounted
                 onClose={logClose}
             >
