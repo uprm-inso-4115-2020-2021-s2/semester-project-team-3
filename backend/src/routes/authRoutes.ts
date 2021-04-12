@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express'
 import { authController, RequestWithUser } from '../controllers'
-import { googleAuth, fromJwt } from '../auth/passport'
+import { googleAuth } from '../auth/passport'
 
 const authRouter = express.Router()
 

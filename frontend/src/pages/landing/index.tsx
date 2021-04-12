@@ -76,7 +76,7 @@ export default function Index(){
 
             <Grid item>
 
-               <Link href="/lform">
+               <Link href="/listingForm">
                   <Button>Listing Form</Button>
                </Link>
 
