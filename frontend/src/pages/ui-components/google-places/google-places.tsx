@@ -1,3 +1,4 @@
+import { Grid, TextField } from "@material-ui/core";
 import React from "react"
 import PlacesAutoComplete, {geocodeByAddress,getLatLng} from "react-places-autocomplete";
 
@@ -23,7 +24,7 @@ export default function GooglePlacesAuto (props:GooglePlacesProps){
     };
     
     
-    return <div>
+    return <Grid>
         
         <PlacesAutoComplete 
         value={address} 
@@ -34,7 +35,7 @@ export default function GooglePlacesAuto (props:GooglePlacesProps){
             <div>
                 <p>Latt : {coordinates.lat}</p>
                 <p>Long : {coordinates.lng}</p>
-                <input {...getInputProps({placeholder:"Type address"})}/>
+                <TextField variant="outlined"{...getInputProps({placeholder:"Type address"})}/>
                 <div>
                     {loading ? <div>...loading</div> : null}
 
@@ -55,5 +56,5 @@ export default function GooglePlacesAuto (props:GooglePlacesProps){
                 </div>
             </div>)}
         </PlacesAutoComplete>
-    </div>
+    </Grid>
 }
