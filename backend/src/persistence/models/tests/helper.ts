@@ -3,6 +3,7 @@ import { CarListingModel, ICarListingModel } from "../carlistingmodel";
 
 export function makeValidCarListingModelSample(ownerId:ObjectId) {
     return new CarListingModel({
+        title:"testing",
         carModel: "Corolla",
         brand: "Toyota",
         year: 2020,

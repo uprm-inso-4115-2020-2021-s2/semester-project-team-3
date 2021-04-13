@@ -1,9 +1,15 @@
 import React from "react"
 import Link from "next/link";
-import { Box, Button, Card, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, Button, Card, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, makeStyles, Theme, Typography } from "@material-ui/core";
+import { AddCircleOutlineRounded, AddRounded } from "@material-ui/icons";
+import ListingForm from "../listingForm";
 
 export default function Index(){
     const classes = useStyles();
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {setOpen(true)}
+    const handleClose = () => {setOpen(false)}
 
     return(
         <Grid container direction="column" alignItems="center" className={classes.main}>
@@ -36,9 +42,25 @@ export default function Index(){
                         </Grid>
                     </Grid>
                 </Grid>
+
             </Grid>
 
             <Grid container direction='row' className={classes.mainContent}>
+
+                <Grid container direction="row" wrap="nowrap" justify="flex-end" className={classes.addButtonContainer}>
+                    <Grid item>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            color="secondary"
+                            className={classes.addButton}
+                            onClick={handleOpen}
+                            endIcon={<Icon className={classes.addButtonIcon}><AddCircleOutlineRounded/></Icon>}
+                        >
+                            Create New Listing
+                        </Button>
+                    </Grid>
+                </Grid>
 
                 <Grid item xs={12} sm={6}>
                     <Grid container justify="center" style={{padding:4}}>
@@ -81,6 +103,37 @@ export default function Index(){
                 </Grid>
 
             </Grid>
+            
+            <Dialog
+                open={open}
+                keepMounted
+                scroll="paper"
+                disableBackdropClick
+                disableEscapeKeyDown
+                maxWidth={"md"}
+                fullWidth
+                className={classes.dialogMain}
+                onClose={handleClose}
+            >
+                <Grid container direction="column" alignItems="center">
+                    <DialogTitle>Submit Information For Your New Listing</DialogTitle>
+                </Grid>
+
+                <DialogContent dividers>
+                    <ListingForm/>
+                </DialogContent>
+                
+                <DialogActions>
+                    <Button className={classes.buttonClose} onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button className={classes.buttonSubmit} onClick={handleClose}>
+                        Submit
+                    </Button>
+                </DialogActions>
+
+            </Dialog>
+
         </Grid>
     )      
 }
@@ -122,6 +175,38 @@ const useStyles = makeStyles((theme: Theme) =>
         cardItem: {
             marginTop: 30,
             width: '95%',
+        },
+
+////
+
+        addButtonContainer: {
+            marginRight: 40
+        },
+        addButton: {
+            height: 50
+        },
+        addButtonIcon: {
+            height: '100%',
+            marginTop: 10
+        },
+
+        dialogMain: {
+            width: '100%',
+            height: '100%',
+            paddingTop: theme.spacing(6),
+            paddingLeft: theme.spacing(6),
+            paddingRight: theme.spacing(6),
+        },
+        buttonContainer: {
+
+        },
+        buttonClose: {
+            fontSize: 18,
+            backgroundColor: "#E53939",
+        },
+        buttonSubmit: {
+            fontSize: 18,
+            backgroundColor: "#6ACB73",
         },
     }),
 );
