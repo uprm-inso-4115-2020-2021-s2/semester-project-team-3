@@ -1,7 +1,14 @@
-//import { Box, Card, createStyles, Grid, makeStyles, Theme, Typography, Button} from '@material-ui/core'
+import GooglePlacesAuto from "../ui-components/google-places/google-places"
 export default function Index(){
+    async function onAddressSelect(lat:number,lng:number,address:string){
+        console.log(lat,lng,address);
+    }
     return(
-        <h1>This is Request Form</h1>
+        <div>
+           <h1>This is Request Form</h1>
+            <GooglePlacesAuto onAddressSelect={onAddressSelect}/> 
+        </div>
+        
 
     )
         
