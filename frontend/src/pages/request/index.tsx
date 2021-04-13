@@ -53,15 +53,6 @@ export default function RequestForm(){
     }
 
     return(
-        <Grid container direction="column" wrap="nowrap" className={classes.main}>
-
-            <Grid container direction="row" className={classes.submitItem}>
-                <TextField label="Vehicle Request Date" type="search" variant="outlined" required className={classes.submitTextField}
-                    value={values.pickupDate}
-                    onChange={handleChange('pickupDate')}
-                />
-            </Grid>
-
             <Grid container direction="row" wrap="nowrap" className={classes.submitItem}>
                 <TextField label="Car Location" type="search" variant="outlined" disabled className={classes.submitTextField}
                     value={values.carLocation}
