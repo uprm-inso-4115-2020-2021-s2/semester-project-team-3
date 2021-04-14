@@ -1,7 +1,7 @@
 import { Box, Button, Checkbox, createStyles, Dialog, FormControlLabel, FormLabel, Grid, IconButton, InputAdornment, makeStyles, Radio, RadioGroup, TextField, Theme, Typography, useMediaQuery, useTheme } from "@material-ui/core";
 import { AddAPhotoRounded, PhotoCamera } from "@material-ui/icons";
 import React, { useEffect } from "react";
-import theme from "../theme";
+import theme from "../../theme";
 
 
 export default function RequestForm(){
