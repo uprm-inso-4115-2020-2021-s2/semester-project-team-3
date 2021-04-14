@@ -8,6 +8,7 @@ import { TransitionProps } from "@material-ui/core/transitions/transition";
 import GoogleLoginButton from "./google-login/google-login";
 import { useUser } from "../../hooks/useUser";
 import fetchUser from "../../requests/fetchUser";
+import theme from "../theme";
 
 
 export default function NavBar() {  
@@ -144,50 +145,48 @@ export default function NavBar() {
                 keepMounted
                 onClose={logClose}
             >
-                <Grid container direction="column" alignItems="center" className={classes.dialogContainer}>
-
-                    <Grid item className={classes.dialogClose}>
-                        <Grid container direction="row" justify='flex-end'>
-                            <Grid item>
-                                <IconButton onClick={logClose}>
-                                    <CloseRounded className={classes.closeButton}></CloseRounded>
-                                </IconButton>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-
-                    <Grid item className={classes.dialogBody}>
-                        <Typography className={classes.Title}>PonPon</Typography>
-                        <Typography className={classes.subTitle}>Sign up or Log in</Typography>
-                        <Typography className={classes.subTitle}>to access our services.</Typography>
-                    </Grid>
-
-                    <Grid item className={classes.dialogButtons}>
-                        <Grid container direction="column" alignItems="center">
-
-                            <Grid item className={classes.columnItem}>
-                                <GoogleLoginButton />
-                            </Grid>
-                            
-                            <Grid item className={classes.columnItem}>
-                                <Button className={classes.buttonFacebook}>
-                                    <Grid container direction="row" justify='center' alignItems="center" id="Facebook-Sign-In">
-                                        <Grid item className={classes.facebookIconItem}>
-                                            <img src="/Facebook_F.png" className={classes.facebookIcon}/>
-                                        </Grid>
-                                        <Grid item>
-                                            <Typography className={classes.buttonTextFacebook}>Sign In With Facebook</Typography>
-                                        </Grid>
-                                    </Grid>
-                                </Button>
-                            </Grid>
-
-                        </Grid>
-                    </Grid>
-
+                <Grid container direction="column" alignItems="flex-end">
+                    <IconButton onClick={logClose}>
+                        <CloseRounded className={classes.closeButton}></CloseRounded>
+                    </IconButton>
                 </Grid>
 
+                <DialogContent dividers>
+                    <Grid container direction="column" alignItems="center" className={classes.dialogContainer}>
+                        
+                        <DialogTitle>
+                            <Typography className={classes.Title}>PonPon</Typography>
+                        </DialogTitle>
+                        
+                        <Typography className={classes.subTitle}>Sign up or Log in</Typography>
+                        <Typography className={classes.subTitle}>to access our services.</Typography>
+
+                        <Grid item className={classes.dialogButtons}>
+                            <Grid container direction="column" alignItems="center">
+
+                                <GoogleLoginButton />
+
+                                {/* <Grid item className={classes.columnItem}>
+                                    <Button className={classes.buttonFacebook}>
+                                        <Grid container direction="row" justify='center' alignItems="center" id="Facebook-Sign-In">
+                                            <Grid item className={classes.facebookIconItem}>
+                                                <img src="/Facebook_F.png" className={classes.facebookIcon}/>
+                                            </Grid>
+                                            <Grid item>
+                                                <Typography className={classes.buttonTextFacebook}>Sign In With Facebook</Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </Button>
+                                </Grid> */}
+
+                            </Grid>
+                        </Grid>
+
+                    </Grid>
+                </DialogContent>
+
             </Dialog>
+
         </AppBar>
     )
 }
@@ -274,7 +273,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
         dialogContainer: {
             minWidth: 350,
-            minHeight: 500,
+            minHeight: 450,
         },
         dialogClose: {
             width: '100%',
@@ -289,7 +288,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         dialogButtons: {
             width: '100%',
-            paddingLeft: 32,
+            paddingTop: theme.spacing(4)
 
         },
         columnItem: {
@@ -319,12 +318,12 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: 8,
         },
         Title: {
-            fontSize: 40,
-            color: theme.palette.secondary.main
+            fontSize: 50,
+            color: theme.palette.secondary.light
         },
         subTitle: {
-            fontSize: 22,
-            color: theme.palette.secondary.main
+            fontSize: 24,
+            color: theme.palette.secondary.main,
         },
     }),
 );
