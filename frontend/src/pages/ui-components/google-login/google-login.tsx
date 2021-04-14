@@ -78,6 +78,7 @@ const useStyles = makeStyles((theme: Theme) =>
         googleIconItem: {
             width: 40,
             height: 40,
+            marginLeft: -10,
         },
         googleIcon: {
             width: '100%',
