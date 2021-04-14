@@ -1,8 +1,7 @@
 import { IAppointmentRepository } from '../../../domain';
 import { AppointmentStatusType } from '../../../domain/declarations';
 import * as dbHandler from '../../inmemory-dbconfig'
-import { ClientModel, IClientModel, ICarListingModel } from '../../models';
-import { IAppointmentModel } from '../../models/appointmentmodel';
+import { ClientModel, IClientModel} from '../../models';
 import { makeValidCarListingModelSample } from '../../models/tests/helper'
 import { AppointmentModel } from '../../models/appointmentmodel';
 import AppointmentRepository from '../appointment-repository';
@@ -24,7 +23,7 @@ beforeAll(async () => {
 afterAll(async () => await dbHandler.closeDatabase());
 
 describe(` 
-    Appointment repository is in hcarge of abstracting 
+    Appointment repository is in charge of abstracting 
     the persistance and retrieval of appointments `, () => {
     
 
@@ -70,6 +69,20 @@ describe(`
         expect(fetched).toBeFalsy()
         
     })
+
+    it("Should be able to find an appointment by appointment number", async () => {
+        const appointment = await AppointmentModel.findOne().exec()
+        const found = await appointmentRepo.findAppointmentByNumber(appointment!._id)
+        expect(found?.appointmentNumber).toEqual(appointment!._id)
+    })
+
+    it("Should be able to update an appointment", async () => {
+        const appointment = await AppointmentModel.findOne().exec()
+        const found = await appointmentRepo.findAppointmentByNumber(appointment!._id)
+        const newAppointment = await appointmentRepo.updateAppointment(found!.appointmentNumber!, {status: AppointmentStatusType.Delivered})
+        expect(newAppointment).not.toBeNull()
+        expect(newAppointment?.status).not.toEqual(appointment!.status)
+    })
     
 
-})
+}) 

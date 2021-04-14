@@ -2,6 +2,7 @@ import * as dbHandler from '../../inmemory-dbconfig'
 import { ClientModel, IClientModel } from '../clientmodel';
 import { AppointmentCollectionName, AppointmentModel, IAppointmentModel } from '../appointmentmodel'
 import { makeValidCarListingModelSample } from './helper';
+import { AppointmentStatusType } from '../../../domain';
 
 
 /**
@@ -45,7 +46,7 @@ describe("The appointment model represents an appointment in the database", () =
 
         const newAppointment = new AppointmentModel({
             rentee: person!._id,
-            status: "Testing",
+            status: AppointmentStatusType.Pending,
             carListing: carListing!._id,
             dateInformation: {
                 appointmentDate: new Date(),
