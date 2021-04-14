@@ -27,16 +27,7 @@ export default function RequestForm(){
     };
 
     const pickupBody = () => {
-        if (state === "dropoff") {
-            return (
-                <Grid container direction="row" wrap="nowrap" className={classes.submitItem}>
-                    <TextField label="Where would you like the vehicle dropped off?" type="search" variant="outlined" required className={classes.submitTextField}
-                        value={values.carDropLocation}
-                        onChange={handleChange('carDropLocation')}
-                    />
-                </Grid>
-            )
-        } else if (state === "meetup") {
+        if (state === "meetup") {
             return (
                 <Grid container direction="row" wrap="nowrap" className={classes.submitItem}>
                     <TextField label="Where will you meet for the vehicle?" type="search" variant="outlined" required className={classes.submitTextField}
@@ -44,10 +35,6 @@ export default function RequestForm(){
                         onChange={handleChange('carMeetLocation')}
                     />
                 </Grid>
-            )
-        } else {
-            return(
-                <></>
             )
         }
     }
@@ -74,9 +61,8 @@ export default function RequestForm(){
                     <RadioGroup value={state} onChange={handleState}>
                         <Grid container direction="column" wrap="nowrap" alignItems="center" className={classes.checkContainer}>
                             <Typography className={classes.checkText}>Vehicle Pickup Method</Typography>
-                            <Grid container direction="row" justify="space-between" className={classes.submitCheck}>
+                            <Grid container direction="row" justify="space-around" className={classes.submitCheck}>
                                 <FormControlLabel control={<Radio color="primary" className={classes.radioIcon}/>} label="Pickup" value="pickup"/>
-                                <FormControlLabel control={<Radio color="primary" className={classes.radioIcon}/>} label="Dropoff" value="dropoff"/>
                                 <FormControlLabel control={<Radio color="primary" className={classes.radioIcon}/>} label="Meetup" value="meetup"/>
                             </Grid>
                         </Grid>
@@ -85,6 +71,13 @@ export default function RequestForm(){
             </Grid>
             
             {pickupBody()}
+
+            <Grid container direction="row" wrap="nowrap" className={classes.submitItem}>
+                <TextField label="Where will the vehicle be dropped off?" type="search" variant="outlined" required className={classes.submitTextField}
+                    value={values.carDropLocation}
+                    onChange={handleChange('carDropLocation')}
+                />
+            </Grid>
 
             <Grid container direction="row" wrap="nowrap">
                 <TextField label="Additional Comments (Optional)" variant="outlined" fullWidth multiline rows={5} className={classes.submitDesc}/>
