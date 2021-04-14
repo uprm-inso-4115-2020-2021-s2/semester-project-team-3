@@ -15,6 +15,7 @@ export default function RequestForm(){
         pickupMethod: state, //state value
         carDropLocation: '',
         carMeetLocation: '',
+        days: 1
     });
 
     const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => { // change "any" to "keyof formModel"
@@ -46,6 +47,13 @@ export default function RequestForm(){
                 <TextField label="Vehicle Request Date" type="search" variant="outlined" required className={classes.submitTextField}
                     value={values.pickupDate}
                     onChange={handleChange('pickupDate')}
+                />
+            </Grid>
+
+            <Grid container direction="row" className={classes.submitItem}>
+                <TextField label="Amount of Days" type="number" variant="outlined" InputProps={{ inputProps: {min: 1}}} required className={classes.submitTextField}
+                    value={values.days}
+                    onChange={handleChange('days')}
                 />
             </Grid>
 
