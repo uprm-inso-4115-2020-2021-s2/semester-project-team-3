@@ -2,8 +2,9 @@ import { AppointmentUpdateFields } from "../../domain/repositories";
 import { IAppointment, IAppointmentRepository, AppointmentStatusType, makeAppointment, makeClient, makeCarListing } from "../../domain";
 import { CarListingModel, ClientModel, ICarListingModel, IClientModel } from "../models";
 import { AppointmentModel, IAppointmentModel } from "../models/appointmentmodel";
-import { carListingRepo } from "..";
+import  CarListingRepository  from "./carlisting-repository";
 
+const carListingRepo = new CarListingRepository()
 
 export default class AppointmentRepository implements IAppointmentRepository {
     
