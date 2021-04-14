@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Box, Button, Card, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, makeStyles, Theme, Typography } from "@material-ui/core";
 import { AddCircleOutlineRounded, AddRounded } from "@material-ui/icons";
 import ListingForm from "../listingForm";
+import RequestForm from "../request";
 
 export default function Index(){
     const classes = useStyles();
@@ -10,6 +11,10 @@ export default function Index(){
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {setOpen(true)}
     const handleClose = () => {setOpen(false)}
+
+    const [openReq, setOpenReq] = React.useState(false);
+    const handleOpenReq = () => {setOpenReq(true)}
+    const handleCloseReq = () => {setOpenReq(false)}
 
     return(
         <Grid container direction="column" alignItems="center" className={classes.main}>
@@ -48,6 +53,20 @@ export default function Index(){
             <Grid container direction='row' className={classes.mainContent}>
 
                 <Grid container direction="row" wrap="nowrap" justify="flex-end" className={classes.addButtonContainer}>
+
+                    <Grid item>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            color="primary"
+                            className={classes.addButton}
+                            onClick={handleOpenReq}
+                            endIcon={<Icon className={classes.addButtonIcon}><AddCircleOutlineRounded/></Icon>}
+                        >
+                            Temporary Request Button
+                        </Button>
+                    </Grid>
+
                     <Grid item>
                         <Button
                             variant="contained"
@@ -123,11 +142,41 @@ export default function Index(){
                     <ListingForm/>
                 </DialogContent>
                 
-                <DialogActions>
+                <DialogActions className={classes.buttonContainer}>
                     <Button className={classes.buttonClose} onClick={handleClose}>
                         Cancel
                     </Button>
                     <Button className={classes.buttonSubmit} onClick={handleClose}>
+                        Submit
+                    </Button>
+                </DialogActions>
+
+            </Dialog>
+
+            <Dialog
+                open={openReq}
+                keepMounted
+                scroll="paper"
+                disableBackdropClick
+                disableEscapeKeyDown
+                maxWidth={"md"}
+                fullWidth
+                className={classes.dialogMain}
+                onClose={handleCloseReq}
+            >
+                <Grid container direction="column" alignItems="center">
+                    <DialogTitle>Submit Your Listing Request</DialogTitle>
+                </Grid>
+
+                <DialogContent dividers>
+                    <RequestForm/>
+                </DialogContent>
+                
+                <DialogActions className={classes.buttonContainer}>
+                    <Button className={classes.buttonClose} onClick={handleCloseReq}>
+                        Cancel
+                    </Button>
+                    <Button className={classes.buttonSubmit} onClick={handleCloseReq}>
                         Submit
                     </Button>
                 </DialogActions>
@@ -198,7 +247,9 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingRight: theme.spacing(6),
         },
         buttonContainer: {
-
+            padding: theme.spacing(1.5),
+            marginRight: 5
+            
         },
         buttonClose: {
             fontSize: 18,
