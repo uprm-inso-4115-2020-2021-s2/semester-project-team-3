@@ -1,9 +1,11 @@
 import React from "react"
 import Link from "next/link";
-import { Box, Button, Card, CardHeader, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, Button, Card, CardContent, CardHeader, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, makeStyles, Theme, Typography } from "@material-ui/core";
 import { AddCircleOutlineRounded, AddRounded } from "@material-ui/icons";
 import ListingForm from "../listingForm";
 import RequestForm from "../request";
+import OwnerListingItem from "../ui-components/ownerListingItem";
+import OwnerReviewItem from "../ui-components/ownerReviewItem";
 
 export default function Index(){
     const classes = useStyles();
@@ -84,20 +86,19 @@ export default function Index(){
                 <Grid item xs={12} sm={6}>
                     <Grid container justify="center" style={{padding:4}}>
                         <Card className={classes.cardContainer}>
+
                             <Grid container direction='column' alignItems="center" wrap="nowrap" >
-                                
                                 <Typography className={classes.cardTitle}>Select a Vehicle</Typography>
-                            
-                            
-
-                            {/* <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
-
-                                <Grid item className={classes.cardItem}>
-
-                                </Grid>   
-
-                            </Grid> */}
                             </Grid>
+
+                            <CardContent>
+                                <Grid container direction='column' alignItems="center" wrap="nowrap">
+                                    {<OwnerListingItem/>}
+                                    {<OwnerListingItem/>}
+                                    {<OwnerListingItem/>}
+                                </Grid>
+                            </CardContent>
+
                         </Card>
                     </Grid>
                 </Grid>
@@ -105,19 +106,19 @@ export default function Index(){
                 <Grid item xs={12} sm={6}>
                     <Grid container justify="center" style={{padding:4}}>
                         <Card className={classes.cardContainer}>  
-                            {/* <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
 
-                                <Grid item>
-                                    <Typography variant='h4'>
-                                        Reviews
-                                    </Typography>
+                            <Grid container direction='column' alignItems="center" wrap="nowrap" >
+                                <Typography className={classes.cardTitle}>Reviews</Typography>
+                            </Grid>
+
+                            <CardContent>
+                                <Grid container direction='column' alignItems="center" wrap="nowrap">
+                                    {<OwnerReviewItem/>}
+                                    {<OwnerReviewItem/>}
+                                    {<OwnerReviewItem/>}
                                 </Grid>
+                            </CardContent>
 
-                                <Grid item className={classes.cardItem}>
-                                
-                                </Grid>   
-
-                            </Grid> */}
                         </Card>
                     </Grid>
                 </Grid>
@@ -213,10 +214,11 @@ const useStyles = makeStyles((theme: Theme) =>
         cardContainer: {
             minHeight: 600,
             maxHeight: 600,
-            maxWidth:800,
+            maxWidth: 800,
             width:"100%",
-            marginBottom:30,
+            marginBottom: 30,
             backgroundColor: theme.palette.primary.main,
+            overflow: 'auto',
         },
         // cardContent: {
         //     paddingTop: theme.spacing(1),

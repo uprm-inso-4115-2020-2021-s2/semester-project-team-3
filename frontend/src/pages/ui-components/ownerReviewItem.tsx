@@ -2,7 +2,7 @@ import { Button, ButtonBase, Card, createStyles, Grid, makeStyles, Theme, Typogr
 import React from "react";
 
 
-export default function OwnerListingItem(){
+export default function OwnerReviewItem(){
     const classes = useStyles();
 
     return(
@@ -10,30 +10,18 @@ export default function OwnerListingItem(){
             <ButtonBase className={classes.mainButton} onClick={null}>
                 <Card className={classes.mainCard}>
                     
-                    <Grid container direction="row" wrap="nowrap" className={classes.cardContent}> 
-                        
-                        <Grid item>
-                            <img src="/Facebook_F.png" className={classes.image}/>
+                    <Grid container direction="row" wrap="nowrap" justify="space-between" className={classes.cardContent}> 
+
+                        <Grid item xs={10} className={classes.textContainerItem}>
+                            <Typography noWrap className={classes.listingText}>
+                                Review text Review text Review text Review text Review text Review text Review text 
+                            </Typography>
                         </Grid>
 
-                        <Grid item className={classes.textContainerItem}>
-                            <Grid container direction="column" alignItems="flex-start" className={classes.textContainer}>
-                                <Typography noWrap className={classes.listingText}>
-                                    Title:
-                                </Typography>
-
-                                <Typography noWrap className={classes.listingText}>
-                                    Model: 
-                                </Typography>
-
-                                <Typography noWrap className={classes.listingText}>
-                                    Location: 
-                                </Typography>
-
-                                <Typography noWrap className={classes.listingText}>
-                                    Day Rate: 
-                                </Typography>
-                            </Grid>
+                        <Grid item xs={2} className={classes.textContainerItem}>
+                            <Typography noWrap className={classes.rating}>
+                                10/10
+                            </Typography>
                         </Grid>
 
                     </Grid>
@@ -64,12 +52,8 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingTop: 12,
             paddingLeft: theme.spacing(2)
         },
-        image: {
-            height: 160,
-            width: 160,
-        },
         textContainerItem: {
-            width: '70%'
+
         },
         textContainer: {
             height: '100%',
@@ -80,7 +64,10 @@ const useStyles = makeStyles((theme: Theme) =>
         listingText: {
             fontSize: 20,
             maxWidth: '88%',
-            paddingBottom: theme.spacing(1)
+            paddingBottom: theme.spacing(1),
+        },
+        rating: {
+            fontSize: 20,
         },
 
     }),
