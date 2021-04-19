@@ -256,7 +256,6 @@ const useStyles = makeStyles((theme: Theme) =>
         buttonContainer: {
             padding: theme.spacing(1.5),
             marginRight: 5
-            
         },
         buttonClose: {
             fontSize: 18,

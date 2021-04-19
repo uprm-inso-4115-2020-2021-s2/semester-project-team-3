@@ -1,13 +1,27 @@
 import { Button, ButtonBase, Card, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
+import ListingViewForm from "./listingViewForm";
 
 
 export default function OwnerListingItem(){
     const classes = useStyles();
 
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {setOpen(true)}
+    const handleClose = () => {setOpen(false)}
+
+    const itemDialog = () => {
+        if (open) {
+            return(
+                <ListingViewForm isOpen={open}/>
+            )
+        }
+    }
+
     return(
+        <>
         <Grid container direction="row" className={classes.main}>
-            <ButtonBase className={classes.mainButton} onClick={null}>
+            <ButtonBase className={classes.mainButton} onClick={handleOpen}>
                 <Card className={classes.mainCard}>
                     
                     <Grid container direction="row" wrap="nowrap" className={classes.cardContent}> 
@@ -40,7 +54,12 @@ export default function OwnerListingItem(){
 
                 </Card>
             </ButtonBase>
+
         </Grid>
+
+        <ListingViewForm isOpen={open}/>
+
+        </>
     )
 }
 
