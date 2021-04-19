@@ -1,6 +1,8 @@
 import { Button, ButtonBase, Card, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, InputAdornment, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import { CloseRounded } from "@material-ui/icons";
 import React from "react";
+import Carousel from "react-material-ui-carousel";
+import CarouselBasicItem from "./carouselBasicItem";
 
 
 export default function ListingViewForm(isOpen: any){
@@ -35,6 +37,19 @@ export default function ListingViewForm(isOpen: any){
                             <Grid container direction="column" wrap="nowrap" alignItems="center">
 
                                 <DialogTitle>Title</DialogTitle>
+
+                                <Grid container direction="row">
+                                    <Carousel
+                                        className={classes.carousel}
+                                        fullHeightHover
+                                        stopAutoPlayOnHover
+                                        animation="slide"
+                                    >
+                                        <CarouselBasicItem/>
+                                        <CarouselBasicItem/>
+                                        <CarouselBasicItem/>
+                                    </Carousel>
+                                </Grid>
 
                                 <Grid container direction="row">
                                     <TextField label="Model" variant="outlined" disabled className={classes.infoTextField}
@@ -160,6 +175,13 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(1),
             paddingTop: 12,
             paddingLeft: theme.spacing(2)
+        },
+        carousel: {
+            width: '100%',
+            height: '50%',
+            position: 'relative',
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(4),
         },
         image: {
             height: 160,
