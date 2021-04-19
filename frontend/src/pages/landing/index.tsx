@@ -1,13 +1,15 @@
 import React from "react"
 import Link from "next/link";
-import { Box, Button, Card, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, Button, ButtonBase, Card, createStyles, Grid, makeStyles, Slide, Theme, Typography } from "@material-ui/core";
+import Carousel from "react-material-ui-carousel";
+import CarouselItem from "../ui-components/carouselItem";
 
 export default function Index(){
    const classes = useStyles();
 
    return(
       <>
-      <Box width="100%"  position="absolute" top={0}>
+      <Box width="100%" position="absolute" top={0}>
          <img src="/backgroundImage.png" className={classes.backImage}/>
       </Box>
 
@@ -46,7 +48,16 @@ export default function Index(){
                         </Grid>
 
                         <Grid item className={classes.cardItem}>
-
+                           <Carousel
+                              className={classes.carousel}
+                              fullHeightHover
+                              stopAutoPlayOnHover
+                              animation="slide"
+                           >
+                              <CarouselItem/>
+                              <CarouselItem/>
+                              <CarouselItem/>
+                           </Carousel>
                         </Grid>   
 
                      </Grid>
@@ -66,8 +77,17 @@ export default function Index(){
                         </Grid>
 
                         <Grid item className={classes.cardItem}>
-                           
-                        </Grid>   
+                           <Carousel
+                              className={classes.carousel}
+                              fullHeightHover
+                              stopAutoPlayOnHover
+                              animation="slide"
+                           >
+                              <CarouselItem/>
+                              <CarouselItem/>
+                              <CarouselItem/>
+                           </Carousel>
+                        </Grid>  
 
                      </Grid>
                   </Card>
@@ -160,6 +180,13 @@ const useStyles = makeStyles((theme: Theme) =>
          marginTop: 30,
          width: '95%',
       },
+      carousel: {
+         width: '100%',
+         height: 450,
+         position: 'relative',
+         zIndex: 1000
+      },
+
 
    }),
 );
