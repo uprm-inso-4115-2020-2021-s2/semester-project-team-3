@@ -12,9 +12,6 @@ interface IProps {
 export default function ListingViewForm({isOpen, handleClose}:IProps){
     const classes = useStyles();
 
-    const [open, setOpen] = React.useState(isOpen);
-    const handleOpen = () => {setOpen(true)}
-
     return(
         <Grid container direction="row" className={classes.mainDialogGrid}>
             <Dialog
@@ -38,7 +35,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
 
                         <DialogContent dividers>
                             <Grid container direction="column" wrap="nowrap" alignItems="center">
-
+                                
                                 <DialogTitle>Title</DialogTitle>
 
                                 <Grid container direction="row">

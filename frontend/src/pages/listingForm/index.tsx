@@ -86,7 +86,7 @@ export default function ListingForm(){
                     InputProps={{
                         endAdornment:
                             <IconButton onClick={null}>
-                                <AddAPhotoRounded className={classes.pictureIcon}/>
+                                <AddAPhotoRounded className={classes.pictureIcon} />
                             </IconButton>,
                     }}
                 />
