@@ -4,18 +4,21 @@ import React from "react";
 import Carousel from "react-material-ui-carousel";
 import CarouselBasicItem from "./carouselBasicItem";
 
+interface IProps {
+    isOpen: boolean,
+    handleClose: () => any
+}
 
-export default function ListingViewForm(isOpen: any){
+export default function ListingViewForm({isOpen, handleClose}:IProps){
     const classes = useStyles();
 
     const [open, setOpen] = React.useState(isOpen);
     const handleOpen = () => {setOpen(true)}
-    const handleClose = () => {setOpen(false)}
 
     return(
         <Grid container direction="row" className={classes.mainDialogGrid}>
             <Dialog
-                open={open}
+                open={isOpen}
                 scroll="body" //scroll="paper" doesn't work for some reason
                 disableBackdropClick
                 disableEscapeKeyDown

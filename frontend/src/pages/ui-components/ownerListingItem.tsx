@@ -10,16 +10,10 @@ export default function OwnerListingItem(){
     const handleOpen = () => {setOpen(true)}
     const handleClose = () => {setOpen(false)}
 
-    const itemDialog = () => {
-        if (open) {
-            return(
-                <ListingViewForm isOpen={open}/>
-            )
-        }
-    }
-
     return(
         <>
+        <ListingViewForm isOpen={open} handleClose={handleClose}/>
+
         <Grid container direction="row" className={classes.main}>
             <ButtonBase className={classes.mainButton} onClick={handleOpen}>
                 <Card className={classes.mainCard}>
@@ -56,9 +50,6 @@ export default function OwnerListingItem(){
             </ButtonBase>
 
         </Grid>
-
-        <ListingViewForm isOpen={open}/>
-
         </>
     )
 }
