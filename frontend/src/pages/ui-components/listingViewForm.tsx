@@ -2,6 +2,7 @@ import { Button, ButtonBase, Card, createStyles, Dialog, DialogActions, DialogCo
 import { CloseRounded } from "@material-ui/icons";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
+import RequestForm from "../request";
 import CarouselBasicItem from "./carouselBasicItem";
 
 interface IProps {
@@ -12,7 +13,15 @@ interface IProps {
 export default function ListingViewForm({isOpen, handleClose}:IProps){
     const classes = useStyles();
 
+    const [openReq, setOpenReq] = React.useState(false);
+    const handleOpenReq = () => {
+        handleClose();
+        setOpenReq(true)
+    }
+    const handleCloseReq = () => {setOpenReq(false)}
+
     return(
+        <>
         <Grid container direction="row" className={classes.mainDialogGrid}>
             <Dialog
                 open={isOpen}
@@ -140,7 +149,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                         </DialogContent>
 
                         <DialogActions className={classes.buttonContainer}>
-                            <Button className={classes.buttonRequest} onClick={null}>
+                            <Button className={classes.buttonRequest} onClick={handleOpenReq}>
                                 Request Vehicle
                             </Button>
                         </DialogActions>
@@ -150,6 +159,8 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                 </Card>
             </Dialog>
         </Grid>
+        <RequestForm isOpen={openReq} handleClose={handleCloseReq}/>
+        </>
     )
 }
 

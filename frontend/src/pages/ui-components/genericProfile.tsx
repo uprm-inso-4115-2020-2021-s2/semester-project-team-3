@@ -21,11 +21,8 @@ export default function GenericProfile(props:IProps){
     const handleOpen = () => {setOpen(true)}
     const handleClose = () => {setOpen(false)}
 
-    const [openReq, setOpenReq] = React.useState(false);
-    const handleOpenReq = () => {setOpenReq(true)}
-    const handleCloseReq = () => {setOpenReq(false)}
-
     return(
+        <>
         <Grid container direction="column" alignItems="center" className={classes.main}>
 
             <Grid container direction="row" wrap='nowrap' className={classes.mainInfo}>
@@ -112,68 +109,11 @@ export default function GenericProfile(props:IProps){
                 </Grid>
 
             </Grid>
-            
-            <Dialog
-                open={open}
-                keepMounted
-                scroll="paper"
-                disableBackdropClick
-                disableEscapeKeyDown
-                maxWidth={"md"}
-                fullWidth
-                className={classes.dialogMain}
-                onClose={handleClose}
-            >
-                <Grid container direction="column" alignItems="center">
-                    <DialogTitle>Submit Information For Your New Listing</DialogTitle>
-                </Grid>
-
-                <DialogContent dividers>
-                    <ListingForm/>
-                </DialogContent>
-                
-                <DialogActions className={classes.buttonContainer}>
-                    <Button className={classes.buttonClose} onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button className={classes.buttonSubmit} onClick={handleClose}>
-                        Submit
-                    </Button>
-                </DialogActions>
-
-            </Dialog>
-
-            <Dialog
-                open={openReq}
-                keepMounted
-                scroll="paper"
-                disableBackdropClick
-                disableEscapeKeyDown
-                maxWidth={"md"}
-                fullWidth
-                className={classes.dialogMain}
-                onClose={handleCloseReq}
-            >
-                <Grid container direction="column" alignItems="center">
-                    <DialogTitle>Submit Your Listing Request</DialogTitle>
-                </Grid>
-
-                <DialogContent dividers>
-                    <RequestForm/>
-                </DialogContent>
-                
-                <DialogActions className={classes.buttonContainer}>
-                    <Button className={classes.buttonClose} onClick={handleCloseReq}>
-                        Cancel
-                    </Button>
-                    <Button className={classes.buttonSubmit} onClick={handleCloseReq}>
-                        Submit
-                    </Button>
-                </DialogActions>
-
-            </Dialog>
 
         </Grid>
+
+        <ListingForm isOpen={open} handleClose={handleClose}/>
+        </>
     )      
 }
 
@@ -232,26 +172,6 @@ const useStyles = makeStyles((theme: Theme) =>
         addButtonIcon: {
             height: '100%',
             marginTop: 10
-        },
-
-        dialogMain: {
-            width: '100%',
-            height: '100%',
-            paddingTop: theme.spacing(6),
-            paddingLeft: theme.spacing(6),
-            paddingRight: theme.spacing(6),
-        },
-        buttonContainer: {
-            padding: theme.spacing(1.5),
-            marginRight: 5
-        },
-        buttonClose: {
-            fontSize: 18,
-            backgroundColor: "#E53939",
-        },
-        buttonSubmit: {
-            fontSize: 18,
-            backgroundColor: "#6ACB73",
         },
     }),
 );
