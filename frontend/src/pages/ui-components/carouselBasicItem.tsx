@@ -2,32 +2,16 @@ import React from "react"
 import Link from "next/link";
 import { Box, Button, ButtonBase, Card, createStyles, Grid, makeStyles, Slide, Theme, Typography } from "@material-ui/core";
 
-export default function CarouselItem(){
+export default function CarouselBasicItem(){
     const classes = useStyles();
 
     return(
         <>
-            <ButtonBase className={classes.carouselItem} onClick={null}>
+            
                 <Grid container direction="column" wrap="nowrap" className={classes.carouselItem}>
-
                     <img src="/Google_G.png" className={classes.carouselImage}/>
-
-                    <Grid container direction="column" wrap="nowrap" alignItems="flex-start" className={classes.carouselTextContainer}>
-                        <Grid item className={classes.carouselTextItem}>
-                            <Typography className={classes.carouselText}>Model</Typography>
-                        </Grid>
-                        
-                        <Grid item className={classes.carouselTextItem}>
-                            <Typography className={classes.carouselText}>Location</Typography>
-                        </Grid>
-
-                        <Grid item className={classes.carouselTextItem}>
-                            <Typography className={classes.carouselText}>Day Rate</Typography>
-                        </Grid>
-                    </Grid>
-
                 </Grid>
-            </ButtonBase>
+            
         </>
     )
 }
@@ -36,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
    createStyles({  
         carouselItem: {
             width: '100%',
-            height: 420,
+            height: 500,
         },
         carouselImage: {
             width: '100%',

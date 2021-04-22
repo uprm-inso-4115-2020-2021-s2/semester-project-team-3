@@ -2,7 +2,7 @@ import React from "react"
 import Link from "next/link";
 import { Box, Button, ButtonBase, Card, createStyles, Grid, makeStyles, Slide, Theme, Typography } from "@material-ui/core";
 import Carousel from "react-material-ui-carousel";
-import CarouselItem from "../ui-components/carouselItem";
+import CarouselButtonItem from "../ui-components/carouselButtonItem";
 
 export default function Index(){
    const classes = useStyles();
@@ -54,9 +54,9 @@ export default function Index(){
                               stopAutoPlayOnHover
                               animation="slide"
                            >
-                              <CarouselItem/>
-                              <CarouselItem/>
-                              <CarouselItem/>
+                              <CarouselButtonItem/>
+                              <CarouselButtonItem/>
+                              <CarouselButtonItem/>
                            </Carousel>
                         </Grid>   
 
@@ -83,9 +83,9 @@ export default function Index(){
                               stopAutoPlayOnHover
                               animation="slide"
                            >
-                              <CarouselItem/>
-                              <CarouselItem/>
-                              <CarouselItem/>
+                              <CarouselButtonItem/>
+                              <CarouselButtonItem/>
+                              <CarouselButtonItem/>
                            </Carousel>
                         </Grid>  
 
