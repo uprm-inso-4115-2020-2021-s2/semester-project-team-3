@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Box, Button, Card, CardContent, CardHeader, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, makeStyles, Theme, Typography } from "@material-ui/core";
 import { AddCircleOutlineRounded, AddRounded } from "@material-ui/icons";
 import ListingForm from "../listingForm";
-import RequestForm from "../request";
+import RequestForm from "../requestForm";
 import OwnerListingItem from "../ui-components/ownerListingItem";
 import OwnerReviewItem from "../ui-components/ownerReviewItem";
 import { IUser } from "../../hooks/useUser";

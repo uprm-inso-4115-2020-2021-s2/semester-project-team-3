@@ -3,7 +3,7 @@ import { CloseRounded } from "@material-ui/icons";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
 import { IUser } from "../../hooks/useUser";
-import RequestForm from "../request";
+import RequestForm from "../requestForm";
 import CarouselBasicItem from "./carouselBasicItem";
 
 interface IProps {
@@ -30,6 +30,22 @@ export default function ListingViewForm({isOpen, handleClose}:IProps, props:IPro
     const [disableBool, setDisableBool] = React.useState(true);
     const disableToggleFalse = () => {setDisableBool(false)}
     const disableToggleTrue = () => {setDisableBool(true)}
+
+    const [values, setValues] = React.useState<any>({  //change "any" to "formModel"
+        listingTitle: '',
+        carBrand: '',
+        carModel: '',
+        licensePlate: '',
+        color: '',
+        location: '',
+        dayRate: null,
+        carDocuments: [],
+        carPictures: [],
+    });
+
+    const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => { // change "any" to "keyof formModel"
+        setValues({ ...values, [prop]: event.target.value });  
+    };
 
     const actionBody = () => { // this doesn't work :(
         if(props.User && disableBool) {
@@ -109,6 +125,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps, props:IPro
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
@@ -121,6 +138,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps, props:IPro
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
@@ -133,6 +151,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps, props:IPro
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
@@ -146,6 +165,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps, props:IPro
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('sinko peso')}
                                     />
                                 </Grid>
 
@@ -158,6 +178,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps, props:IPro
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
@@ -170,6 +191,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps, props:IPro
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
@@ -182,6 +204,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps, props:IPro
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
