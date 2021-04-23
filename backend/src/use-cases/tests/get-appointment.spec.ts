@@ -62,6 +62,8 @@ beforeAll(async () => {
     
 });
 
+afterAll(async () => await dbConfig.closeDatabase());
+
 describe("you should be able to get your appointments", () => {
 
     it("Should get all your appointments", async ()=>{
