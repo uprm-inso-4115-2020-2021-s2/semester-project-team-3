@@ -2,6 +2,8 @@ import { Button, ButtonBase, Card, createStyles, Dialog, DialogActions, DialogCo
 import { CloseRounded } from "@material-ui/icons";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
+import { IUser } from "../../hooks/useUser";
+import RequestForm from "../requestForm";
 import CarouselBasicItem from "./carouselBasicItem";
 
 interface IProps {
@@ -9,19 +11,79 @@ interface IProps {
     handleClose: () => any
 }
 
-export default function ListingViewForm({isOpen, handleClose}:IProps){
+interface IProps2 {
+    User: IUser,
+    Listings: any[],
+    Reviews: any[],
+}
+
+export default function ListingViewForm({isOpen, handleClose}:IProps, props:IProps2){
     const classes = useStyles();
 
-    const [open, setOpen] = React.useState(isOpen);
-    const handleOpen = () => {setOpen(true)}
+    const [openReq, setOpenReq] = React.useState(false);
+    const handleOpenReq = () => {
+        handleClose();
+        setOpenReq(true)
+    }
+    const handleCloseReq = () => {setOpenReq(false)}
+
+    const [disableBool, setDisableBool] = React.useState(true);
+    const disableToggleFalse = () => {setDisableBool(false)}
+    const disableToggleTrue = () => {setDisableBool(true)}
+
+    const [values, setValues] = React.useState<any>({  //change "any" to "formModel"
+        listingTitle: '',
+        carBrand: '',
+        carModel: '',
+        licensePlate: '',
+        color: '',
+        location: '',
+        dayRate: null,
+        carDocuments: [],
+        carPictures: [],
+    });
+
+    const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => { // change "any" to "keyof formModel"
+        setValues({ ...values, [prop]: event.target.value });  
+    };
+
+    const actionBody = () => { // this doesn't work :(
+        if(props.User && disableBool) {
+            return(
+                <>
+                <Button className={classes.buttonRequest} onClick={disableToggleFalse}>
+                    Update Listing
+                </Button>
+                </>
+            )
+        }
+        else if(props.User && !disableBool) {
+            return(
+                <>
+                <Button className={classes.buttonRequest} onClick={disableToggleTrue}>
+                    Confirm Update
+                </Button>
+                </>
+            )
+        }
+        else {
+            return(
+                <>
+                <Button className={classes.buttonRequest} onClick={handleOpenReq}>
+                    Request Vehicle
+                </Button>
+                </>
+            )
+        }
+    }
 
     return(
+        <>
         <Grid container direction="row" className={classes.mainDialogGrid}>
             <Dialog
                 open={isOpen}
                 scroll="body" //scroll="paper" doesn't work for some reason
                 disableBackdropClick
-                disableEscapeKeyDown
                 maxWidth={"md"}
                 fullWidth
                 className={classes.mainDialog}
@@ -38,7 +100,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
 
                         <DialogContent dividers>
                             <Grid container direction="column" wrap="nowrap" alignItems="center">
-
+                                
                                 <DialogTitle>Title</DialogTitle>
 
                                 <Grid container direction="row">
@@ -55,7 +117,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                                 </Grid>
 
                                 <Grid container direction="row">
-                                    <TextField label="Model" variant="outlined" disabled className={classes.infoTextField}
+                                    <TextField label="Model" variant="outlined" disabled={disableBool} className={classes.infoTextField}
                                         value={"value"}
                                         InputProps={{
                                             classes: {
@@ -63,11 +125,12 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
                                 <Grid container direction="row">
-                                    <TextField label="Color" variant="outlined" disabled className={classes.infoTextField}
+                                    <TextField label="Color" variant="outlined" disabled={disableBool} className={classes.infoTextField}
                                         value={"value"}
                                         InputProps={{
                                             classes: {
@@ -75,11 +138,12 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
                                 <Grid container direction="row">
-                                    <TextField label="Brand" variant="outlined" disabled className={classes.infoTextField}
+                                    <TextField label="Brand" variant="outlined" disabled={disableBool} className={classes.infoTextField}
                                         value={"value"}
                                         InputProps={{
                                             classes: {
@@ -87,11 +151,12 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
                                 <Grid container direction="row">
-                                    <TextField label="Day Rate" variant="outlined" disabled className={classes.infoTextField}
+                                    <TextField label="Day Rate" variant="outlined" disabled={disableBool} className={classes.infoTextField}
                                         value={"sinko peso"}
                                         InputProps={{
                                             startAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -100,11 +165,12 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('sinko peso')}
                                     />
                                 </Grid>
 
                                 <Grid container direction="row" wrap="nowrap">
-                                    <TextField label="Owner" variant="outlined" disabled className={classes.infoTextField}
+                                    <TextField label="Owner" variant="outlined" disabled={disableBool} className={classes.infoTextField}
                                         value={"value"}
                                         InputProps={{
                                             classes: {
@@ -112,11 +178,12 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
                                 <Grid container direction="row" wrap="nowrap">
-                                    <TextField label="Location" variant="outlined" disabled className={classes.infoTextField}
+                                    <TextField label="Location" variant="outlined" disabled={disableBool} className={classes.infoTextField}
                                         value={"value"}
                                         InputProps={{
                                             classes: {
@@ -124,11 +191,12 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
                                 <Grid container direction="row" wrap="nowrap">
-                                    <TextField label="Description" variant="outlined" disabled fullWidth multiline rows={5} className={classes.descTextField}
+                                    <TextField label="Description" variant="outlined" disabled={disableBool} fullWidth multiline rows={5} className={classes.descTextField}
                                         value={"value"}
                                         InputProps={{
                                             classes: {
@@ -136,6 +204,7 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                                                 disabled: classes.disabled
                                             }
                                         }}
+                                        onChange={handleChange('value')}
                                     />
                                 </Grid>
 
@@ -143,9 +212,17 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                         </DialogContent>
 
                         <DialogActions className={classes.buttonContainer}>
-                            <Button className={classes.buttonRequest} onClick={null}>
-                                Request Vehicle
-                            </Button>
+                            <Grid container direction="row" justify="flex-end" wrap="nowrap">
+                                <Button className={classes.buttonRequest} onClick={disableToggleFalse}>
+                                    Update Listing
+                                </Button>
+                                <Button className={classes.buttonRequest} onClick={disableToggleTrue}>
+                                    Confirm Update
+                                </Button>
+                                <Button className={classes.buttonRequest} onClick={handleOpenReq}>
+                                    Request Vehicle
+                                </Button>
+                            </Grid>
                         </DialogActions>
                         
 
@@ -153,6 +230,8 @@ export default function ListingViewForm({isOpen, handleClose}:IProps){
                 </Card>
             </Dialog>
         </Grid>
+        <RequestForm isOpen={openReq} handleClose={handleCloseReq}/>
+        </>
     )
 }
 

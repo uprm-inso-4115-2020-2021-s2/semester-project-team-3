@@ -12,8 +12,6 @@ export default function OwnerListingItem(){
 
     return(
         <>
-        <ListingViewForm isOpen={open} handleClose={handleClose}/>
-
         <Grid container direction="row" className={classes.main}>
             <ButtonBase className={classes.mainButton} onClick={handleOpen}>
                 <Card className={classes.mainCard}>
@@ -48,8 +46,9 @@ export default function OwnerListingItem(){
 
                 </Card>
             </ButtonBase>
-
         </Grid>
+
+        <ListingViewForm isOpen={open} handleClose={handleClose}/>
         </>
     )
 }
