@@ -1,4 +1,4 @@
-import { AppointmentUpdateFields } from "../../domain/repositories";
+import { AppointmentQueryFields, AppointmentUpdateFields } from "../../domain/repositories";
 import { IAppointment, IAppointmentRepository, AppointmentStatusType, makeAppointment, makeClient, makeCarListing } from "../../domain";
 import { CarListingModel, ClientModel, ICarListingModel, IClientModel } from "../models";
 import { AppointmentModel, IAppointmentModel } from "../models/appointmentmodel";
@@ -7,6 +7,28 @@ import  CarListingRepository  from "./carlisting-repository";
 const carListingRepo = new CarListingRepository()
 
 export default class AppointmentRepository implements IAppointmentRepository {
+    
+    
+    async findAllByFields(data: AppointmentQueryFields): Promise<IAppointment[]> {
+        let query = AppointmentModel.find()
+        
+        if (data.rentee) {
+            query = query.find({
+                retnee: (await ClientModel.findOne({email:data.rentee}).exec())!._id!
+            })
+        }
+        
+        if (data.licensePlate) {
+            query = query.find({
+                carListing: (await CarListingModel.findOne({licensePlate: data.licensePlate}).exec())!._id!
+            })
+        }
+
+        const result = await query.limit(10).skip(10*(data.page - 1)).exec()
+        const prebuilt = result.map(async (val) => (await this.buildAppointment(val)) as IAppointment)
+        const finalResult = await Promise.all(prebuilt)
+        return finalResult
+    }
     
 
     private calcEndDate(date:Date, days:number) {
@@ -113,7 +135,6 @@ export default class AppointmentRepository implements IAppointmentRepository {
         catch(err) {
             return null
         }
-        return null
 
     }
 

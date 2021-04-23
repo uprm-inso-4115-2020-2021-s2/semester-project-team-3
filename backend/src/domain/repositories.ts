@@ -50,7 +50,15 @@ export interface IAppointmentRepository {
     overlapExists(date: Date, days: number, listingPlate: string): Promise<boolean>
     findAppointmentByNumber(appointmentNumber: string): Promise<IAppointment | null>
     updateAppointment(appointmentNumber: string, appointment: AppointmentUpdateFields): Promise<IAppointment | null>
+    findAllByFields(data:AppointmentQueryFields): Promise<IAppointment[]>
 
+}
+
+export type AppointmentQueryFields = {
+    appointmentDate?: Date,
+    rentee?:string,
+    licensePlate?:string,
+    page:number
 }
 
 export type AppointmentUpdateFields = {

@@ -1,4 +1,4 @@
-import { Location } from "../domain";
+import { IClient, Location } from "../domain";
 
 export interface UseCaseOutput<E> {
     success: boolean,
@@ -18,17 +18,7 @@ export enum ErrorMessages {
     ListingImageCapacityReached = "Listing image capacity reached"
 }
 
-/**
-"model": "Corolla",
-"brand": "Toyota",
-"year": 2020,
-"cancellationFee":25.56,
-"licensePlate": "TES321",
-"priceRate": 35,
-"carDescription": " Testing creating a vehicle ",
-"carImages": [""] ,
-"carLocation": {lat:0, lon:0, address:""}
- */
+
 export type CreateCarListingRequest = {
     title: string,
     carLocationLat: number,
@@ -48,7 +38,7 @@ export type CreateCarListingRequest = {
 
 }
 
-export type AppointmentRequest = {
+export interface  AppointmentRequest {
 
     meetupLocation: Location
     dropoffLocation: Location,
@@ -56,6 +46,16 @@ export type AppointmentRequest = {
     days: number,
     listingLicensePlate: string
 
+}
+
+export interface GetAppointmentResponse extends AppointmentRequest {
+    rentee: IClient
+}
+
+export interface GetAppointmentRequest {
+    listingLicensePlate: string,
+    owner:string
+    page:number
 }
 
 export type File = {
