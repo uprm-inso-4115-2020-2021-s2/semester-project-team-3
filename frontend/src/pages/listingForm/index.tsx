@@ -1,7 +1,10 @@
 import { Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, InputAdornment, makeStyles, TextField, Theme, Typography, useMediaQuery, useTheme } from "@material-ui/core";
-import { AddAPhotoRounded, PhotoCamera } from "@material-ui/icons";
+import { AddAPhotoRounded, LocationSearchingTwoTone, PhotoCamera } from "@material-ui/icons";
 import React, { useEffect } from "react";
+import GooglePlacesAuto from '../ui-components/google-places/google-places'
 import theme from "../../theme";
+import createListing from "../../requests/createListing";
+import { useUser } from "../../hooks/useUser";
 
 interface IProps {
     isOpen: boolean,
@@ -12,17 +15,45 @@ export default function ListingForm({isOpen, handleClose}:IProps){
     const classes = useStyles();
     const theme = useTheme();
 
+    const {user} = useUser()
+
     const [values, setValues] = React.useState<any>({  //change "any" to "formModel"
         listingTitle: '',
         carBrand: '',
         carModel: '',
         licensePlate: '',
         color: '',
-        location: '',
         dayRate: null,
         carDocuments: [],
         carPictures: [],
+        carDescription: ''
     });
+
+    const [location, setLocation] = React.useState<any>({
+        lat:null,
+        lon:null,
+        address:null
+    })
+
+    const submit = async () => {
+        let body = {
+            licensePlate: values.licensePlate,
+            title: values.listingTitle,
+            carLocationLat: location.lat,
+            carLocationLon: location.lon,
+            carLocationAddress: location.address,
+            model: values.carModel,
+            brand: values.carBrand,
+            year:2020,
+            carDescription: "testing",
+            cancellationFee: 10.00,
+            priceRate: values.dayRate,
+            accessToken: sessionStorage.getItem('access_token'),
+        }
+        console.log(body)
+        const result = await createListing(body)
+        console.log(result)
+    }
 
     const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => { // change "any" to "keyof formModel"
         setValues({ ...values, [prop]: event.target.value });  
@@ -77,10 +108,17 @@ export default function ListingForm({isOpen, handleClose}:IProps){
                     </Grid>
 
                     <Grid container direction="row" className={classes.submitItem}>
-                        <TextField label="Location" type="search" variant="outlined" required className={classes.submitTextField}
+                        {/* <TextField label="Location" type="search" variant="outlined" required className={classes.submitTextField}
                             value={values.location}
                             onChange={handleChange('location')}
-                        />
+                        /> */}
+                        <GooglePlacesAuto onAddressSelect={async (lat, lon, address) => {
+                            setLocation({
+                                lat:lat,
+                                lon:lon,
+                                address:address
+                            })
+                        }}/>
                         <TextField label="Day Rate (USD)" type="number" variant="outlined" required className={classes.submitTextField}
                             value={values.dayRate}
                             onChange={handleChange('dayRate')}
@@ -115,7 +153,11 @@ export default function ListingForm({isOpen, handleClose}:IProps){
                     </Grid>
 
                     <Grid container direction="row">
-                        <TextField label="Additional Description (Optional)" variant="outlined" fullWidth multiline rows={5} className={classes.submitDesc}/>
+                        <TextField 
+                            value={values.carDescription}
+                            onChange={handleChange('carDescription')}
+                            label="Additional Description (Optional)" variant="outlined" fullWidth multiline rows={5} className={classes.submitDesc}
+                        />
                     </Grid>
                 </Grid>
             </DialogContent>
@@ -124,7 +166,7 @@ export default function ListingForm({isOpen, handleClose}:IProps){
                 <Button className={classes.buttonClose} onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button className={classes.buttonSubmit} onClick={handleClose}>
+                <Button className={classes.buttonSubmit} onClick={submit}>
                     Submit
                 </Button>
             </DialogActions>

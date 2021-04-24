@@ -24,7 +24,7 @@ export default function GooglePlacesAuto (props:GooglePlacesProps){
     };
     
     
-    return <Grid>
+    return <>
         
         <PlacesAutoComplete 
         value={address} 
@@ -32,9 +32,7 @@ export default function GooglePlacesAuto (props:GooglePlacesProps){
         onSelect={handleselect}
         >
             {({getInputProps, suggestions, getSuggestionItemProps, loading})=>(
-            <div>
-                <p>Latt : {coordinates.lat}</p>
-                <p>Long : {coordinates.lng}</p>
+            <>
                 <TextField variant="outlined"{...getInputProps({placeholder:"Type address"})}/>
                 <div>
                     {loading ? <div>...loading</div> : null}
@@ -47,14 +45,16 @@ export default function GooglePlacesAuto (props:GooglePlacesProps){
                         
 
                         return (
-                            <div {...getSuggestionItemProps(suggestion,{style})}>
+                            <div
+                             style={{position:"absolute", zIndex:1000000}}
+                             {...getSuggestionItemProps(suggestion,{style})}>
                                 {suggestion.description}
                             </div>
                         );
 
                     })}
                 </div>
-            </div>)}
+            </>)}
         </PlacesAutoComplete>
-    </Grid>
+    </>
 }

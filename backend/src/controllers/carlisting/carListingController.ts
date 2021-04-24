@@ -29,8 +29,8 @@ export const createCarListing = async (req:CreateListingRequest, res:Response) =
         const request = {
             ...req.body,
             owner: req.user.email,
-            carImages: req.files.carImages,
-            carLicenseImage: req.files.carLicenseImage
+            carImages: req.files?.carImages,
+            carLicenseImage: req.files?.carLicenseImage
         }
 
         const result = await createCarListingUseCase(request)
