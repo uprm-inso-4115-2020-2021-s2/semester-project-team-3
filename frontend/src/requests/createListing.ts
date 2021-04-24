@@ -6,7 +6,6 @@ export type CreateListingRequest = {
     carLocationLat: number,
     carLocationLon: number,
     carLocationAddress: string,
-    owner: string,
     model: string,
     brand: string,
     year: number,
@@ -22,12 +21,17 @@ export type CreateListingRequest = {
 
 export default async function createListing(listingInfo: CreateListingRequest) {
 
-    const result = await axios
-        .post(`${process.env.NEXT_PUBLIC_BACKEND_API}/listing?access_token=${listingInfo.accessToken}`, {
-            ...listingInfo
-        })
 
-    console.log(result)
-    return result.data
+        return axios
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_API}/listing?access_token=${listingInfo.accessToken}`, 
+            listingInfo
+        ).then(res => res.data)
+        .catch(err => {
+            if (!err.response) {
+                alert(err.message)
+            }
+            return err.response?.data
+        })
+    
 
 }
