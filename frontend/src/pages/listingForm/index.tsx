@@ -1,4 +1,4 @@
-import { Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, InputAdornment, makeStyles, TextField, Theme, Typography, useMediaQuery, useTheme } from "@material-ui/core";
+import { CircularProgress, Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, InputAdornment, makeStyles, TextField, Theme, Typography, useMediaQuery, useTheme, LinearProgress } from "@material-ui/core";
 import { AddAPhotoRounded, LocationSearchingTwoTone, PhotoCamera } from "@material-ui/icons";
 import React, { useEffect } from "react";
 import GooglePlacesAuto from '../ui-components/google-places/google-places'
@@ -35,7 +35,10 @@ export default function ListingForm({isOpen, handleClose}:IProps){
         address:null
     })
 
+    const [loading, setLoading] = React.useState<boolean>(false)
+
     const submit = async () => {
+        setLoading(true)
         let body = {
             licensePlate: values.licensePlate,
             title: values.listingTitle,
@@ -50,9 +53,13 @@ export default function ListingForm({isOpen, handleClose}:IProps){
             priceRate: values.dayRate,
             accessToken: sessionStorage.getItem('access_token'),
         }
-        console.log(body)
         const result = await createListing(body)
-        console.log(result)
+        if (result.success) {
+            alert("Created successfully")
+        }else {
+            alert(result.msg)
+        }
+        setLoading(false)
     }
 
     const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => { // change "any" to "keyof formModel"
@@ -71,8 +78,9 @@ export default function ListingForm({isOpen, handleClose}:IProps){
             className={classes.dialogMain}
             onClose={handleClose}
         >
-
-            <Grid container direction="column" alignItems="center">
+            {!loading?(
+                <>
+                <Grid container direction="column" alignItems="center">
                 <DialogTitle>Submit Information For Your New Listing</DialogTitle>
             </Grid>
 
@@ -171,6 +179,15 @@ export default function ListingForm({isOpen, handleClose}:IProps){
                 </Button>
             </DialogActions>
 
+                </>
+            ): 
+            <DialogContent>
+                <Grid container justify="center">
+                    <CircularProgress />
+                </Grid>
+            </DialogContent>
+            }
+            
         </Dialog>  
     )
         

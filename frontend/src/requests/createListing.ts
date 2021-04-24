@@ -27,6 +27,9 @@ export default async function createListing(listingInfo: CreateListingRequest) {
             listingInfo
         ).then(res => res.data)
         .catch(err => {
+            if (!err.response) {
+                alert(err.message)
+            }
             return err.response?.data
         })
     
