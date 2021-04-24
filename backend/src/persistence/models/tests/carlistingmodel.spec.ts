@@ -1,5 +1,5 @@
 import { CarListingModel, ICarListingModel } from '../carlistingmodel'
-import * as dbHandler from '../../inmemory-dbconfig'
+import * as dbHandler from '../../dbconfig'
 import { ClientModel, IClientModel } from '../clientmodel';
 import {makeValidCarListingModelSample} from './helper'
 

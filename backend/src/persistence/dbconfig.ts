@@ -4,7 +4,7 @@ import  { MongoMemoryServer } from 'mongodb-memory-server'
 
 const mongod = new MongoMemoryServer();
 /**
- * Connect to the mongoDB ATLAS database.
+ * Connect to the mongoDB ATLAS or in-Memory DB depending on the server environment  database.
 */
 export const connect = async () => {
     let uri = await mongod.getUri();
