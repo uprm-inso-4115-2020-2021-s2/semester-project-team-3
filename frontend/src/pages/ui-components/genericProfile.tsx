@@ -78,9 +78,7 @@ export default function GenericProfile(props:IProps){
 
                             <CardContent>
                                 <Grid container direction='column' alignItems="center" wrap="nowrap">
-                                    {<OwnerListingItem/>}
-                                    {<OwnerListingItem/>}
-                                    {<OwnerListingItem/>}
+                                    {props.Listings.map(val => <OwnerListingItem/>)}
                                 </Grid>
                             </CardContent>
 

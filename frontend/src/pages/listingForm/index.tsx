@@ -5,6 +5,7 @@ import GooglePlacesAuto from '../ui-components/google-places/google-places'
 import theme from "../../theme";
 import createListing from "../../requests/createListing";
 import { useUser } from "../../hooks/useUser";
+import {mutate} from 'swr';
 
 interface IProps {
     isOpen: boolean,
@@ -60,6 +61,8 @@ export default function ListingForm({isOpen, handleClose}:IProps){
             alert(result.msg)
         }
         setLoading(false)
+        mutate(`ownerProfile/${sessionStorage.getItem('access_token')}`)
+        handleClose()
     }
 
     const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => { // change "any" to "keyof formModel"
