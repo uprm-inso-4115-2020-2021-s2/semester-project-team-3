@@ -10,7 +10,7 @@ export default function Index(){
     const {user, setUser} = useUser();
     const router = useRouter();
     
-    const {data:listings, error} = useSWR(`ownerProfile/${sessionStorage.getItem('access_token')}`, async ()=>{
+    const {data:listings, error} = useSWR(`ownerProfile/${user?.email}`, async ()=>{
         return await fetchMyListings(sessionStorage.getItem('access_token'))
     })
 

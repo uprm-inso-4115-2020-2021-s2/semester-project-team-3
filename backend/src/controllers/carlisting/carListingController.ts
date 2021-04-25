@@ -34,7 +34,6 @@ export const createCarListing = async (req:CreateListingRequest, res:Response) =
         }
 
         const result = await createCarListingUseCase(request)
-
         request.carImages?.map((val: File) => unlinkAsync(val.path))
         request.carLicenseImage?.map((val: File) => unlinkAsync(val.path))
         
