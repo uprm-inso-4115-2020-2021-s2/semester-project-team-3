@@ -29,6 +29,8 @@ interface UploadCarImageRequest extends RequestWithUser {
     file: Express.Multer.File
 }
 
+
+
 export type {
     RequestWithUser,
     RequestAppointmentRequest,

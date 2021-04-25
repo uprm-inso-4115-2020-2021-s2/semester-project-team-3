@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express";
-import { RequestAppointmentRequest } from "../controllers";
+import { RequestAppointmentRequest, RequestWithUser } from "../controllers";
 import { googleAuth } from "../auth/passport";
 import {appointmentController} from '../controllers'
 
@@ -13,5 +13,11 @@ appointmentRouter.post('/request',
     }
 )
 
+appointmentRouter.get('/', 
+    googleAuth,
+    (req:Request, res:Response) => {
+        appointmentController.getMyAppointments(req as RequestWithUser, res)
+    }
+)
 
 export default appointmentRouter

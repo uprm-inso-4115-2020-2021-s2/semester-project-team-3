@@ -31,7 +31,7 @@ export interface ICarListing {
     isVerified: boolean
     brand: string
     year: number
-    cancellationFee: number
+    cancellationFee?: number
     licensePlate: string
     priceRate: number
     owner: IClient

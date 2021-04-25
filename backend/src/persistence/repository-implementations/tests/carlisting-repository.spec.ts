@@ -1,5 +1,5 @@
 import CarListingRepository from '../carlisting-repository'
-import * as dbHandler from '../../inmemory-dbconfig'
+import * as dbHandler from '../../dbconfig'
 import { ClientModel, IClientModel, CarListingModel, ICarListingModel } from '../../models';
 import { makeValidCarListingModelSample } from '../../models/tests/helper'
 

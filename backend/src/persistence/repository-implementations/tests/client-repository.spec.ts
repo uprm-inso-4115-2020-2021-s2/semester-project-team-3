@@ -1,6 +1,6 @@
 import ClientRepository from '../client-repository'
 import {makeClient} from '../../../domain/factories'
-import * as dbHandler from '../../inmemory-dbconfig'
+import * as dbHandler from '../../dbconfig'
 import { ClientModel, IClientModel } from '../../models/clientmodel';
 
 
