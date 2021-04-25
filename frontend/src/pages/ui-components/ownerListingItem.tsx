@@ -22,7 +22,7 @@ export default function OwnerListingItem({listing}){
                     <Grid container direction="row" wrap="nowrap" className={classes.cardContent}> 
                         
                         <Grid item>
-                            {listing.carImages?.length? <img src={listing.carImages[0]} className={classes.image} />: <img src="/Facebook_F.png" className={classes.image}/>}
+                            {listing.carImages?.length? <img src={listing.carImages[0]} className={classes.image} />: <img src="/cartoon_car.jpg" className={classes.image}/>}
                             
                         </Grid>
 

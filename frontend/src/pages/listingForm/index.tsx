@@ -15,6 +15,7 @@ interface IProps {
 export default function ListingForm({isOpen, handleClose}:IProps){
     const classes = useStyles();
     const theme = useTheme();
+    const {user} = useUser();
 
     const [values, setValues] = React.useState<any>({  //change "any" to "formModel"
         listingTitle: '',
@@ -79,7 +80,7 @@ export default function ListingForm({isOpen, handleClose}:IProps){
             alert(result.msg)
         }
         setLoading(false)
-        mutate(`ownerProfile/${sessionStorage.getItem('access_token')}`)
+        mutate(`ownerProfile/${user?.email}`)
     }
 
     const handleInputFileCarImage = (e) => {
