@@ -1,4 +1,4 @@
-import { Grid, TextField } from "@material-ui/core";
+import { Grid, TextField, createStyles, makeStyles, Theme, Box } from "@material-ui/core";
 import React from "react"
 import PlacesAutoComplete, {geocodeByAddress,getLatLng} from "react-places-autocomplete";
 
@@ -7,6 +7,7 @@ interface GooglePlacesProps{
 }
 
 export default function GooglePlacesAuto (props:GooglePlacesProps){
+    const classes = useStyles();
     const [address,setAddress]= React.useState("");
     const [coordinates,setCoordinates] = React.useState({
         lat:null,
@@ -32,29 +33,50 @@ export default function GooglePlacesAuto (props:GooglePlacesProps){
         onSelect={handleselect}
         >
             {({getInputProps, suggestions, getSuggestionItemProps, loading})=>(
-            <>
-                <TextField variant="outlined"{...getInputProps({placeholder:"Type address"})}/>
-                <div>
+            <>   
+                <TextField className={classes.submitTextField} variant="outlined"{...getInputProps({placeholder:"Car Location*"})}/>
+                <Box className={classes.autocomplete}>
                     {loading ? <div>...loading</div> : null}
 
                     {suggestions.map((suggestion)=>{
                         const style = {
-                            backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
+                            backgroundColor: suggestion.active ? "#41b6e6" : "#fff",
+                            borderStyle: "solid"
+                            
                         };
-
-                        
 
                         return (
                             <div
-                             style={{position:"absolute", zIndex:1000000}}
                              {...getSuggestionItemProps(suggestion,{style})}>
                                 {suggestion.description}
                             </div>
                         );
 
                     })}
-                </div>
+                </Box>
             </>)}
         </PlacesAutoComplete>
     </>
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        submitTextField: {
+            paddingLeft: theme.spacing(0.5),
+            paddingRight: theme.spacing(0.5),
+            paddingBottom: theme.spacing(1.5),
+            width: '50%',
+            [theme.breakpoints.down('sm')]: {
+                width: '100%',
+                paddingBottom: theme.spacing(1.5),
+            },
+        },
+        autocomplete: {
+            position:'absolute',
+            zIndex:100,
+            padding: theme.spacing(1),
+            width: '28%',
+        },
+        
+    }),
+);
