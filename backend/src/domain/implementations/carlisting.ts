@@ -6,7 +6,7 @@ export class CarListing implements ICarListing{
     isVerified: boolean
     brand: string
     year: number
-    cancellationFee: number
+    cancellationFee?: number
     licensePlate: string
     priceRate: number
     owner: IClient
@@ -18,7 +18,7 @@ export class CarListing implements ICarListing{
     title:string
 
     constructor(data: Partial<ICarListing> = {}){
-        if(!data.model || !data.brand || !data.year || !data.cancellationFee || !data.licensePlate
+        if(!data.model || !data.brand || !data.year || !data.licensePlate
             || !data.priceRate || !data.owner || !data.carDescription || !data.carLocation || data.carLocation.lat === undefined || data.carLocation.lon === undefined || !data.title){
             throw new Error(ErrorMsg.IllegalException)
         }
@@ -26,7 +26,7 @@ export class CarListing implements ICarListing{
         this.isVerified = data.isVerified? data.isVerified: false;
         this.brand = data.brand as string;
         this.year = data.year as number;
-        this.cancellationFee = data.cancellationFee as number;
+        this.cancellationFee = data.cancellationFee;
         this.licensePlate = data.licensePlate as string;
         this.priceRate = data.priceRate as number;
         this.owner = makeClient(data.owner);
