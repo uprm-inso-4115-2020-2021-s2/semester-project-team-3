@@ -5,6 +5,7 @@ import GooglePlacesAuto from '../ui-components/google-places/google-places'
 import theme from "../../theme";
 import createListing from "../../requests/createListing";
 import { useUser } from "../../hooks/useUser";
+import {mutate} from 'swr';
 
 interface IProps {
     isOpen: boolean,
@@ -14,8 +15,7 @@ interface IProps {
 export default function ListingForm({isOpen, handleClose}:IProps){
     const classes = useStyles();
     const theme = useTheme();
-
-    const {user} = useUser()
+    const {user} = useUser();
 
     const [values, setValues] = React.useState<any>({  //change "any" to "formModel"
         listingTitle: '',
@@ -35,6 +35,10 @@ export default function ListingForm({isOpen, handleClose}:IProps){
         address:null
     })
 
+    const [carImages, setCarImages] = React.useState(null)
+
+    const [carLicenseImage, setCarLicenseImage] = React.useState(null)
+
     const [loading, setLoading] = React.useState<boolean>(false)
 
     const submit = async () => {
@@ -48,18 +52,45 @@ export default function ListingForm({isOpen, handleClose}:IProps){
             model: values.carModel,
             brand: values.carBrand,
             year:2020,
-            carDescription: "testing",
+            carDescription: values.carDescription,
             cancellationFee: 10.00,
             priceRate: values.dayRate,
             accessToken: sessionStorage.getItem('access_token'),
+            carImages: carImages,
+            carLicenseImage: carLicenseImage
         }
         const result = await createListing(body)
         if (result.success) {
             alert("Created successfully")
+            setValues({  //change "any" to "formModel"
+                listingTitle: '',
+                carBrand: '',
+                carModel: '',
+                licensePlate: '',
+                color: '',
+                dayRate: null,
+                carDocuments: [],
+                carPictures: [],
+                carDescription: ''
+            })
+            setCarImages(null)
+            setCarLicenseImage(null)
+            handleClose()
         }else {
             alert(result.msg)
         }
         setLoading(false)
+        mutate(`ownerProfile/${user?.email}`)
+    }
+
+    const handleInputFileCarImage = (e) => {
+        setCarImages(e.target.files)
+    }
+
+    const handleInputFileCarLicenseImage = (e) => {
+        if (e.target.files) {
+            setCarLicenseImage(e.target.files[0])
+        }
     }
 
     const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => { // change "any" to "keyof formModel"
@@ -137,27 +168,15 @@ export default function ListingForm({isOpen, handleClose}:IProps){
                     </Grid>
 
                     <Grid container direction="row" className={classes.submitItem}>
-                        <TextField label="Upload Car Documents..." variant="outlined" disabled required className={classes.submitTextField} // might change to button group
-                            value={values.carDocuments}
-                            onChange={handleChange('carDocuments')}
-                            InputProps={{
-                                endAdornment:
-                                    <IconButton onClick={null}>
-                                        <AddAPhotoRounded className={classes.pictureIcon}/>
-                                    </IconButton>,
-                            }}
-                        />
-                        <TextField label="Upload Car Pictures..." variant="outlined" disabled required className={classes.submitTextField}
-                            value={values.carPictures}
-                            onChange={handleChange('carPictures')}
-                            InputProps={{
-                                endAdornment:
-                                    <IconButton onClick={null}>
-                                        <AddAPhotoRounded className={classes.pictureIcon} />
-                                    </IconButton>,
-                            }}
-                        />
+                        <div className={classes.submitTextField}>
+                            <Typography>Upload Car Images</Typography>
+                            <input type="file" multiple onChange={handleInputFileCarImage}/>
+                        </div>
                         
+                        <div className={classes.submitTextField}>
+                            <Typography>Upload License Image</Typography>
+                            <input type="file" onChange={handleInputFileCarLicenseImage}/>
+                        </div>
                     </Grid>
 
                     <Grid container direction="row">

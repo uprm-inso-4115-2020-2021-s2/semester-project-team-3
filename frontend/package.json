@@ -17,7 +17,8 @@
     "react-dom": "17.0.1",
     "react-google-login": "^5.2.2",
     "react-material-ui-carousel": "^2.2.4",
-    "react-places-autocomplete": "^7.3.0"
+    "react-places-autocomplete": "^7.3.0",
+    "swr": "^0.5.5"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",

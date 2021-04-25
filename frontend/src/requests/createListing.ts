@@ -12,7 +12,7 @@ export type CreateListingRequest = {
     licensePlate: string,
     priceRate: number,
     carDescription: string
-    carImages?: File[],
+    carImages?: FileList,
     carLicenseImage?: File[],
     cancellationFee: number,
     canDeliver?: boolean,
@@ -21,10 +21,26 @@ export type CreateListingRequest = {
 
 export default async function createListing(listingInfo: CreateListingRequest) {
 
+        let {accessToken , ...rest} = listingInfo
 
+        let body = new FormData();
+        
+        for ( let key in rest ) {
+            
+            if (key === "carImages" && rest[key]) {
+                for(let i = 0; i < rest[key].length; i++) {
+                    body.append("carImages", rest[key].item(i))
+                }
+            } else {
+                body.append(key, rest[key])
+            }
+            
+        }
+
+        console.log(body.getAll('carImages'))
         return axios
-        .post(`${process.env.NEXT_PUBLIC_BACKEND_API}/listing?access_token=${listingInfo.accessToken}`, 
-            listingInfo
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_API}/listing?access_token=${accessToken}`, 
+            body
         ).then(res => res.data)
         .catch(err => {
             if (!err.response) {

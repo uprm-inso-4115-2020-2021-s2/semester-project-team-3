@@ -3,12 +3,15 @@ import React, { useEffect } from "react";
 import ListingViewForm from "./listingViewForm";
 
 
-export default function OwnerListingItem(){
+export default function OwnerListingItem({listing}){
     const classes = useStyles();
-
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {setOpen(true)}
     const handleClose = () => {setOpen(false)}
+
+    useEffect(()=> {
+        console.log(listing)
+    }, [listing])
 
     return(
         <>
@@ -19,25 +22,26 @@ export default function OwnerListingItem(){
                     <Grid container direction="row" wrap="nowrap" className={classes.cardContent}> 
                         
                         <Grid item>
-                            <img src="/Facebook_F.png" className={classes.image}/>
+                            {listing.carImages?.length? <img src={listing.carImages[0]} className={classes.image} />: <img src="/cartoon_car.jpg" className={classes.image}/>}
+                            
                         </Grid>
 
                         <Grid item className={classes.textContainerItem}>
                             <Grid container direction="column" alignItems="flex-start" className={classes.textContainer}>
                                 <Typography noWrap className={classes.listingText}>
-                                    Title:
+                                    Title: {listing.title}
                                 </Typography>
 
                                 <Typography noWrap className={classes.listingText}>
-                                    Model: 
+                                    Model: {listing.model}
                                 </Typography>
 
                                 <Typography noWrap className={classes.listingText}>
-                                    Location: 
+                                    Location: {listing.carLocation.address}
                                 </Typography>
 
                                 <Typography noWrap className={classes.listingText}>
-                                    Day Rate: 
+                                    Day Rate: {listing.priceRate}
                                 </Typography>
                             </Grid>
                         </Grid>
