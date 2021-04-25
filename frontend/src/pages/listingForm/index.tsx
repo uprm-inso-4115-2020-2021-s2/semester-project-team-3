@@ -1,12 +1,21 @@
-import { Button, createStyles, Dialog, Grid, IconButton, InputAdornment, makeStyles, TextField, Theme, Typography, useMediaQuery, useTheme } from "@material-ui/core";
-import { AddAPhotoRounded, PhotoCamera } from "@material-ui/icons";
+import { CircularProgress, Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, InputAdornment, makeStyles, TextField, Theme, Typography, useMediaQuery, useTheme, LinearProgress } from "@material-ui/core";
+import { AddAPhotoRounded, LocationSearchingTwoTone, PhotoCamera } from "@material-ui/icons";
 import React, { useEffect } from "react";
+import GooglePlacesAuto from '../ui-components/google-places/google-places'
 import theme from "../../theme";
+import createListing from "../../requests/createListing";
+import { useUser } from "../../hooks/useUser";
 
+interface IProps {
+    isOpen: boolean,
+    handleClose: () => any
+}
 
-export default function ListingForm(){
+export default function ListingForm({isOpen, handleClose}:IProps){
     const classes = useStyles();
     const theme = useTheme();
+
+    const {user} = useUser()
 
     const [values, setValues] = React.useState<any>({  //change "any" to "formModel"
         listingTitle: '',
@@ -14,89 +23,172 @@ export default function ListingForm(){
         carModel: '',
         licensePlate: '',
         color: '',
-        location: '',
         dayRate: null,
         carDocuments: [],
         carPictures: [],
+        carDescription: ''
     });
+
+    const [location, setLocation] = React.useState<any>({
+        lat:null,
+        lon:null,
+        address:null
+    })
+
+    const [loading, setLoading] = React.useState<boolean>(false)
+
+    const submit = async () => {
+        setLoading(true)
+        let body = {
+            licensePlate: values.licensePlate,
+            title: values.listingTitle,
+            carLocationLat: location.lat,
+            carLocationLon: location.lon,
+            carLocationAddress: location.address,
+            model: values.carModel,
+            brand: values.carBrand,
+            year:2020,
+            carDescription: "testing",
+            cancellationFee: 10.00,
+            priceRate: values.dayRate,
+            accessToken: sessionStorage.getItem('access_token'),
+        }
+        const result = await createListing(body)
+        if (result.success) {
+            alert("Created successfully")
+        }else {
+            alert(result.msg)
+        }
+        setLoading(false)
+    }
 
     const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => { // change "any" to "keyof formModel"
         setValues({ ...values, [prop]: event.target.value });  
     };
 
-    return(
-        <Grid container direction="column" wrap="nowrap" className={classes.main}>
-            <Grid container direction="row" className={classes.titleItem}>
-                <TextField label="Title" type="search" variant="outlined" required fullWidth
-                    value={values.listingTitle}
-                    onChange={handleChange('listingTitle')}
-                />
+    return(      
+        <Dialog
+            open={isOpen}
+            keepMounted
+            scroll="paper"
+            disableBackdropClick
+            disableEscapeKeyDown
+            maxWidth={"md"}
+            fullWidth
+            className={classes.dialogMain}
+            onClose={handleClose}
+        >
+            {!loading?(
+                <>
+                <Grid container direction="column" alignItems="center">
+                <DialogTitle>Submit Information For Your New Listing</DialogTitle>
             </Grid>
 
-            <Grid container direction="row" className={classes.submitItem}>
-                <TextField label="Car Brand" type="search" variant="outlined" required className={classes.submitTextField}
-                    value={values.carBrand}
-                    onChange={handleChange('carBrand')}
-                />
-                <TextField label="Car Model" type="search" variant="outlined" required className={classes.submitTextField}
-                    value={values.carModel}
-                    onChange={handleChange('carModel')}
-                />
-            </Grid>
+            <DialogContent dividers>
+                <Grid container direction="column" wrap="nowrap" className={classes.main}>
+                    <Grid container direction="row" className={classes.titleItem}>
+                        <TextField label="Title" type="search" variant="outlined" required fullWidth
+                            value={values.listingTitle}
+                            onChange={handleChange('listingTitle')}
+                        />
+                    </Grid>
 
-            <Grid container direction="row" className={classes.submitItem}>
-                <TextField label="License Plate" type="search" variant="outlined" required className={classes.submitTextField}
-                    value={values.licensePlate}
-                    onChange={handleChange('licensePlate')}
-                />
-                <TextField label="Color" type="search" variant="outlined" required className={classes.submitTextField}
-                    value={values.color}
-                    onChange={handleChange('color')}
-                />
-            </Grid>
+                    <Grid container direction="row" className={classes.submitItem}>
+                        <TextField label="Car Brand" type="search" variant="outlined" required className={classes.submitTextField}
+                            value={values.carBrand}
+                            onChange={handleChange('carBrand')}
+                        />
+                        <TextField label="Car Model" type="search" variant="outlined" required className={classes.submitTextField}
+                            value={values.carModel}
+                            onChange={handleChange('carModel')}
+                        />
+                    </Grid>
 
-            <Grid container direction="row" className={classes.submitItem}>
-                <TextField label="Location" type="search" variant="outlined" required className={classes.submitTextField}
-                    value={values.location}
-                    onChange={handleChange('location')}
-                />
-                <TextField label="Day Rate (USD)" type="number" variant="outlined" required className={classes.submitTextField}
-                    value={values.dayRate}
-                    onChange={handleChange('dayRate')}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                    }}
-                />
-            </Grid>
+                    <Grid container direction="row" className={classes.submitItem}>
+                        <TextField label="License Plate" type="search" variant="outlined" required className={classes.submitTextField}
+                            value={values.licensePlate}
+                            onChange={handleChange('licensePlate')}
+                        />
+                        <TextField label="Color" type="search" variant="outlined" required className={classes.submitTextField}
+                            value={values.color}
+                            onChange={handleChange('color')}
+                        />
+                    </Grid>
 
-            <Grid container direction="row" className={classes.submitItem}>
-                <TextField label="Upload Car Documents..." variant="outlined" disabled required className={classes.submitTextField} // might change to button group
-                    value={values.carDocuments}
-                    onChange={handleChange('carDocuments')}
-                    InputProps={{
-                        endAdornment:
-                            <IconButton onClick={null}>
-                                <AddAPhotoRounded className={classes.pictureIcon}/>
-                            </IconButton>,
-                    }}
-                />
-                <TextField label="Upload Car Pictures..." variant="outlined" disabled required className={classes.submitTextField}
-                    value={values.carPictures}
-                    onChange={handleChange('carPictures')}
-                    InputProps={{
-                        endAdornment:
-                            <IconButton onClick={null}>
-                                <AddAPhotoRounded className={classes.pictureIcon}/>
-                            </IconButton>,
-                    }}
-                />
-                
-            </Grid>
+                    <Grid container direction="row" className={classes.submitItem}>
+                        {/* <TextField label="Location" type="search" variant="outlined" required className={classes.submitTextField}
+                            value={values.location}
+                            onChange={handleChange('location')}
+                        /> */}
+                        <GooglePlacesAuto onAddressSelect={async (lat, lon, address) => {
+                            setLocation({
+                                lat:lat,
+                                lon:lon,
+                                address:address
+                            })
+                        }}/>
+                        <TextField label="Day Rate (USD)" type="number" variant="outlined" required className={classes.submitTextField}
+                            value={values.dayRate}
+                            onChange={handleChange('dayRate')}
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                        />
+                    </Grid>
 
-            <Grid container direction="row">
-                <TextField label="Additional Description (Optional)" variant="outlined" fullWidth multiline rows={5} className={classes.submitDesc}/>
-            </Grid>
-        </Grid>
+                    <Grid container direction="row" className={classes.submitItem}>
+                        <TextField label="Upload Car Documents..." variant="outlined" disabled required className={classes.submitTextField} // might change to button group
+                            value={values.carDocuments}
+                            onChange={handleChange('carDocuments')}
+                            InputProps={{
+                                endAdornment:
+                                    <IconButton onClick={null}>
+                                        <AddAPhotoRounded className={classes.pictureIcon}/>
+                                    </IconButton>,
+                            }}
+                        />
+                        <TextField label="Upload Car Pictures..." variant="outlined" disabled required className={classes.submitTextField}
+                            value={values.carPictures}
+                            onChange={handleChange('carPictures')}
+                            InputProps={{
+                                endAdornment:
+                                    <IconButton onClick={null}>
+                                        <AddAPhotoRounded className={classes.pictureIcon} />
+                                    </IconButton>,
+                            }}
+                        />
+                        
+                    </Grid>
+
+                    <Grid container direction="row">
+                        <TextField 
+                            value={values.carDescription}
+                            onChange={handleChange('carDescription')}
+                            label="Additional Description (Optional)" variant="outlined" fullWidth multiline rows={5} className={classes.submitDesc}
+                        />
+                    </Grid>
+                </Grid>
+            </DialogContent>
+
+            <DialogActions className={classes.buttonContainer}>
+                <Button className={classes.buttonClose} onClick={handleClose}>
+                    Cancel
+                </Button>
+                <Button className={classes.buttonSubmit} onClick={submit}>
+                    Submit
+                </Button>
+            </DialogActions>
+
+                </>
+            ): 
+            <DialogContent>
+                <Grid container justify="center">
+                    <CircularProgress />
+                </Grid>
+            </DialogContent>
+            }
+            
+        </Dialog>  
     )
         
 }
@@ -148,5 +240,27 @@ const useStyles = makeStyles((theme: Theme) =>
             }
         },
         disabled: {},
+
+        //////////////////////////////
+
+        dialogMain: {
+            width: '100%',
+            height: '100%',
+            paddingTop: theme.spacing(6),
+            paddingLeft: theme.spacing(6),
+            paddingRight: theme.spacing(6),
+        },
+        buttonContainer: {
+            padding: theme.spacing(1.5),
+            marginRight: 5
+        },
+        buttonClose: {
+            fontSize: 18,
+            backgroundColor: "#E53939",
+        },
+        buttonSubmit: {
+            fontSize: 18,
+            backgroundColor: "#6ACB73",
+        },
     }),
 );

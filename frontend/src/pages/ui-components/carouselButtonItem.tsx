@@ -1,13 +1,18 @@
 import React from "react"
 import Link from "next/link";
 import { Box, Button, ButtonBase, Card, createStyles, Grid, makeStyles, Slide, Theme, Typography } from "@material-ui/core";
+import ListingViewForm from "./listingViewForm";
 
 export default function CarouselButtonItem(){
     const classes = useStyles();
 
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {setOpen(true)}
+    const handleClose = () => {setOpen(false)}
+
     return(
         <>
-            <ButtonBase className={classes.carouselItem} onClick={null}>
+            <ButtonBase className={classes.carouselItem} onClick={handleOpen}>
                 <Grid container direction="column" wrap="nowrap" className={classes.carouselItem}>
 
                     <img src="/Google_G.png" className={classes.carouselImage}/>
@@ -28,6 +33,8 @@ export default function CarouselButtonItem(){
 
                 </Grid>
             </ButtonBase>
+
+            <ListingViewForm isOpen={open} handleClose={handleClose}/>
         </>
     )
 }
