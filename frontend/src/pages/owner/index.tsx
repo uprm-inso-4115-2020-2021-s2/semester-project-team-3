@@ -21,6 +21,7 @@ export default function Index(){
     }, [user]) 
     
     if(user) {
+        
         return(
             <GenericProfile User={user as IUser} Listings={listings?.data? listings.data: []} Reviews={[]}/>
         )      
