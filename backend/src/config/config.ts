@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const SERVER_ENV = process.env.ENV || 'development'
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';
 const SERVER_PORT = process.env.SERVER_PORT || '1337';
 const SECRET_KEY = process.env.SECRET_KEY || 'foo'
@@ -12,10 +13,12 @@ const COOKIE_DURATION = Number(process.env.COOKIE_DURATION) || 8.64e+7
 const GOOGLE_STORAGE_SERVICE_KEY = process.env.GOOGLE_STORAGE_SERVICE_KEY || ''
 const GOOGLE_STORAGE_BUCKET = process.env.GOOGLE_STORAGE_BUCKET || ''
 const GOOGLE_PROJECT_ID = process.env.projectId || ''
+const MONGO_URI = process.env.MONGO_URI || ''
 
 const SERVER = {
     hostname: SERVER_HOSTNAME,
     port: Number(SERVER_PORT),
+    env: SERVER_ENV
     
 };
 
@@ -37,10 +40,15 @@ const GOOGLE = {
     projectId: GOOGLE_PROJECT_ID
 }
 
+const MONGO = {
+    mongoURI: MONGO_URI
+}
+
 const config = {
     server: SERVER,
     google: GOOGLE,
-    security: SECURITY
-};
+    security: SECURITY,
+    mongo: MONGO
+}
 
 export default config;

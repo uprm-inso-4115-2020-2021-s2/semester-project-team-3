@@ -1,14 +1,17 @@
 import mongoose from 'mongoose'
 import  { MongoMemoryServer } from 'mongodb-memory-server'
 
-const mongod = new MongoMemoryServer();
 
+const mongod = new MongoMemoryServer();
 /**
- * Connect to the in-memory database.
+ * Connect to the mongoDB ATLAS or in-Memory DB depending on the server environment  database.
 */
 export const connect = async () => {
-    const uri = await mongod.getUri();
-
+    let uri = await mongod.getUri();
+    if(process.env.SERVER_ENV==='production'){
+        uri = process.env.MONGO_URI || ''
+    }
+    
     const mongooseOpts = {
         useNewUrlParser: true,
         autoReconnect: true,
@@ -20,7 +23,7 @@ export const connect = async () => {
 }
 
 /**
- * Drop database, close the connection and stop mongod.
+ * Drop database, close the connection.
  */
 export const closeDatabase = async () => {
     await mongoose.connection.dropDatabase();

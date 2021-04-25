@@ -1,6 +1,6 @@
 import { IAppointmentRepository } from '../../../domain';
 import { AppointmentStatusType } from '../../../domain/declarations';
-import * as dbHandler from '../../inmemory-dbconfig'
+import * as dbHandler from '../../dbconfig'
 import { ClientModel, IClientModel} from '../../models';
 import { makeValidCarListingModelSample } from '../../models/tests/helper'
 import { AppointmentModel } from '../../models/appointmentmodel';
