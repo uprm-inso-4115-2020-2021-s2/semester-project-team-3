@@ -16,8 +16,6 @@ export default function ListingForm({isOpen, handleClose}:IProps){
     const classes = useStyles();
     const theme = useTheme();
 
-    const {user} = useUser()
-
     const [values, setValues] = React.useState<any>({  //change "any" to "formModel"
         listingTitle: '',
         carBrand: '',
@@ -63,6 +61,14 @@ export default function ListingForm({isOpen, handleClose}:IProps){
         setLoading(false)
         mutate(`ownerProfile/${sessionStorage.getItem('access_token')}`)
         handleClose()
+    }
+
+    const handleInputFileCarImage = (e) => {
+        console.log(e.target.files)
+    }
+
+    const handleInputFileCarLicenseImage = (e) => {
+        console.log(e.target.files)
     }
 
     const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => { // change "any" to "keyof formModel"
@@ -140,27 +146,15 @@ export default function ListingForm({isOpen, handleClose}:IProps){
                     </Grid>
 
                     <Grid container direction="row" className={classes.submitItem}>
-                        <TextField label="Upload Car Documents..." variant="outlined" disabled required className={classes.submitTextField} // might change to button group
-                            value={values.carDocuments}
-                            onChange={handleChange('carDocuments')}
-                            InputProps={{
-                                endAdornment:
-                                    <IconButton onClick={null}>
-                                        <AddAPhotoRounded className={classes.pictureIcon}/>
-                                    </IconButton>,
-                            }}
-                        />
-                        <TextField label="Upload Car Pictures..." variant="outlined" disabled required className={classes.submitTextField}
-                            value={values.carPictures}
-                            onChange={handleChange('carPictures')}
-                            InputProps={{
-                                endAdornment:
-                                    <IconButton onClick={null}>
-                                        <AddAPhotoRounded className={classes.pictureIcon} />
-                                    </IconButton>,
-                            }}
-                        />
+                        <div className={classes.submitTextField}>
+                            <Typography>Upload Car Images</Typography>
+                            <input type="file" onChange={handleInputFileCarImage}/>
+                        </div>
                         
+                        <div className={classes.submitTextField}>
+                            <Typography>Upload License Image</Typography>
+                            <input type="file" onChange={handleInputFileCarLicenseImage}/>
+                        </div>
                     </Grid>
 
                     <Grid container direction="row">
