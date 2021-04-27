@@ -1,10 +1,12 @@
 import { Button, ButtonBase, Card, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 import React, { useEffect } from "react";
+import AppointmentList from "./appointmentList";
 import ListingViewForm from "./listingViewForm";
 
 
 export default function OwnerListingItem({listing}){
     const classes = useStyles();
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {setOpen(true)}
     const handleClose = () => {setOpen(false)}
@@ -13,17 +15,29 @@ export default function OwnerListingItem({listing}){
         console.log(listing)
     }, [listing])
 
+    // const buttonAppointment = () => {
+    //     if (true) {
+    //         return(
+    //             <Card className={classes.cardAppointments}>
+    //                 <Grid container direction="row" justify="flex-end" className={classes.appointmentContainer}>                   
+    //                     <Button className={classes.requestButton} onClick={handleOpenAppointments}>
+    //                         Vehicle Requests
+    //                     </Button>                   
+    //                 </Grid>     
+    //             </Card>       
+    //         )
+    //     }
+    // }
+
     return(
         <>
-        <Grid container direction="row" className={classes.main}>
-            <ButtonBase className={classes.mainButton} onClick={handleOpen}>
+        <Grid container direction="column" className={classes.main}>
+            <ButtonBase className={classes.mainButton} onClick={handleOpen}>  
                 <Card className={classes.mainCard}>
-                    
                     <Grid container direction="row" wrap="nowrap" className={classes.cardContent}> 
                         
                         <Grid item>
-                            {listing.carImages?.length? <img src={listing.carImages[0]} className={classes.image} />: <img src="/cartoon_car.jpg" className={classes.image}/>}
-                            
+                            {listing.carImages?.length? <img src={listing.carImages[0]} className={classes.image} />: <img src="/cartoon_car.jpg" className={classes.image}/>}                         
                         </Grid>
 
                         <Grid item className={classes.textContainerItem}>
@@ -33,7 +47,7 @@ export default function OwnerListingItem({listing}){
                                 </Typography>
 
                                 <Typography noWrap className={classes.listingText}>
-                                    Model: {listing.model}
+                                    Model: {listing.brand} {listing.model}
                                 </Typography>
 
                                 <Typography noWrap className={classes.listingText}>
@@ -41,18 +55,24 @@ export default function OwnerListingItem({listing}){
                                 </Typography>
 
                                 <Typography noWrap className={classes.listingText}>
-                                    Day Rate: {listing.priceRate}
+                                    Day Rate: ${listing.priceRate}
                                 </Typography>
+
+                                
                             </Grid>
                         </Grid>
 
-                    </Grid>
-
-                </Card>
+                    </Grid>  
+                </Card>   
             </ButtonBase>
-        </Grid>
+            
+            {/* {buttonAppointment()} */}
 
+        </Grid>
+        
         <ListingViewForm isOpen={open} handleClose={handleClose}/>
+        
+        
         </>
     )
 }
@@ -94,6 +114,19 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: 20,
             maxWidth: '88%',
             paddingBottom: theme.spacing(1)
+        },
+        appointmentContainer: {
+            width: '100%',
+            paddingRight: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        cardAppointments: {
+            width: '100%',
+            paddingTop: 30,
+            marginTop: -20,
+        },
+        requestButton: {
+            backgroundColor: theme.palette.secondary.light,
         },
 
     }),

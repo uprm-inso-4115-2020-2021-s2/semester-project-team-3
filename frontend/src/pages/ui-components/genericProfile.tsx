@@ -1,12 +1,13 @@
 import React from "react"
 import Link from "next/link";
 import { Box, Button, Card, CardContent, CardHeader, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, makeStyles, Theme, Typography } from "@material-ui/core";
-import { AddCircleOutlineRounded, AddRounded } from "@material-ui/icons";
+import { AddCircleOutlineRounded, AddRounded, AirportShuttleRounded } from "@material-ui/icons";
 import ListingForm from "../listingForm";
 import RequestForm from "../requestForm";
 import OwnerListingItem from "../ui-components/ownerListingItem";
 import OwnerReviewItem from "../ui-components/ownerReviewItem";
 import { IUser } from "../../hooks/useUser";
+import AppointmentList from "./appointmentList";
 
 interface IProps {
     User: IUser,
@@ -21,39 +22,49 @@ export default function GenericProfile(props:IProps){
     const handleOpen = () => {setOpen(true)}
     const handleClose = () => {setOpen(false)}
 
+    const [openAppointments, setOpenAppointments] = React.useState(false);
+    const handleOpenAppointments = () => {setOpenAppointments(true)}
+    const handleCloseAppointments = () => {setOpenAppointments(false)}
+
     return(
         <>
         <Grid container direction="column" alignItems="center" className={classes.main}>
 
-            <Grid container direction="row" wrap='nowrap' className={classes.mainInfo}>
-
+            <Grid container direction="column" alignItems="center" className={classes.mainInfoItem}>
+               
                 <img src={props.User.image} className={classes.profileImg}/>
-
+               
                 <Grid item>
-                    <Grid container direction="column" className={classes.mainInfoItem}>
-                        <Grid item>
-                            <Typography variant="h3">
-                                {props.User.name}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography variant="h5">
-                                {props.User.cellNumber?props.User.cellNumber:"No Cellphone Provided"}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography variant="h5">
-                                {props.User.email}
-                            </Typography>
-                        </Grid>
-                    </Grid>
+                    <Typography className={classes.nameText}>
+                        {props.User.name}
+                    </Typography>
                 </Grid>
 
-            </Grid>
+                <Grid item>
+                    <Typography variant="h5">
+                        {props.User.email}
+                    </Typography>
+                </Grid>
 
-            <Grid container direction='column' className={classes.mainContent}>
+                <Grid item>
+                    <Typography variant="h5">
+                        {props.User.cellNumber?props.User.cellNumber:"No Cellphone Provided"}
+                    </Typography>
+                </Grid>
 
-                <Grid container direction="row" wrap="nowrap" justify="flex-end" className={classes.addButtonContainer}>
+                <Grid container direction="row" wrap="nowrap" justify="center" className={classes.addButtonContainer}>
+                    <Grid item>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            color="secondary"
+                            className={classes.addButton}
+                            onClick={handleOpenAppointments}
+                            endIcon={<Icon className={classes.addButtonIcon}><AirportShuttleRounded/></Icon>}
+                        >
+                            View Appointments
+                        </Button>
+                    </Grid>
                     <Grid item>
                         <Button
                             variant="contained"
@@ -68,49 +79,46 @@ export default function GenericProfile(props:IProps){
                     </Grid>
                 </Grid>
 
-                <Grid item>
-                    <Grid container justify="center" style={{padding:4}}>
-                        <Card className={classes.cardContainer}>
+            </Grid>
 
-                            <Grid container direction='column' alignItems="center" wrap="nowrap" >
-                                <Typography className={classes.cardTitle}>Select a Vehicle</Typography>
+            <Grid container direction='column' alignItems='center' className={classes.mainContent}>
+
+
+                    <Card className={classes.cardContainer}>
+                        <Grid container direction='column' alignItems="center" wrap="nowrap" >
+                            <Typography className={classes.cardTitle}>Select a Vehicle</Typography>
+                        </Grid>
+
+                        <CardContent>
+                            <Grid container direction='column' alignItems="center" wrap="nowrap">
+                                {props.Listings.map((val, index) => <OwnerListingItem key={index} listing={val}/>)}
                             </Grid>
+                        </CardContent>
+                    </Card>
 
-                            <CardContent>
-                                <Grid container direction='column' alignItems="center" wrap="nowrap">
-                                    {props.Listings.map((val, index) => <OwnerListingItem key={index} listing={val}/>)}
-                                </Grid>
-                            </CardContent>
 
-                        </Card>
-                    </Grid>
-                </Grid>
 
-                <Grid item>
-                    <Grid container justify="center" style={{padding:4}}>
-                        <Card className={classes.cardContainer}>  
+                    <Card className={classes.cardContainer}>  
+                        <Grid container direction='column' alignItems="center" wrap="nowrap" >
+                            <Typography className={classes.cardTitle}>Reviews</Typography>
+                        </Grid>
 
-                            <Grid container direction='column' alignItems="center" wrap="nowrap" >
-                                <Typography className={classes.cardTitle}>Reviews</Typography>
+                        <CardContent>
+                            <Grid container direction='column' alignItems="center" wrap="nowrap">
+                                {<OwnerReviewItem/>}
+                                {<OwnerReviewItem/>}
+                                {<OwnerReviewItem/>}
                             </Grid>
+                        </CardContent>
+                    </Card>
 
-                            <CardContent>
-                                <Grid container direction='column' alignItems="center" wrap="nowrap">
-                                    {<OwnerReviewItem/>}
-                                    {<OwnerReviewItem/>}
-                                    {<OwnerReviewItem/>}
-                                </Grid>
-                            </CardContent>
-
-                        </Card>
-                    </Grid>
-                </Grid>
 
             </Grid>
 
         </Grid>
 
         <ListingForm isOpen={open} handleClose={handleClose}/>
+        <AppointmentList isOpen={openAppointments} handleClose={handleCloseAppointments}/>
         </>
     )      
 }
@@ -128,20 +136,27 @@ const useStyles = makeStyles((theme: Theme) =>
 
         },
         profileImg: {
-            width: 135,
-            height: 135,
+            width: 200,
+            height: 200,
+            marginTop: theme.spacing(3),
+            marginBottom: theme.spacing(2)
+        },
+        nameText: {
+            fontSize: 40,
         },
         mainInfoItem: {
-            paddingLeft: theme.spacing(4)
+            // paddingLeft: theme.spacing(4)
         },
         mainContent: {
-            marginTop: 50,
+            marginTop: theme.spacing(3),
+            width: '100%',
+        },
+        mainContentItem: {
+            width: '95%',
         },
         cardContainer: {
-            minHeight: 600,
-            maxHeight: 600,
-            maxWidth: 800,
-            width:"100%",
+            height: 700,
+            width:"95%",
             marginBottom: 30,
             backgroundColor: theme.palette.primary.main,
             overflow: 'auto',
@@ -162,10 +177,12 @@ const useStyles = makeStyles((theme: Theme) =>
 ////
 
         addButtonContainer: {
-            marginRight: 40
+            marginTop: theme.spacing(2)
         },
         addButton: {
-            height: 50
+            height: 50,
+            marginLeft: 5,
+            marginRight: 5,
         },
         addButtonIcon: {
             height: '100%',

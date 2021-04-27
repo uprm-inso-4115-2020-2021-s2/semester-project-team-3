@@ -145,7 +145,7 @@ export default function NavBar() {
                 keepMounted
                 onClose={logClose}
             >
-                <Grid container direction="column" alignItems="flex-end">
+                <Grid container direction="column" alignItems="flex-end" className={classes.closeButtonContainer}>
                     <IconButton onClick={logClose}>
                         <CloseRounded className={classes.closeButton}></CloseRounded>
                     </IconButton>
@@ -197,8 +197,14 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'left',
         },
         iconButton: {
-            width: 150,
+            width: 120,
             height: 50,
+            marginLeft: 5,
+            marginRight: 5,
+            backgroundColor: theme.palette.secondary.main,
+            '&:hover': {
+                backgroundColor: fade(theme.palette.secondary.light, 0.40),
+            },
         },
         icon: {
             width: '100%',
@@ -247,6 +253,12 @@ const useStyles = makeStyles((theme: Theme) =>
         logInButton: {
             width: 150,
             height: 50,
+            marginRight: 5,
+            marginLeft: 5,
+            backgroundColor: theme.palette.secondary.main,
+            '&:hover': {
+                backgroundColor: fade(theme.palette.secondary.light, 0.40),
+            },
         },
         logInText: {
             color: theme.palette.secondary.contrastText,
@@ -277,6 +289,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         dialogClose: {
             width: '100%',
+        },
+        closeButtonContainer: {
+            backgroundColor: theme.palette.primary.light
         },
         closeButton: {
             fontSize: 30,
