@@ -111,7 +111,7 @@ export default function ListingForm({isOpen, handleClose}:IProps){
         >
             {!loading?(
                 <>
-                <Grid container direction="column" alignItems="center">
+                <Grid container direction="row" justify="center">
                 <DialogTitle>Submit Information For Your New Listing</DialogTitle>
             </Grid>
 
@@ -201,7 +201,7 @@ export default function ListingForm({isOpen, handleClose}:IProps){
                 </>
             ): 
             <DialogContent>
-                <Grid container justify="center">
+                <Grid container direction='row' justify="center">
                     <CircularProgress />
                 </Grid>
             </DialogContent>
@@ -270,15 +270,19 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingRight: theme.spacing(6),
         },
         buttonContainer: {
-            padding: theme.spacing(1.5),
-            marginRight: 5
+            padding: theme.spacing(1),
+            marginRight: 10,
         },
         buttonClose: {
             fontSize: 18,
+            paddingLeft: theme.spacing(2),
+            paddingRight: theme.spacing(2),
             backgroundColor: "#E53939",
         },
         buttonSubmit: {
             fontSize: 18,
+            paddingLeft: theme.spacing(2),
+            paddingRight: theme.spacing(2),
             backgroundColor: "#6ACB73",
         },
     }),
