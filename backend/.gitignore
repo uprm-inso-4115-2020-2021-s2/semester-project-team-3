@@ -3,6 +3,7 @@
 /.env
 /.vscode
 /coverage
+/.metals
 *.png
 *.jpg
 *.jpeg
