@@ -1,14 +1,10 @@
 import React from "react"
 import Link from "next/link";
 import { Box, Button, Card, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
+import { Pagination } from "@material-ui/lab";
 
 export default function Index(){
     const classes = useStyles();
-
-    const l1 = "<"
-    const l2 = "<<"
-    const r1 = ">"
-    const r2 = ">>"
 
     return(
         <Grid container direction="column" alignItems="center" className={classes.main}>
@@ -21,38 +17,13 @@ export default function Index(){
                         </Typography>
                     </Grid>
 
-                    <Grid item>
+                    <Grid item> 
+                        {/*vvv  items go here  vvv*/}
 
                     </Grid>
 
-                    <Grid container direction='row' justify="center">
-                        <Grid item>
-                            <Button>
-                                <Typography variant='h4'>{l2}</Typography>   
-                            </Button>
-                        </Grid>
-                        <Grid item>
-                            <Button>
-                                <Typography variant='h4'>{l1}</Typography> 
-                            </Button>
-                        </Grid>
-
-                        <Grid item>
-                            <Button disabled classes={{root: classes.inputRoot, disabled: classes.disabled}}>
-                                <Typography variant='h4'>0</Typography>
-                            </Button>
-                        </Grid>
-
-                        <Grid item>
-                            <Button>
-                                <Typography variant='h4'>{r1}</Typography> 
-                            </Button>
-                        </Grid>
-                        <Grid item>
-                            <Button>
-                                <Typography variant='h4'>{r2}</Typography> 
-                            </Button>
-                        </Grid>
+                    <Grid container direction='row' justify="center" wrap="nowrap">
+                        <Pagination count={10} variant="outlined" shape="rounded" color="secondary" siblingCount={1}/>
                     </Grid>
 
                 </Grid>
