@@ -197,7 +197,7 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'left',
         },
         iconButton: {
-            width: 150,
+            width: 120,
             height: 50,
             marginLeft: 5,
             marginRight: 5,

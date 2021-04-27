@@ -11,27 +11,23 @@ export default function OwnerListingItem({listing}){
     const handleOpen = () => {setOpen(true)}
     const handleClose = () => {setOpen(false)}
 
-    const [openAppointments, setOpenAppointments] = React.useState(false);
-    const handleOpenAppointments = () => {setOpenAppointments(true)}
-    const handleCloseAppointments = () => {setOpenAppointments(false)}
-
     useEffect(()=> {
         console.log(listing)
     }, [listing])
 
-    const buttonAppointment = () => {
-        if (true) {
-            return(
-                <Card className={classes.cardAppointments}>
-                    <Grid container direction="row" justify="flex-end" className={classes.appointmentContainer}>                   
-                        <Button className={classes.requestButton} onClick={handleOpenAppointments}>
-                            Vehicle Requests
-                        </Button>                   
-                    </Grid>     
-                </Card>       
-            )
-        }
-    }
+    // const buttonAppointment = () => {
+    //     if (true) {
+    //         return(
+    //             <Card className={classes.cardAppointments}>
+    //                 <Grid container direction="row" justify="flex-end" className={classes.appointmentContainer}>                   
+    //                     <Button className={classes.requestButton} onClick={handleOpenAppointments}>
+    //                         Vehicle Requests
+    //                     </Button>                   
+    //                 </Grid>     
+    //             </Card>       
+    //         )
+    //     }
+    // }
 
     return(
         <>
@@ -70,12 +66,12 @@ export default function OwnerListingItem({listing}){
                 </Card>   
             </ButtonBase>
             
-            {buttonAppointment()}
+            {/* {buttonAppointment()} */}
 
         </Grid>
         
         <ListingViewForm isOpen={open} handleClose={handleClose}/>
-        <AppointmentList isOpen={openAppointments} handleClose={handleCloseAppointments}/>
+        
         
         </>
     )
