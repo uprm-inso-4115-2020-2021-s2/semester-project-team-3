@@ -55,7 +55,7 @@ export default function OwnerListingItem({listing}){
                                 </Typography>
 
                                 <Typography noWrap className={classes.listingText}>
-                                    Day Rate: ${listing.priceRate}
+                                    Day Rate: ${listing.priceRate.toFixed(2)}
                                 </Typography>
 
                                 
