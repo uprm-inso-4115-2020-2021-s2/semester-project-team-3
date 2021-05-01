@@ -4,16 +4,12 @@ import AppointmentList from "./appointmentList";
 import ListingViewForm from "./listingViewForm";
 
 
-export default function OwnerListingItem({listing}){
+export default function SearchItem(){
     const classes = useStyles();
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {setOpen(true)}
     const handleClose = () => {setOpen(false)}
-
-    useEffect(()=> {
-        console.log(listing)
-    }, [listing])
 
     return(
         <>
@@ -23,28 +19,28 @@ export default function OwnerListingItem({listing}){
                     <Grid container direction="row" wrap="nowrap" className={classes.cardContent}> 
                         
                         <Grid item>
-                            {listing.carImages?.length? <img src={listing.carImages[0]} className={classes.image} />: <img src="/cartoon_car.jpg" className={classes.image}/>}                         
+                            <img src="/cartoon_car.jpg" className={classes.image}/>                        
                         </Grid>
 
                         <Grid item className={classes.textContainerItem}>
+
                             <Grid container direction="column" alignItems="flex-start" className={classes.textContainer}>
                                 <Typography noWrap className={classes.listingText}>
-                                    Title: {listing.title}
+                                    Title: Some Car
                                 </Typography>
 
                                 <Typography noWrap className={classes.listingText}>
-                                    Model: {listing.brand} {listing.model}
+                                    Model: Honda Civic
                                 </Typography>
 
                                 <Typography noWrap className={classes.listingText}>
-                                    Location: {listing.carLocation.address}
+                                    Location: Somewhere, PR
                                 </Typography>
 
                                 <Typography noWrap className={classes.listingText}>
-                                    Day Rate: ${listing.priceRate.toFixed(2)}
+                                    Day Rate: $15.00
                                 </Typography>
-
-                                
+           
                             </Grid>
                         </Grid>
 
@@ -55,7 +51,7 @@ export default function OwnerListingItem({listing}){
         </Grid>
         
         <ListingViewForm isOpen={open} handleClose={handleClose}/>
-           
+              
         </>
     )
 }
@@ -81,7 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingLeft: theme.spacing(2)
         },
         image: {
-            height: 160,
+            height: 200,
             width: 200,
         },
         textContainerItem: {

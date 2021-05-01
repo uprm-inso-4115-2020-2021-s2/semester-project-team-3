@@ -29,9 +29,11 @@ export default function Index(){
          </Grid>
 
          <Grid item className={classes.buttonSearchItem}>
-            <Button variant="contained" className={classes.buttonSearch} onClick={null}>
-               Start Now!
-            </Button>
+            <Link href="/search">
+               <Button variant="contained" className={classes.buttonSearch}>
+                  Start Now!
+               </Button>
+            </Link>
          </Grid>
 
          <Grid container direction='row' justify="space-around" alignContent="center" className={classes.gridMainContent}>
@@ -92,30 +94,6 @@ export default function Index(){
                      </Grid>
                   </Card>
                </Grid>
-            </Grid>
-
-            <Grid item>
-
-               <Link href="/listingForm">
-                  <Button>Listing Form</Button>
-               </Link>
-
-               <Link href="/listing">
-                  <Button>Listing Page</Button>
-               </Link>
-
-               <Link href="/owner">
-                  <Button>Owner Page</Button>
-               </Link>
-
-               <Link href="/request">
-                  <Button>Request Page</Button>
-               </Link>
-
-               <Link href="/search">
-                  <Button>Search Page</Button>
-               </Link>
-
             </Grid>
             
          </Grid>
