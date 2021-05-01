@@ -76,6 +76,7 @@ const useStyles = makeStyles((theme: Theme) =>
             zIndex:100,
             padding: theme.spacing(1),
             width: '28%',
+            marginTop: theme.spacing(6)
         },
         
     }),
