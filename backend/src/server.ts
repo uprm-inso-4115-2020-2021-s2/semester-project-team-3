@@ -41,8 +41,10 @@ app.use(routes)
 const httpServer = http.createServer(app);
 
 dbConfig
-.connect()
+.connect(process.env.MONGO_URI || '')
 .then(() => {
     httpServer.listen(config.server.port, "0.0.0.0", () => console.log(`Server up in port ${config.server.port}`));
 })
+
+
 

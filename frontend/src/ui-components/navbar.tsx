@@ -6,9 +6,9 @@ import React, { useEffect } from "react";
 import { useTheme } from '@material-ui/core/styles';
 import { TransitionProps } from "@material-ui/core/transitions/transition";
 import GoogleLoginButton from "./google-login/google-login";
-import { useUser } from "../../hooks/useUser";
-import fetchUser from "../../requests/fetchUser";
-import theme from "../../theme";
+import { useUser } from "../hooks/useUser";
+import fetchUser from "../requests/fetchUser";
+import theme from "../theme";
 
 
 export default function NavBar() {  

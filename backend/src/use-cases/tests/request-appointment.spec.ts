@@ -3,6 +3,7 @@ import {makeClient, makeAppointment, makeCarListing, IClient, ICarListing, IAppo
 import {clientRepo, appointmentRepo, carListingRepo} from '../../persistence'
 import { dbConfig } from '../../persistence'
 import { ErrorMessages } from '../declarations';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 
 
@@ -16,13 +17,11 @@ let carListing3: ICarListing;
 let appointment1: IAppointment;
 let appointment2: IAppointment;
 
-/**
- * Connect to a new in-memory database before running any tests.
- */
+let mongod:MongoMemoryServer;
+
 beforeAll(async () => {
-    await dbConfig.connect()
-    
-    
+    mongod = new MongoMemoryServer()
+    await dbConfig.connect(await mongod.getUri())
     client1 = makeClient({
         name:"test1",
         email:"test1@test.com"
@@ -35,7 +34,7 @@ beforeAll(async () => {
         name:"test3",
         email:"test3@test3.com"
     })
-
+    
     carListing1 = makeCarListing({
         title:"listing1",
         owner: client1,
@@ -48,7 +47,7 @@ beforeAll(async () => {
         carDescription: "Testing1",
         carLocation: {lat:0, lon:0, address:""}
     })
-
+    
     carListing2 = makeCarListing({
         title:"listing2",
         owner:client2,
@@ -61,7 +60,7 @@ beforeAll(async () => {
         carDescription: "Testing2",
         carLocation: {lat:0, lon:0, address:""}
     })
-
+    
     carListing3 = makeCarListing({
         title:"listing3",
         owner: client3,
@@ -74,7 +73,7 @@ beforeAll(async () => {
         carDescription: "Testing3",
         carLocation: {lat:0, lon:0, address:""}
     })
-
+    
     appointment1 = makeAppointment({
         rentee: client1,
         carListing: carListing2,
@@ -92,7 +91,7 @@ beforeAll(async () => {
             dateAccepted: new Date("2020-09-12")
         }
     })
-
+    
     appointment2 = makeAppointment({
         rentee: client2,
         carListing: carListing1,
@@ -105,19 +104,22 @@ beforeAll(async () => {
             dropoffLocation: {lat:0, lon:0}
         }
     })
-
+    
     await clientRepo.createClient(client1)
     await clientRepo.createClient(client2)
     await carListingRepo.createCarListing(carListing1, client1.email)
     await carListingRepo.createCarListing(carListing2, client2.email)
     await appointmentRepo.createAppointment(appointment1)
     await appointmentRepo.createAppointment(appointment2)
-
 });
+
 /**
  * Remove and close the db and server.
  */
-afterAll(async () => await dbConfig.closeDatabase());
+afterAll(async () =>{ 
+    await dbConfig.closeDatabase()
+    await mongod.stop()
+});
 
 describe("requestAppointmentUseCase represents the use case when a rentee requests a carListing for lease", () => {
 

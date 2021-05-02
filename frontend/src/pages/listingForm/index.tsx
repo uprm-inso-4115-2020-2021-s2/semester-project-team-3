@@ -1,7 +1,7 @@
 import { CircularProgress, Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, InputAdornment, makeStyles, TextField, Theme, Typography, useMediaQuery, useTheme, LinearProgress } from "@material-ui/core";
 import { AddAPhotoRounded, LocationSearchingTwoTone, PhotoCamera } from "@material-ui/icons";
 import React, { useEffect } from "react";
-import GooglePlacesAuto from '../ui-components/google-places/google-places'
+import GooglePlacesAuto from '../../ui-components/google-places/google-places'
 import theme from "../../theme";
 import createListing from "../../requests/createListing";
 import { useUser } from "../../hooks/useUser";

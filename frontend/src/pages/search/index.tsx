@@ -2,7 +2,7 @@ import React from "react"
 import Link from "next/link";
 import { Box, Button, Card, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
-import SearchItem from "../ui-components/searchItem";
+import SearchItem from "../../ui-components/searchItem";
 
 export default function Index(){
     const classes = useStyles();

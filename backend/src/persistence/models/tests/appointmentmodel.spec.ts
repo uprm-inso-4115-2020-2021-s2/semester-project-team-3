@@ -2,18 +2,32 @@ import * as dbHandler from '../../dbconfig'
 import { ClientModel, IClientModel } from '../clientmodel';
 import { AppointmentCollectionName, AppointmentModel, IAppointmentModel } from '../appointmentmodel'
 import { makeValidCarListingModelSample } from './helper';
-import { AppointmentStatusType } from '../../../domain';
+import { AppointmentStatusType, IAppointmentRepository } from '../../../domain';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import AppointmentRepository from '../../repository-implementations/appointment-repository';
 
+
+let appointmentRepo:IAppointmentRepository
+
+let mongod:MongoMemoryServer
+beforeAll(async () => {
+    mongod = new MongoMemoryServer()
+    await dbHandler.connect(await mongod.getUri())
+    appointmentRepo = new AppointmentRepository()
+});
 
 /**
- * Connect to a new in-memory database before running any tests.
+ * Remove and close the db and server.
  */
-beforeAll(async () => await dbHandler.connect());
+afterAll(async () =>{ 
+    await dbHandler.closeDatabase()
+    await mongod.stop()
+});
 
 /**
  * Clear all test data after every test.
  */
-afterEach(async () => await dbHandler.clearDatabase());
+ afterEach(async () => await dbHandler.clearDatabase());
 
 /**
  * Create sample user in db
@@ -30,10 +44,6 @@ beforeEach(async () => {
     await person.save()
 })
 
-/**
- * Remove and close the db and server.
- */
-afterAll(async () => await dbHandler.closeDatabase());
 
 describe("The appointment model represents an appointment in the database", () => {
 

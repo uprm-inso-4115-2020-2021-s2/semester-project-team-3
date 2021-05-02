@@ -2,8 +2,8 @@ import { Button, ButtonBase, Card, createStyles, Dialog, DialogActions, DialogCo
 import { CloseRounded } from "@material-ui/icons";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
-import { IUser } from "../../hooks/useUser";
-import RequestForm from "../requestForm";
+import { IUser } from "../hooks/useUser";
+import RequestForm from "../pages/requestForm";
 import CarouselBasicItem from "./carouselBasicItem";
 
 interface IProps {

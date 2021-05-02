@@ -1,17 +1,11 @@
 import mongoose from 'mongoose'
-import  { MongoMemoryServer } from 'mongodb-memory-server'
 
 
-const mongod = new MongoMemoryServer();
 /**
  * Connect to the mongoDB ATLAS or in-Memory DB depending on the server environment  database.
 */
-export const connect = async () => {
-    let uri = await mongod.getUri();
-    if(process.env.SERVER_ENV==='production'){
-        uri = process.env.MONGO_URI || ''
-    }
-    
+export const connect = async (uri:string) => {
+
     const mongooseOpts = {
         useNewUrlParser: true,
         autoReconnect: true,
@@ -28,7 +22,6 @@ export const connect = async () => {
 export const closeDatabase = async () => {
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
-    await mongod.stop();
 }
 
 /**

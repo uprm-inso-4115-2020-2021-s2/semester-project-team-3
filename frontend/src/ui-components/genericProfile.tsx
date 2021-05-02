@@ -2,11 +2,11 @@ import React from "react"
 import Link from "next/link";
 import { Box, Button, Card, CardContent, CardHeader, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, makeStyles, Theme, Typography } from "@material-ui/core";
 import { AddCircleOutlineRounded, AddRounded, AirportShuttleRounded } from "@material-ui/icons";
-import ListingForm from "../listingForm";
-import RequestForm from "../requestForm";
-import OwnerListingItem from "../ui-components/ownerListingItem";
-import OwnerReviewItem from "../ui-components/ownerReviewItem";
-import { IUser } from "../../hooks/useUser";
+import ListingForm from "../pages/listingForm";
+import RequestForm from "../pages/requestForm";
+import OwnerListingItem from "./ownerListingItem";
+import OwnerReviewItem from "./ownerReviewItem";
+import { IUser } from "../hooks/useUser";
 import AppointmentList from "./appointmentList";
 
 interface IProps {

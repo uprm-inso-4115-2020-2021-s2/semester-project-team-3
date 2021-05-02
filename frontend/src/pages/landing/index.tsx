@@ -2,7 +2,7 @@ import React from "react"
 import Link from "next/link";
 import { Box, Button, ButtonBase, Card, createStyles, Grid, makeStyles, Slide, Theme, Typography } from "@material-ui/core";
 import Carousel from "react-material-ui-carousel";
-import CarouselButtonItem from "../ui-components/carouselButtonItem";
+import CarouselButtonItem from "../../ui-components/carouselButtonItem";
 
 export default function Index(){
    const classes = useStyles();

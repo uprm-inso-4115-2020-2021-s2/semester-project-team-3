@@ -1,3 +1,4 @@
+import { MongoMemoryServer } from "mongodb-memory-server";
 import { IAppointment, ICarListing, IClient, makeCarListing, makeClient } from "../../domain";
 import { appointmentRepo, CarListingRepository, ClientRepository, dbConfig } from "../../persistence";
 import {makeGetMyAppointments} from '../appointment/get-appointments'
@@ -9,11 +10,11 @@ let client1:IClient;
 let client2:IClient;
 let carListing1: ICarListing
 let appointment1: IAppointment
-/**
- * Connect to a new in-memory database before running any tests.
- */
+let mongod:MongoMemoryServer;
+
 beforeAll(async () => {
-    await dbConfig.connect()
+    mongod = new MongoMemoryServer()
+    await dbConfig.connect(await mongod.getUri())
     client1 = await clientRepo.createClient(
         makeClient({
             email:"test@test.com",
@@ -59,10 +60,16 @@ beforeAll(async () => {
     }) as IAppointment
 
     appointment1 = (await appointmentRepo.createAppointment(appointment1)) as IAppointment
-    
 });
 
-afterAll(async () => await dbConfig.closeDatabase());
+
+/**
+ * Remove and close the db and server.
+ */
+afterAll(async () =>{ 
+    await dbConfig.closeDatabase()
+    await mongod.stop()
+});
 
 describe("you should be able to get your appointments", () => {
 

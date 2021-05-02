@@ -1,26 +1,32 @@
 import { IAppointmentRepository } from '../../../domain';
 import { AppointmentStatusType } from '../../../domain/declarations';
-import * as dbHandler from '../../dbconfig'
+import * as dbConfig from '../../dbconfig'
 import { ClientModel, IClientModel} from '../../models';
 import { makeValidCarListingModelSample } from '../../models/tests/helper'
 import { AppointmentModel } from '../../models/appointmentmodel';
 import AppointmentRepository from '../appointment-repository';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 /**
  * Connect to a new in-memory database before running any tests.
  */
 let appointmentRepo: IAppointmentRepository
+let mongod:MongoMemoryServer;
 
 beforeAll(async () => {
-    await dbHandler.connect()
+    mongod = new MongoMemoryServer()
+    await dbConfig.connect(await mongod.getUri())
     appointmentRepo = new AppointmentRepository()
-}); 
-
+});
 
 /**
  * Remove and close the db and server.
  */
-afterAll(async () => await dbHandler.closeDatabase());
+afterAll(async () =>{ 
+    await dbConfig.closeDatabase()
+    await mongod.stop()
+});
+
 
 describe(` 
     Appointment repository is in charge of abstracting 

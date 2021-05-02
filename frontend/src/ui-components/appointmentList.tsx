@@ -1,7 +1,7 @@
 import { Box, Button, Checkbox, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, FormLabel, Grid, IconButton, InputAdornment, makeStyles, Radio, RadioGroup, TextField, Theme, Typography, useMediaQuery, useTheme } from "@material-ui/core";
 import { AddAPhotoRounded, CloseRounded, PhotoCamera } from "@material-ui/icons";
 import React, { useEffect } from "react";
-import theme from "../../theme";
+import theme from "../theme";
 
 interface IProps {
     isOpen: boolean,
