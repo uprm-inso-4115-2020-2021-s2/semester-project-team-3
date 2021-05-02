@@ -2,17 +2,24 @@ import { CarListingModel, ICarListingModel } from '../carlistingmodel'
 import * as dbHandler from '../../dbconfig'
 import { ClientModel, IClientModel } from '../clientmodel';
 import {makeValidCarListingModelSample} from './helper'
+import { MongoMemoryServer } from 'mongodb-memory-server';
+
+
+
+let mongod:MongoMemoryServer
+beforeAll(async () => {
+    mongod = new MongoMemoryServer()
+    await dbHandler.connect(await mongod.getUri())
+});
 
 /**
- * Connect to a new in-memory database before running any tests.
+ * Remove and close the db and server.
  */
-beforeAll(async () => await dbHandler.connect());
-
-/**
- * Clear all test data after every test.
- */
+afterAll(async () =>{ 
+    await dbHandler.closeDatabase()
+    await mongod.stop()
+});
 afterEach(async () => await dbHandler.clearDatabase());
-
 /**
  * Create sample user in db
  */
@@ -28,10 +35,6 @@ beforeEach(async () => {
     await person.save()
 })
 
-/**
- * Remove and close the db and server.
- */
-afterAll(async () => await dbHandler.closeDatabase());
 
 
 

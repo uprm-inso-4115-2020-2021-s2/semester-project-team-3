@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button, Grid, Typography, makeStyles, createStyles, Theme } from '@material-ui/core'
 import {GoogleLoginResponse, useGoogleLogin}  from 'react-google-login'
-import {logIn} from '../../../requests'
-import { useUser } from '../../../hooks/useUser'
+import {logIn} from '../../requests'
+import { useUser } from '../../hooks/useUser'
 
 interface GoogleLoginButton {
     sucessCallBack: (res) => void

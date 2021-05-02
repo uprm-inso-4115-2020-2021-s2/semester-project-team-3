@@ -1,22 +1,31 @@
 import makeGetMyListingsUseCase from '../car-listing/get-my-listings'
 import {clientRepo, carListingRepo, dbConfig} from '../../persistence'
 import { ICarListing, IClient, makeCarListing, makeClient } from '../../domain'
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 let Person: IClient | null
+let mongod:MongoMemoryServer;
+
 beforeAll(async () => {
-    await dbConfig.connect()
+    mongod = new MongoMemoryServer()
+    await dbConfig.connect(await mongod.getUri())
     Person = await clientRepo.createClient(
         makeClient({
             email:"test@test.com",
             name:"pedro"
         })
     )
-
 });
+
+
 /**
  * Remove and close the db and server.
  */
-afterAll(async () => await dbConfig.closeDatabase());
+afterAll(async () =>{ 
+    await dbConfig.closeDatabase()
+    await mongod.stop()
+});
+
 describe(`The get my listing use case represents the 
         use case where the client needs to fetch his listings`, () => {
     

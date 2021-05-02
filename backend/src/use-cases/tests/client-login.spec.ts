@@ -1,11 +1,16 @@
 import { ClientRepository } from '../../persistence'
 import makeClientLoginUseCase from '../client/client-login'
 import { dbConfig } from '../../persistence'
-
+import {MongoMemoryServer} from 'mongodb-memory-server'
 /**
  * Connect to a new in-memory database before running any tests.
  */
-beforeAll(async () => await dbConfig.connect());
+let mongod:MongoMemoryServer;
+
+beforeAll(async () => {
+    mongod = new MongoMemoryServer()
+    await dbConfig.connect(await mongod.getUri())
+});
 
 
 
@@ -13,7 +18,10 @@ beforeAll(async () => await dbConfig.connect());
 /**
  * Remove and close the db and server.
  */
-afterAll(async () => await dbConfig.closeDatabase());
+afterAll(async () =>{ 
+    await dbConfig.closeDatabase()
+    await mongod.stop()
+});
 
 
 describe(" A client should be able to login. If a client does not exist, it should be created ", () => {

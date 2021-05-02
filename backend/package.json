@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests --detectOpenHandles --runInBand",
-    "start": "node build/server.js",
+    "start": "node ./build/server.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' --files src/server.ts",
     "build": "tsc -p ."
   },

@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../theme';
-import NavBar from './ui-components/navbar';
+import NavBar from '../ui-components/navbar';
 import { UserProvider } from '../hooks/context/userProvider'
 
 export default function MyApp(props) {

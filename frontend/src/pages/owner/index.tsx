@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import Link from "next/link";
-import GenericProfile from "../ui-components/genericProfile";
+import GenericProfile from "../../ui-components/genericProfile";
 import { IUser, useUser } from "../../hooks/useUser";
 import { useRouter } from "next/router";
 import fetchMyListings from "../../requests/myListings";

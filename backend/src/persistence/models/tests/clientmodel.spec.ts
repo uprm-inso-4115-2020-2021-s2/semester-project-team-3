@@ -1,22 +1,26 @@
 
 import { ClientModel, IClientModel } from '../../models/clientmodel'
 import * as dbHandler from '../../dbconfig'
+import { MongoMemoryServer } from 'mongodb-memory-server';
+
+let mongod:MongoMemoryServer
+beforeAll(async () => {
+    mongod = new MongoMemoryServer()
+    await dbHandler.connect(await mongod.getUri())
+});
 
 /**
- * Connect to a new in-memory database before running any tests.
+ * Remove and close the db and server.
  */
-beforeAll(async () => await dbHandler.connect());
+afterAll(async () =>{ 
+    await dbHandler.closeDatabase()
+    await mongod.stop()
+});
 
 /**
  * Clear all test data after every test.
  */
 afterEach(async () => await dbHandler.clearDatabase());
-
-/**
- * Remove and close the db and server.
- */
-afterAll(async () => await dbHandler.closeDatabase());
-
 
 describe(" The Client Model represents a model of an IClient in the database ", () => {
 

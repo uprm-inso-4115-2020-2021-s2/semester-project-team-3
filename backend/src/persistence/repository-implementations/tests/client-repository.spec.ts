@@ -2,13 +2,13 @@ import ClientRepository from '../client-repository'
 import {makeClient} from '../../../domain/factories'
 import * as dbHandler from '../../dbconfig'
 import { ClientModel, IClientModel } from '../../models/clientmodel';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 
-/**
- * Connect to a new in-memory database before running any tests.
- */
+let mongod:MongoMemoryServer;
 beforeAll(async () => {
-    await dbHandler.connect()
+    mongod = new MongoMemoryServer()
+    await dbHandler.connect(await mongod.getUri())
     const person = new ClientModel({
         email:"test@test.com",
         name:"Pedro",
@@ -16,15 +16,17 @@ beforeAll(async () => {
         isVerified: false,
         cellNumber:"7875550000"
     } as IClientModel)
-
+    
     await person.save()
 });
-
 
 /**
  * Remove and close the db and server.
  */
-afterAll(async () => await dbHandler.closeDatabase());
+afterAll(async () =>{ 
+    await dbHandler.closeDatabase()
+    await mongod.stop()
+});
 
 const clientRepo = new ClientRepository()
 

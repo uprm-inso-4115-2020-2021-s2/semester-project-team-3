@@ -1,3 +1,4 @@
+import { MongoMemoryServer } from 'mongodb-memory-server'
 import { makeClient } from '../../domain'
 import { dbConfig, CarListingRepository, ClientRepository } from '../../persistence'
 import makeCreateCarListingUseCase from '../car-listing/create-car-listing'
@@ -6,12 +7,13 @@ import {MockStorageAdapter} from './mock/mockStorageAdapter'
 let carListingRepo = new CarListingRepository()
 let clientRepo = new ClientRepository()
 let createCarListingUseCase = makeCreateCarListingUseCase(carListingRepo, clientRepo, new MockStorageAdapter())
-
+let mongod:MongoMemoryServer
 /**
  * Connect to a new in-memory database before running any tests.
  */
 beforeAll(async () => {
-    await dbConfig.connect()
+    mongod = new MongoMemoryServer()
+    await dbConfig.connect(await mongod.getUri())
     await clientRepo.createClient(
         makeClient({
             email:"test@test.com",
@@ -22,7 +24,10 @@ beforeAll(async () => {
 /**
  * Remove and close the db and server.
  */
-afterAll(async () => await dbConfig.closeDatabase());
+ afterAll(async () =>{ 
+    await dbConfig.closeDatabase()
+    await mongod.stop()
+});
 
 describe("A client should be able to create a new car listing for others to see", () => {
 

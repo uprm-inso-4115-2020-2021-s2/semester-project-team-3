@@ -2,6 +2,7 @@ import CarListingRepository from '../carlisting-repository'
 import * as dbHandler from '../../dbconfig'
 import { ClientModel, IClientModel, CarListingModel, ICarListingModel } from '../../models';
 import { makeValidCarListingModelSample } from '../../models/tests/helper'
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 /**
  * Connect to a new in-memory database before running any tests.
@@ -9,8 +10,11 @@ import { makeValidCarListingModelSample } from '../../models/tests/helper'
 let person: IClientModel;
 let sampleCarListing: ICarListingModel;
 
+let mongod:MongoMemoryServer;
+
 beforeAll(async () => {
-    await dbHandler.connect()
+    mongod = new MongoMemoryServer()
+    await dbHandler.connect(await mongod.getUri())
     person = new ClientModel({
         email:"test@test.com",
         name:"Pedro",
@@ -20,17 +24,22 @@ beforeAll(async () => {
     } as IClientModel)
     
     await person.save()
-
+    
     sampleCarListing = makeValidCarListingModelSample(person._id)
     await sampleCarListing.save()
+});
 
-}); 
+
 
 
 /**
  * Remove and close the db and server.
  */
-afterAll(async () => await dbHandler.closeDatabase());
+afterAll(async () =>{ 
+    await dbHandler.closeDatabase()
+    await mongod.stop()
+});
+
 
 const carListingRepo = new CarListingRepository()
 
