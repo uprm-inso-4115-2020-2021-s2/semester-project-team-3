@@ -4,5 +4,7 @@
 
 ## [Click here for Application Video Demo](https://youtu.be/EaTASGQoZG0)
 
+## [Click here for the current application deployment](https://ponpon-kenneth-rosario.vercel.app/)
+
 PonPon's goal was to make a site that provided an opportunity for people to give their cars up for renting, as well as allowing people to rent other people's car in an easy and organized manner in Puerto Rico.
 
